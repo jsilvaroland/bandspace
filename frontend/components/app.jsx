@@ -1,14 +1,14 @@
 import React from 'react';
-import Modal from './modal/modal';
+// import Modal from './modal/modal';
 
 const App = () => (
     <div id='bandspace'>
 
-        <NavBar>
+        {/* <NavBar> */}
             <h1>Bandspace</h1>
-            login modal
+            {/* login modal
             logout modal
-        </NavBar>
+        </NavBar> */}
 
     </div>
 );
