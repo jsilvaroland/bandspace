@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+    skip_before_action :verify_authenticity_token
     helper_method :current_user, :logged_in?
 
     private
@@ -8,7 +9,11 @@ class ApplicationController < ActionController::Base
     end
 
     def require_logged_in
-        redirect_to api_session_url unless logged_in? #should this render json instead? like invalid credentials?
+        render json: ['Must be logged in'], status: 401 unless logged_in?
+    end
+
+    def require_logged_out
+        render json: ['Must be logged out'], status: 401 if logged_in?
     end
 
     def login!(user)

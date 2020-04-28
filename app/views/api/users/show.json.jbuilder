@@ -1,0 +1,1 @@
+json.extract! @user, :id, :username, :is_artist # is there more to extract?

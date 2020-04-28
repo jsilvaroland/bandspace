@@ -1,7 +1,8 @@
 class User < ApplicationRecord
-    validates :username, :email, :session_token, :password_digest, :is_artist, presence: true
+    validates :username, :email, :session_token, :password_digest, presence: true
+    validates :is_artist, inclusion: [true, false]
     validates :username, :email, :session_token, uniqueness: true
-    validates :password, length: { minimum: 3 allow_nil: true }
+    validates :password, length: { minimum: 3, allow_nil: true }
     before_validation :ensure_session_token!
 
     # associations will go here
@@ -13,7 +14,7 @@ class User < ApplicationRecord
     def self.find_by_credentials(username, password)
         user ||= User.find_by(username: username)
         return nil unless user
-        user.is_password(password) ? user : nil
+        user.is_password?(password) ? user : nil
     end
 
     def password=(password)
