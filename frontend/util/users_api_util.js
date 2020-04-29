@@ -1,7 +1,7 @@
-export const fetchAllArtists = allArtists => (
+export const fetchAllUsers = () => (
     $.ajax({
         method: 'GET',
         url: 'api/users',
-        data: { allArtists }
+        // data: { allUsers }
     })
 );

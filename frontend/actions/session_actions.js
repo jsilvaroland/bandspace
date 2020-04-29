@@ -21,16 +21,16 @@ const receiveErrors = errors => ({
 export const signup = user => dispatch => (
     SessionApiUtil.signup(user)
         .then(user => dispatch(receiveCurrentUser(user)))
-        // .fail(errors => dispatch(receiveErrors(errors))) //errors.responseJSON ?
+        .fail(errors => dispatch(receiveErrors(errors.reponseJSON)))
 );
 
 export const login = user => dispatch => (
     SessionApiUtil.login(user)
         .then(user => dispatch(receiveCurrentUser(user)))
-        // .fail(errors => dispatch(receiveErrors(errors))) //errors.responseJSON ?
+        .fail(errors => dispatch(receiveErrors(errors.responseJSON)))
 );
 
-export const logout = () => dispatch => (                   // may need to pass in user here later
+export const logout = () => dispatch => (                   // may need to pass in user here later to reroute to user's show page after logout
     SessionApiUtil.logout()
         .then(user => dispatch(logoutCurrentUser())) 
 );

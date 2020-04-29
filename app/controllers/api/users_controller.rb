@@ -2,7 +2,7 @@ class Api::UsersController < ApplicationController
     before_action :require_logged_in, only: [:update]
 
     def index
-        @artists = User.where(is_artist: true) # or logic could go in the show -- next if is_artist is false. Depends on if this action is needed elsewhere
+        @users = User.all
         render :index
     end
 
@@ -16,7 +16,6 @@ class Api::UsersController < ApplicationController
         if @user.save
             login!(@user)
             render :show
-            # redirect_to 'static_pages#root'              # how to i redirect to splash page upon signup
         else
             render json: @user.errors.full_messages, status: 422
         end
@@ -28,7 +27,7 @@ class Api::UsersController < ApplicationController
         if @user.save #Profile Updated / changes saved message or something?
             render :show
         else
-            render json: @user.errors.full_messages, status: 422 # correct status msg?
+            render json: @user.errors.full_messages, status: 422
         end
     end
 
