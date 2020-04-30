@@ -15,9 +15,8 @@ class SessionForm extends React.Component {
                 password: '', 
                 isArtist: true      // for now, every new account will be an artist account
             };
-
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.renderErrors = this.renderErrors.bind(this);
+        this.demoLogin = this.demoLogin.bind(this);
     }
 
     change(field) {
@@ -28,13 +27,22 @@ class SessionForm extends React.Component {
         e.preventDefault();
         const { username, email, password, isArtist: is_artist } = this.state;           // why isn't camelize in environment.rb fixing this?
         this.props.processForm({ username, email, password, is_artist })
-            .then(this.props.closeModal) //.fail if credentials aren't met?
-            // .fail(this.renderErrors());
+            .then(this.props.closeModal);
+    }
+
+    demoLogin() {
+        const demoUser = {
+            username: 'demo',
+            email: 'demo@demo.com',
+            password: 'demo',
+            is_artist: true,
+        };
+        this.props.processForm(demoUser)
+            .then(this.props.closeModal);
     }
 
     renderErrors() {
         const { errors } = this.props;
-        debugger;
         return (
             <ul>
                 {
@@ -46,13 +54,18 @@ class SessionForm extends React.Component {
         );
     }
 
+    componentWillUnmount() {
+        this.props.clearErrors();
+    }
+
     render() {
-        const { formType } = this.props;
-        let formTitleText, buttonText;
+        const { formType, otherForm } = this.props;
+        let formTitleText, buttonText, otherFormText;
         let emailField;
 
         if (formType == 'login') {
             formTitleText = buttonText = 'Log in';
+            otherFormText = `Don't have an account?`
         } else {
             formTitleText = 'Sign up for a Bandspace account';
             emailField = (<label>Email address
@@ -63,6 +76,7 @@ class SessionForm extends React.Component {
                             />
                         </label>)
             buttonText = 'Sign up';
+            otherFormText = `Already have an account?`
         }
 
         return(
@@ -87,10 +101,13 @@ class SessionForm extends React.Component {
                         />
                     </label>
                     <br/>
-                    {() => this.renderErrors}
-                    <br/>
+                    <div id="session-errors">{this.renderErrors()}</div>
                     <button>{buttonText}</button>
+                    <br/>
                 </form>
+                <button onClick={this.demoLogin}>Demo login</button>
+                <div id="other-modal-text">{otherFormText}</div>
+                <div id="other-modal-link">{otherForm}</div>
             </div>
         )
     }
