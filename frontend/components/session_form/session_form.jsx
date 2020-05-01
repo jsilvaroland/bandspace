@@ -60,12 +60,12 @@ class SessionForm extends React.Component {
 
     render() {
         const { formType, otherForm } = this.props;
-        let formTitleText, buttonText, otherFormText;
-        let emailField;
+        let formTitleText, buttonText, otherFormText, demoButton, emailField;
 
         if (formType == 'login') {
             formTitleText = buttonText = 'Log in';
             otherFormText = `Don't have an account?`
+            demoButton = (<button onClick={this.demoLogin}>Demo login</button>)
         } else {
             formTitleText = 'Sign up for a Bandspace account';
             emailField = (<label>Email address
@@ -80,34 +80,39 @@ class SessionForm extends React.Component {
         }
 
         return(
-            <div>
-                <h3>{formTitleText}</h3>
-                <form onSubmit={this.handleSubmit}>
-                    {emailField}
+            <div className={`modal-${formType}`}>
+                <div className={`modal-${formType}-titlebar`}>
+                    {formTitleText}
+                </div>
+                <div className={`modal-${formType}-content`}>
+                    <form onSubmit={this.handleSubmit}>
+                        {emailField}
+                        <br/>
+                        <label>Username
+                            <input
+                                type="text"
+                                value={this.state.username}
+                                onChange={this.change('username')}
+                            />
+                        </label>
+                        <br/>
+                        <label>Password
+                            <input
+                            type="password"
+                            value={this.state.password}
+                            onChange={this.change('password')}
+                            />
+                        </label>
+                        <br/>
+                        <div id="session-errors">{this.renderErrors()}</div>
+                        <button className="submit">{buttonText}</button>
+                        <br/>
+                    </form>
+                    {demoButton}
                     <br/>
-                    <label>Username
-                        <input
-                            type="text"
-                            value={this.state.username}
-                            onChange={this.change('username')}
-                        />
-                    </label>
-                    <br/>
-                    <label>Password
-                        <input
-                        type="password"
-                        value={this.state.password}
-                        onChange={this.change('password')}
-                        />
-                    </label>
-                    <br/>
-                    <div id="session-errors">{this.renderErrors()}</div>
-                    <button>{buttonText}</button>
-                    <br/>
-                </form>
-                <button onClick={this.demoLogin}>Demo login</button>
-                <div id="other-modal-text">{otherFormText}</div>
-                <div id="other-modal-link">{otherForm}</div>
+                    <div id="other-modal-text">{otherFormText}</div>
+                    <div id="other-modal-link">{otherForm}</div>
+                </div>
             </div>
         )
     }

@@ -1,7 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import configureStore from './store/store';
+// import { library } from '@fortawesome/fontawesome-svg-core';
+// import { faCheckSquare, faCoffee } from '@fortawesome/free-solid-svg-icons';
+
 import Root from './components/root';
+import configureStore from './store/store';
 
 // testing
 import { signup, login, logout } from './actions/session_actions';
