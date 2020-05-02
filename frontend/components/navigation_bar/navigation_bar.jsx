@@ -30,7 +30,8 @@ class NavigationBar extends React.Component {
 
         const welcomeMessage = () => (
             <div className="welcome-message">
-                Discover music from across the galaxy.
+                Spellbinding songs and sirenic soundscape from space.
+                {/* Discover music from across the galaxy. */}
             </div>
         );       
         

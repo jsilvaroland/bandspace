@@ -8,10 +8,16 @@
     width: 500px;
 }
 
-
-
 .modal-login {
     height: 345px;
+}
+
+.modal-signup-content {
+    height: 441px;
+}
+
+.modal-login-content {
+    height: 299px;
 }
 
 .modal-signup {
@@ -38,13 +44,35 @@
     border-radius: 0 0 5px 5px;
 }
 
+.modal-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-label {
+    // width: 340px;
+    color: #333333;
+    font-size: 16px;
+    margin: 2px 0 1px;
+}
+
+.modal-input {
+    padding: 4px 4px 4px 10px;
+    margin: 0 0 25px;
+}
+
+.terms-text {
+    font-size: 14px;
+    color: #333333;
+}
+
 .submit {
     width: 340px;
     height: 36px;
     color: #fff;
     background-color: rgb(0, 161, 198);
     font-size: 16px;
-    font-weight: bold;
+    font-weight: 500;
     border-radius: 5px;
     cursor: pointer;
 }
@@ -52,3 +80,4 @@
 .submit:hover {
     text-decoration: underline;
 }
+
