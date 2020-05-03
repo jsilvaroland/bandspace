@@ -1,3 +1,12 @@
+html, body, #root, #bandspace {
+    height: 100%;
+}
+
+#bandspace {
+    height: 100%;
+    position: relative;
+}
+
 body {
     font: 13px/1.2307692308 'Helvetica Neue',Helvetica,Arial,sans-serif;
 }

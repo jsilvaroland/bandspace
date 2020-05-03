@@ -67,6 +67,7 @@ class SessionForm extends React.Component {
         if (formType == 'login') {
             formTitleText = buttonText = 'Log in';
             usernameField = (<input className="modal-input"
+                                style={{ marginBottom: "10px" }}
                                 type="text"
                                 value={this.state.username}
                                 placeholder="Username"
@@ -78,7 +79,7 @@ class SessionForm extends React.Component {
                                 placeholder="Password"
                                 onChange={this.change('password')}
                             />)
-            otherFormText = `Don't have an account?`
+            otherFormText = "Don't have an account?"
             demoButton = (<button 
                             className="submit" 
                             onClick={this.demoLogin}
@@ -106,7 +107,7 @@ class SessionForm extends React.Component {
                             />)
             buttonText = 'Sign up';
             otherFormText = 'Already have an account?'
-            termsText = 'Lucky you, no terms of use.'
+            termsText = (<div className="terms-text">Lucky you, no terms of use.</div>)
         }
 
         return(
@@ -123,12 +124,14 @@ class SessionForm extends React.Component {
                         {passwordLabel}
                         {passwordField}
                         <div className="session-errors">{this.renderErrors()}</div>
-                        <div className="terms-text">{termsText}</div>
+                        {termsText}
                         <button className="submit">{buttonText}</button>
                     </form>
                     {demoButton}
-                    <div id="other-modal-text">{otherFormText}</div>
-                    <div id="other-modal-link">{otherForm}</div>
+                    <div className="other-modal-wrapper">
+                        <div className="other-modal-text">{otherFormText}</div>
+                        <div className="other-modal-link">{otherForm}.</div>
+                    </div>
                 </div>
             </div>
         )
