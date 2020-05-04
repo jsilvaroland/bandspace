@@ -5,9 +5,10 @@ class User < ApplicationRecord
     validates :password, length: { minimum: 3, allow_nil: true }
     before_validation :ensure_session_token!
 
-    # associations will go here
-
-    # end associations
+    has_many :albums,
+        foreign_key: :artist_id
+    has_many :tracks,
+        foreign_key: :artist_id
 
     attr_reader :password
 
