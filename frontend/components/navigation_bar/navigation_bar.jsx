@@ -4,15 +4,16 @@ import { withRouter } from 'react-router-dom';
 
 class NavigationBar extends React.Component {
     constructor(props) {
+        debugger;
         super(props);
         this.state = { active: false };
 
         this.toggleDropdown = this.toggleDropdown.bind(this);
-        this.collapse = this.collapse.bind(this);
 
         this.setWrapperRef = this.setWrapperRef.bind(this);
         this.handleClickOutside = this.handleClickOutside.bind(this);
-        this.onClick = this.onClick.bind(this);
+        this.onUserMenuClick = this.onUserMenuClick.bind(this);
+        this.collapse = this.collapse.bind(this);
     }
 
     toggleDropdown() {
@@ -20,31 +21,24 @@ class NavigationBar extends React.Component {
         this.setState({ active: !currentState });
     }
 
-
-
-
-
     setWrapperRef(node) {
         this.wrapperRef = node;
     }
 
     handleClickOutside(e) {
         if (this.wrapperRef && !this.wrapperRef.contains(e.target)) {
-            this.setState({ active: false });
+            this.collapse();
             document.removeEventListener('mousedown', this.handleClickOutside);
         }
     }
 
-    onClick(e) {
-        this.toggleDropdown();
-        document.addEventListener('mousedown', this.handleClickOutside);
-    }
-
-
-
-
     collapse() {
         this.setState({ active: false });
+    }
+
+    onUserMenuClick(e) {
+        this.toggleDropdown();
+        document.addEventListener('mousedown', this.handleClickOutside);
     }
 
     render() {
@@ -150,7 +144,7 @@ class NavigationBar extends React.Component {
                             <div className="collection-icon">heart</div> */}
                             
                             <div className="user-menu-dropdown" ref={this.setWrapperRef}>
-                                <a className="user-menu-btn" onClick={this.onClick}>
+                                <a className="user-menu-btn" onClick={this.onUserMenuClick}>
                                     <div className="user-pic"></div>
                                 </a>
                                 {userMenuDropdown()}
