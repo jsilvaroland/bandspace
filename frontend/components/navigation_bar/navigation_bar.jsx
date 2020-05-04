@@ -3,14 +3,55 @@ import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 
 class NavigationBar extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { active: false };
+
+        this.toggleDropdown = this.toggleDropdown.bind(this);
+        this.collapse = this.collapse.bind(this);
+
+        this.setWrapperRef = this.setWrapperRef.bind(this);
+        this.handleClickOutside = this.handleClickOutside.bind(this);
+        this.onClick = this.onClick.bind(this);
+    }
+
+    toggleDropdown() {
+        const currentState = this.state.active;
+        this.setState({ active: !currentState });
+    }
+
+
+
+
+
+    setWrapperRef(node) {
+        this.wrapperRef = node;
+    }
+
+    handleClickOutside(e) {
+        if (this.wrapperRef && !this.wrapperRef.contains(e.target)) {
+            this.setState({ active: false });
+            document.removeEventListener('mousedown', this.handleClickOutside);
+        }
+    }
+
+    onClick(e) {
+        this.toggleDropdown();
+        document.addEventListener('mousedown', this.handleClickOutside);
+    }
+
+
+
+
+    collapse() {
+        this.setState({ active: false });
+    }
+
     render() {
+
         const { currentUser, logout, openModal } = this.props;
         
         let mainNavStatus;
-
-        // if (!currentUser && path == '/') {
-            
-        // }
         
         currentUser ? 
             mainNavStatus = "main-nav-logged-in" :
@@ -38,7 +79,7 @@ class NavigationBar extends React.Component {
         );       
         
         const userMenuDropdown = () => (
-            <ul className="user-menu-ul">
+            <ul className="user-menu-ul" id={this.state.active ? "show" : null}>
                 <li className="user-menu-userpage-item">
                     <Link className="userpage-link" to="">
                         <div className="band-name">{currentUser.username}</div>
@@ -49,10 +90,6 @@ class NavigationBar extends React.Component {
                     {logoutLink(currentUser, logout)}
                 </li>
             </ul>
-        );
-
-        const userMenuClick = () => (
-            
         );
 
         const { path } = this.props.match;
@@ -112,14 +149,13 @@ class NavigationBar extends React.Component {
                             <div className="feed-icon">bolt</div> 
                             <div className="collection-icon">heart</div> */}
                             
-                            <div className="user-menu-dropdown">
-                                <a className="user-menu-btn" onClick={userMenuClick()}>
+                            <div className="user-menu-dropdown" ref={this.setWrapperRef}>
+                                <a className="user-menu-btn" onClick={this.onClick}>
                                     <div className="user-pic"></div>
                                 </a>
                                 {userMenuDropdown()}
                             </div>
                         </div>
-                        {/* {logoutLink(currentUser, logout)} */}
                     </div>
                 </div>
             )

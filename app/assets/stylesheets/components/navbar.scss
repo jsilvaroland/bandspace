@@ -144,6 +144,7 @@
 .user-menu-dropdown {
     float: right;
     position: relative;
+    z-index: 1000;
 }
 
 .user-menu-dropdown * {
@@ -151,17 +152,18 @@
 }
 
 .user-menu-ul {
-//   display: none;
+    display: none;
     position: absolute;
+    z-index: 1000;
     top: 46px;
     min-width: 236px;
     padding: 10px 0;
     overflow: auto;
     right: 0;
-    z-index: 1;
     box-shadow: 0px 1px 4px rgba(0,0,0,0.1);
     border: 1px solid rgb(238, 238, 238);
     border-radius: 5px;
+    background-color: #ffffff;
 }
 
 .user-menu-ul li {
@@ -195,7 +197,7 @@
     background-color: rgb(243, 243, 243);
 }
 
-.show {
+#show {
     display: block;
 }
 
