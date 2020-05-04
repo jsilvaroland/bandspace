@@ -4,7 +4,6 @@ import { withRouter } from 'react-router-dom';
 
 class NavigationBar extends React.Component {
     constructor(props) {
-        debugger;
         super(props);
         this.state = { active: false };
 
