@@ -43,15 +43,19 @@ class SessionForm extends React.Component {
 
     renderErrors() {
         const { errors } = this.props;
-        return (
-            <ul>
-                {
-                    errors.map((error, i) => (
-                        <li key={i}>{error}</li>
-                    ))
-                }
-            </ul>
-        );
+        if (!!errors.length) {
+            return (
+                <div className="session-errors">
+                    <ul>
+                        {
+                            errors.map((error, i) => (
+                                <li key={i}>{error}</li>
+                            ))
+                        }
+                    </ul>
+                </div>
+            );
+        }
     }
 
     componentWillUnmount() {
@@ -123,7 +127,7 @@ class SessionForm extends React.Component {
                         {usernameField}
                         {passwordLabel}
                         {passwordField}
-                        <div className="session-errors">{this.renderErrors()}</div>
+                        {this.renderErrors()}
                         {termsText}
                         <button className="submit">{buttonText}</button>
                     </form>

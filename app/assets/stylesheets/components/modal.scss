@@ -31,13 +31,13 @@
     border-radius: 5px;
 }
 
-.modal-login {
-    height: 345px;
-}
+// .modal-login {
+//     height: 345px;
+// }
 
-.modal-signup {
-    height: 487px;
-}
+// .modal-signup {
+//     height: 487px;
+// }
 
 // .modal-signup-content {
 //     height: 441px;
@@ -135,5 +135,7 @@
 }
 
 .session-errors {
+    font-size: 16px;
     color: #c43329;
+    margin-bottom: 20px;
 }

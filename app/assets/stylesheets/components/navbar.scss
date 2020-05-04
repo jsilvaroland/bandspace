@@ -1,10 +1,12 @@
+
 .main-nav-logged-in, .main-nav-logged-out {
     display: flex;
     justify-content: space-between;
     background-color: rgba(255,255,255,0.98);
-    // background-color: green;
     margin: 0 15px;
 }
+
+// if logged out and on splash page
 
 .main-nav-logged-out {
     height: 105px;
@@ -74,5 +76,127 @@
     height: 32px;
     width: 137px;
     font-size: 24px;
-    text-decoration: none;
 }
+
+
+
+
+// if logged in
+
+
+
+.main-nav-logged-in {
+    height: 53px;
+    // background-color: green;
+}
+.main-nav-logged-in * {
+    display: flex;
+}
+
+.logo-wrapper-logged-in {
+    margin-top: 14px;
+}
+
+.logo-placeholder-logged-in {
+    width: 108px;
+    font-size: 18px;
+}
+
+.search-bar-wrapper-logged-in {
+    visibility: hidden; // remove hidden later
+    margin: 8px 0;
+}
+
+.search-bar-placeholder-logged-in {
+    display: flex;
+    align-items: center;
+    width: 282px;
+    font-size: 14px;
+    padding: 10px 30px 10px 10px;
+    background-color: rgb(243, 243, 243);
+}
+
+.user-menu-btn {
+    justify-content: center;
+    align-items: center;
+    width: 59px;
+}
+
+.user-menu-btn:hover {
+    background-color: rgb(243, 243, 243);
+}
+
+.user-pic {
+    margin: 12px 15px;
+    height: 29px;
+    width: 29px;
+    background: -webkit-linear-gradient(left, #6046FE, #1DA0C3);
+    border-radius: 50%;
+}
+
+.user-menu-btn {
+    color: white;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.user-menu-dropdown {
+    float: right;
+    position: relative;
+}
+
+.user-menu-dropdown * {
+    display: block;
+}
+
+.user-menu-ul {
+//   display: none;
+    position: absolute;
+    top: 46px;
+    min-width: 236px;
+    padding: 10px 0;
+    overflow: auto;
+    right: 0;
+    z-index: 1;
+    box-shadow: 0px 1px 4px rgba(0,0,0,0.1);
+    border: 1px solid rgb(238, 238, 238);
+    border-radius: 5px;
+}
+
+.user-menu-ul li {
+    padding: 0 20px;
+    line-height: 32px;
+}
+
+.user-menu-item {
+    font-size: 15px;
+}
+
+.userpage-link {
+    color: #000000;
+    text-decoration: none;
+    padding: 5px 20px 6px 0;
+}
+
+.band-name {
+    line-height: 32px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.view-site {
+    font-size: 12px;
+    line-height: 16px;
+    padding-bottom: 3px;
+}
+
+.user-menu-userpage-item:hover, .user-menu-item:hover {
+    background-color: rgb(243, 243, 243);
+}
+
+.show {
+    display: block;
+}
+
+// if logged out but not on splash page
