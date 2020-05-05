@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import { library } from '@fortawesome/fontawesome-svg-core';
-// import { faCheckSquare, faCoffee } from '@fortawesome/free-solid-svg-icons';
 
 import Root from './components/root';
 import configureStore from './store/store';
 
 // testing
 import { signup, login, logout } from './actions/session_actions';
+
+import { fetchAllUsers, fetchUser, updateUser } from './actions/users_actions';
 // end testing
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -33,6 +33,10 @@ document.addEventListener('DOMContentLoaded', () => {
     window.signup = signup;
     window.login = login;
     window.logout = logout;
+
+    window.fetchAllUsers = fetchAllUsers;
+    window.fetchUser = fetchUser;
+    window.updateUser = updateUser;
     
     // end testing
 

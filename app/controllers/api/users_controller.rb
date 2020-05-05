@@ -24,7 +24,7 @@ class Api::UsersController < ApplicationController
     def update
         @user = current_user
         @user.update(user_params)
-        if @user.save #Profile Updated / changes saved message or something?
+        if @user.save # Profile Updated / changes saved message or something?
             render :show
         else
             render json: @user.errors.full_messages, status: 422

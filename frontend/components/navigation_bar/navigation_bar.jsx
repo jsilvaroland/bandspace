@@ -67,7 +67,7 @@ class NavigationBar extends React.Component {
 
         const welcomeMessage = () => (
             <div className="welcome-message">
-                Spellbinding songs and sirenic soundscape from space.
+                Spellbinding songs and sirenic soundscapes from space.
             </div>
         );       
         

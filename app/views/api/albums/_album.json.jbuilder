@@ -1,4 +1,4 @@
 json.extract! album, :id, :title, :description, :credits, :artist_id
-json.trackIds album.tracks do |track|
-    track.id
-end
+
+track_ids = album.tracks.map { |track| track.id }
+json.trackIds track_ids
