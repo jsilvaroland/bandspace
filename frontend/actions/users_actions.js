@@ -15,15 +15,15 @@ const receiveUser = user => ({
 
 export const fetchAllUsers = () => dispatch => {
     return UsersApiUtil.fetchAllUsers()
-        .then( users => dispatch(receiveAllUsers(users)));
+        .then(users => dispatch(receiveAllUsers(users)));
 };
 
 export const fetchUser = userId => dispatch => {
     return UsersApiUtil.fetchUser(userId)
-        .then( user => dispatch(receiveUser(user)));
+        .then(user => dispatch(receiveUser(user)));
 };
 
 export const updateUser = user => dispatch => {
     return UsersApiUtil.updateUser(user)
-        .then( user => dispatch(receiveUser(user)));
+        .then(user => dispatch(receiveUser(user)));
 };

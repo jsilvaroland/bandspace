@@ -1,9 +1,12 @@
 class Api::AlbumsController < ApplicationController
     before_action :require_logged_in, only: [ :create, :update, :destroy]
 
-    def index       # do i want this to get the albums for a particular user? i think i'll do this in frontend logic
-        # @albums = Album.where            # change this to be filtered by data/params later
-        @albums = Album.all
+    def index
+        if params[:artist_id]
+            @albums = Album.where(artist_id: params[:artist_id])
+        else
+            @albums = Album.all
+        end
         render :index
     end
 

@@ -8,6 +8,7 @@ import configureStore from './store/store';
 import { signup, login, logout } from './actions/session_actions';
 
 import { fetchAllUsers, fetchUser, updateUser } from './actions/users_actions';
+import { fetchAllAlbums, fetchArtistAlbums, fetchAlbum, createAlbum, updateAlbum, deleteAlbum } from './actions/albums_actions';
 // end testing
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -21,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
             session: { id: window.currentUser.id }
         };
         store = configureStore(preloadedState);
-        // delete window.currentUser;        
+        delete window.currentUser;
     } else {
         store = configureStore();
     }
@@ -37,6 +38,10 @@ document.addEventListener('DOMContentLoaded', () => {
     window.fetchAllUsers = fetchAllUsers;
     window.fetchUser = fetchUser;
     window.updateUser = updateUser;
+
+    window.fetchAllAlbums = fetchAllAlbums;
+    window.fetchArtistAlbums = fetchArtistAlbums;
+    window.fetchAlbum = fetchAlbum;
     
     // end testing
 

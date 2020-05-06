@@ -10,7 +10,7 @@ const sessionReducer = (oldState = _nullUser, action) => {
     const newState = Object.assign({}, oldState);
     switch (action.type) {
         case RECEIVE_CURRENT_USER:
-            return Object.assign(newState, { id: action.currentUser.id });
+            return Object.assign(newState, { id: action.currentUser.id }); // maybe change this to return whole user instead of just user's id?
         case LOGOUT_CURRENT_USER:
             return Object.assign(newState, _nullUser);
         default:
