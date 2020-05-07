@@ -8,9 +8,11 @@ import UserShowContainer from './user_show/user_show_container';
 
 
 const App = () => (
-    <div id='bandspace'>
+    <div className='bandspace'>
         <Modal />
-        <NavigationBarContainer  />
+        <div className="navbar-wrapper">
+            <NavigationBarContainer  />
+        </div>
         <div className="main-wrapper">
             <Switch>
             <Route path="/artists/:userId" component={UserShowContainer} />

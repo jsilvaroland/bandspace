@@ -2,7 +2,11 @@ class Api::TracksController < ApplicationController
     before_action :require_logged_in, only: [:create, :update, :destroy]
 
     def index
-        @tracks = Track.all
+        if params[:album_id]
+            @tracks = Track.where(album_id: params[:album_id])
+        elsif params[:artist_id]
+            @tracks = Track.where(album_id: nil).where(artist_id: params[:artist_id])
+        end
         render :index
     end
 

@@ -8,7 +8,20 @@ import configureStore from './store/store';
 import { signup, login, logout } from './actions/session_actions';
 
 import { fetchAllUsers, fetchUser, updateUser } from './actions/users_actions';
-import { fetchAllAlbums, fetchArtistAlbums, fetchAlbum, createAlbum, updateAlbum, deleteAlbum } from './actions/albums_actions';
+import { 
+    fetchAllAlbums, 
+    fetchArtistAlbums, 
+    fetchAlbum, 
+    createAlbum, 
+    updateAlbum, 
+    deleteAlbum 
+} from './actions/albums_actions';
+import {
+    fetchArtistSingles,
+    fetchAlbumTracks,
+    fetchTrack
+} from './actions/tracks_actions';
+
 // end testing
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -42,6 +55,10 @@ document.addEventListener('DOMContentLoaded', () => {
     window.fetchAllAlbums = fetchAllAlbums;
     window.fetchArtistAlbums = fetchArtistAlbums;
     window.fetchAlbum = fetchAlbum;
+
+    window.fetchArtistSingles = fetchArtistSingles;
+    window.fetchAlbumTracks = fetchAlbumTracks;
+    window.fetchTrack = fetchTrack;
     
     // end testing
 

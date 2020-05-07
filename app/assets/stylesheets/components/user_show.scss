@@ -28,19 +28,40 @@
     background-color: #f2f2f2;
 }
 
-.artist-navbar > li a {
+.artist-navbar > li > * {
+    height: 100%;
     font-weight: bold;
     line-height: 36px; // comment out to test
     padding: 2px 15px 0;
     border-top: 0 solid #000000;
+    text-decoration: none;
+    color: #363636;
+    cursor: pointer;
 }
 
 .artist-navbar > li {
-    display: inline-block;
+    display: flex;
+    float: left;
     margin-right: 4px;
 }
 
 #artist-navbar-active {
-    padding-top: 2px;
-    border-top: 2px;
+    padding-top: 0;
+    border-top: 2px solid rgb(54, 54, 54) ;
+}
+
+.music-column {
+    width: 756px;
+    float: left;
+}
+
+.artist-info-column {
+    width: 120px;
+    float: right;
+    word-wrap: break-word;
+}
+
+.music-column, .artist-info-column { // TEMPORARILY
+    height: 1000px;
+    background-color: green;
 }

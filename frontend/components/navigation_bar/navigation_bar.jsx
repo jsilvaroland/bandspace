@@ -80,7 +80,7 @@ class NavigationBar extends React.Component {
         const userMenuDropdown = () => (
             <ul className="user-menu-ul" id={this.state.active ? "show" : null}>
                 <li className="user-menu-userpage-item">
-                    <Link className="userpage-link" to="">
+                    <Link className="userpage-link" to={`/artists/${currentUser.id}`}>
                         <div className="band-name">{currentUser.username}</div>
                         <div className="view-site">view site</div>
                     </Link>

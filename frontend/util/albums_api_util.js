@@ -1,6 +1,3 @@
-// two different ajax calls for index
-// ajax call for show
-// ajax call for update
 
 export const fetchAllAlbums = () => (
     $.ajax({

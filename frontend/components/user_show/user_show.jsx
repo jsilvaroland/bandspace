@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 // maybe have current user page be in state?
 
@@ -8,7 +9,13 @@ class UserShow extends React.Component {
         this.state = {
             
         };
+
+        // this.listReleases = this.listReleases.bind(this);
     }
+
+    // listReleases() {
+    //     const { pageAlbums, pageSingles } = this.props;
+    // }
 
     componentDidMount() {
         const { fetchUser, fetchArtistAlbums, pageUserId } = this.props;
@@ -16,6 +23,7 @@ class UserShow extends React.Component {
     }
 
     render() {  // will first write if you are nOT owner of this page
+        const { pageUserId } = this.props;
         // if (this.props.pageAlbum) {
         // debugger;
         if ( this.props.currentUser && this.props.currentUser.id === this.props.pageUserId) {
@@ -32,12 +40,17 @@ class UserShow extends React.Component {
                         <div className="artist-navbar-wrapper">
                             <ol className="artist-navbar">
                                 <li>
-                                    <a id="artist-navbar-active">music</a>
+                                    <Link id="artist-navbar-active" to={`/artists/${pageUserId}`}>music</Link>
                                 </li> 
                                 {/* add a classname to this when it is active, will have active styling */}
                             </ol>
                         </div>
-                        User Show Page
+                    </div>
+                    <div className="music-column">
+                        {/* {listReleases()} */}
+                    </div>
+                    <div className="artist-info-column">
+
                     </div>
                     
                 </div>

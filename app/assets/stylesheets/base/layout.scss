@@ -7,9 +7,15 @@ body {
     font: 13px/1.2307692308 'Helvetica Neue',Helvetica,Arial,sans-serif;
 }
 
-#bandspace {
+.bandspace {
     height: 100%;
     position: relative;
+}
+
+.navbar-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
 }
 
 .main-wrapper {
