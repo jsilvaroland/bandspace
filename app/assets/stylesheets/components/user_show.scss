@@ -1,0 +1,46 @@
+.user-show, .my-user-show {
+    width: 915px;
+    background-color: rgb(255, 255, 255);
+    padding: 35px 30px 80px;
+    margin-bottom: 40px;
+    border-width: 0 1px 1px;
+    border-style: solid;
+    border-color: rgb(229, 229, 229);
+}
+
+.header-wrapper {
+    margin: -35px -30px 44px -30px;
+}
+
+// placeholder, change to .header l8r
+.header-placeholder {
+    width: 975px;
+    height: 136px; // change once get images from activestorage
+    min-height: 40px;
+    background-color: blue;
+}
+
+.artist-navbar {
+    height: 38px;
+    padding: 0 15px;
+    font-size: 14px;
+    color: #363636;
+    background-color: #f2f2f2;
+}
+
+.artist-navbar > li a {
+    font-weight: bold;
+    line-height: 36px; // comment out to test
+    padding: 2px 15px 0;
+    border-top: 0 solid #000000;
+}
+
+.artist-navbar > li {
+    display: inline-block;
+    margin-right: 4px;
+}
+
+#artist-navbar-active {
+    padding-top: 2px;
+    border-top: 2px;
+}

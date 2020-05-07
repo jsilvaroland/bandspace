@@ -1,5 +1,5 @@
 
-.main-nav-logged-in, .main-nav-logged-out {
+.main-nav-logged-in, .main-nav-logged-out, .main-nav-logged-out-not-splash {
     display: flex;
     justify-content: space-between;
     background-color: rgba(255,255,255,0.98);
@@ -19,11 +19,16 @@
 }
 
 
-.login-signup {
+.login-signup, .login-signup-not-splash {
     margin-top: 11px;
     color: #161113;
     font-weight: 600;
     font-size: 14px;
+}
+
+.login-signup-not-splash {
+    font-weight: 500;
+    margin-top: 18px; // change this?
 }
 
 .signup:hover, .login:hover {
@@ -85,7 +90,7 @@
 
 
 
-.main-nav-logged-in {
+.main-nav-logged-in, .main-nav-logged-out-not-splash {
     height: 53px;
     // background-color: green;
 }
@@ -93,11 +98,11 @@
     display: flex;
 }
 
-.logo-wrapper-logged-in {
+.logo-wrapper-not-splash {
     margin-top: 14px;
 }
 
-.logo-placeholder-logged-in {
+.logo-placeholder-not-splash {
     width: 108px;
     font-size: 18px;
 }

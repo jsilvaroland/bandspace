@@ -11,9 +11,11 @@ const App = () => (
     <div id='bandspace'>
         <Modal />
         <NavigationBarContainer  />
-        <Switch>
+        <div className="main-wrapper">
+            <Switch>
             <Route path="/artists/:userId" component={UserShowContainer} />
-        </Switch>
+            </Switch>
+        </div>
     </div>
 );
 

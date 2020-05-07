@@ -34,24 +34,30 @@ class NavigationBar extends React.Component {
     collapse() {
         this.setState({ active: false });
     }
-
+    
     onUserMenuClick(e) {
         this.toggleDropdown();
         document.addEventListener('mousedown', this.handleClickOutside);
     }
-
+    
     render() {
-
+        
         const { currentUser, logout, openModal } = this.props;
+        const { pathname } = this.props.history.location;
         
         let mainNavStatus;
-        
+        let sessionLinksClass;
+
+        pathname == '/' ?
+            sessionLinksClass = "login-signup" :
+            sessionLinksClass = "login-signup-not-splash";
+
         currentUser ? 
             mainNavStatus = "main-nav-logged-in" :
             mainNavStatus = "main-nav-logged-out";
         
         const sessionLinks = () => (
-            <nav className="login-signup">
+            <nav className={sessionLinksClass}>
                 <a className="signup" onClick={() => openModal('signup')}>
                     sign up
                 </a>
@@ -85,9 +91,8 @@ class NavigationBar extends React.Component {
             </ul>
         );
 
-        const { path } = this.props.match;
 
-        if (!currentUser && path == '/') {
+        if (!currentUser && pathname == '/') {
             return (
                 <div className={mainNavStatus}>
                     <div className="left-nav-logged-out">
@@ -119,19 +124,18 @@ class NavigationBar extends React.Component {
             return (
                 <div className={mainNavStatus}>
                     <div className="left-nav-logged-in">
-                        <div className="logo-wrapper-logged-in">
-                            <div className="logo-placeholder-logged-in">
-                                <Link className="logo-link-logged-in" to="/">bandspace</Link>
+                        <div className="logo-wrapper-not-splash">
+                            <div className="logo-placeholder-not-splash">
+                                <Link className="logo-link-not-splash" to="/">bandspace</Link>
                             </div>
                         </div>
-                        <div className="search-bar-wrapper-logged-in">
+                        {/* <div className="search-bar-wrapper-logged-in">
                             <div className="search-bar-placeholder-logged-in">
                                 Search and discover music 
                             </div>
-                            {/* <div className="search-icon-placeholder">
-
-                            </div> */}
-                        </div>
+                            <div className="search-icon-placeholder">
+                            </div>
+                        </div> */}
                     </div>
                     <div className="right-nav-logged-in">
                         <div className="nav-bar-icons">
@@ -152,10 +156,27 @@ class NavigationBar extends React.Component {
                     </div>
                 </div>
             )
-        } else {
+        } else { // will have to add another else for if you are an artist on your own page, because nav bar looks diff in that case
             return (
                 <div className="main-nav-logged-out-not-splash">
-                    Logged out but not on splash
+                    <div className="left-nav-logged-out-not-splash">
+                        <div className="logo-wrapper-not-splash">
+                            <div className="logo-placeholder-not-splash">
+                                <Link className="logo-link-not-splash" to="/">bandspace</Link>
+                            </div>
+                        </div>
+                        {/* <div className="search-bar-wrapper-logged-in">
+                            <div className="search-bar-placeholder-logged-in">
+                                Search and discover music
+                            </div>
+                            <div className="search-icon-placeholder">
+
+                            </div>
+                        </div> */}
+                    </div>
+                    <div className="right-nav-logged-out-not-splash">
+                       {sessionLinks()}
+                    </div>
                 </div>
             )
         }

@@ -2,26 +2,29 @@ html, body, #root, #bandspace {
     height: 100%;
 }
 
+
+body {
+    font: 13px/1.2307692308 'Helvetica Neue',Helvetica,Arial,sans-serif;
+}
+
 #bandspace {
     height: 100%;
     position: relative;
 }
 
-body {
-    font: 13px/1.2307692308 'Helvetica Neue',Helvetica,Arial,sans-serif;
+.main-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    background-color: rgb(248, 248, 248);
+    border-top: 1px solid rgb(238, 238, 238);
 }
 
 .logo-link, .text-link {
     text-decoration: none;
 }
 
-.logo-link {
-    background: -webkit-linear-gradient(left, #6046FE, #1DA0C3);
-    -webkit-text-fill-color: transparent;
-    -webkit-background-clip: text;
-}
-
-.logo-link-logged-in {
+.logo-link, .logo-link-not-splash {
     background: -webkit-linear-gradient(left, #6046FE, #1DA0C3);
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
