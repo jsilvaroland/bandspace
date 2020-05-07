@@ -18,8 +18,10 @@ class UserShow extends React.Component {
     // }
 
     componentDidMount() {
-        const { fetchUser, fetchArtistAlbums, pageUserId } = this.props;
-        fetchUser().then(fetchArtistAlbums(pageUserId));
+        const { fetchUser, fetchArtistAlbums, fetchArtistSingles, pageUserId } = this.props;
+        fetchUser()
+            .then(fetchArtistAlbums(pageUserId))
+            .then(fetchArtistSingles(pageUserId));
     }
 
     render() {  // will first write if you are nOT owner of this page
