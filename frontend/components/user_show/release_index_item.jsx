@@ -12,7 +12,7 @@ const ReleaseIndexItem = props => {
                     to={`/artists/${single.artistId}/tracks/${single.id}`}
                 >
                     <div className="release-art">
-                        <img className="release-art" src={eval(`window.image${single.id}`)} />
+                        <img className="release-art" src={single.trackArt} />
                     </div>
                     <p className="release-title">{single.title}</p>
                 </Link>
@@ -26,7 +26,9 @@ const ReleaseIndexItem = props => {
                     to={`/artists/${album.artistId}/albums/${album.id}`}
                 >
                     <div className="release-art">
-                        <img className="release-art" src={eval(`window.image${album.id}`)} />
+                        {/* <img className="release-art" src={eval(`window.image${album.id}`)} /> */}
+                        <img className="release-art" src={album.albumArt} />
+
                     </div>
                     <p className="release-title">{album.title}</p>
                 </Link>

@@ -22,8 +22,7 @@ class UserShow extends React.Component {
     }
 
     render() {  // will first write if you are nOT owner of this page
-        const { pageUserId, pageAlbums, pageSingles } = this.props;
-            
+        const { pageUser, pageUserId, pageAlbums, pageSingles } = this.props;
         // if ( this.props.currentUser && this.props.currentUser.id === this.props.pageUserId) {
         //     return(
         //         <div className="my-user-show">
@@ -35,7 +34,7 @@ class UserShow extends React.Component {
                 <div className="user-show">
                     <div className="header-wrapper">
                         <div className="header-placeholder">
-                            <img className="banner-art" src={eval(`window.banner${pageUserId}`)} />
+                            <img className="banner-art" src={pageUser.userBanner} />
                         </div>
                         <div className="artist-navbar-wrapper">
                             <ol className="artist-navbar">

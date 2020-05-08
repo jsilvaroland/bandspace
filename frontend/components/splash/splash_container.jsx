@@ -9,7 +9,7 @@ class Splash extends React.Component {
         return (
             <div>
                 <Link to="/artist_index">
-                    <img className="splash-img" src={window.eagleNebula} />
+                    <img className="splash-img" src="https://bandspace-seeds.s3-us-west-1.amazonaws.com/eagle-nebula.png" />
                 </Link>
             </div>
         )

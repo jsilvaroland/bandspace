@@ -11,7 +11,6 @@ const mapStateToProps = (state, ownProps) => {
     const pageUser = state.entities.users[ownProps.match.params.userId];
     const pageAlbums = Object.values(state.entities.albums);
     const pageSingles = Object.values(state.entities.tracks);
-
     return ({
         currentUser: state.entities.users[state.session.id],
         pageUserId,

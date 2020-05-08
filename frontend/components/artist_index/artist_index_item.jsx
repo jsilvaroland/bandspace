@@ -2,15 +2,15 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const ArtistIndexItem = props => {
-    const { username, id } = props.artist;
+    const { artist } = props;
 
     return (
         <li>
-            <Link className="artist-link" to={`/artists/${id}`}>
+            <Link className="artist-link" to={`/artists/${artist.id}`}>
                 <div className="artist-art">
-                    <img className="artist-art" src={eval(`window.image${id}`)} />
+                    <img className="artist-art" src={artist.userArt} />
                 </div>
-                <div className="artist-username">{username}</div>
+                <div className="artist-username">{artist.username}</div>
             </Link>
         </li>
     )

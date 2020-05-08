@@ -9,6 +9,8 @@ class User < ApplicationRecord
         foreign_key: :artist_id
     has_many :tracks,
         foreign_key: :artist_id
+    has_one_attached :photo
+    has_one_attached :banner
 
     attr_reader :password
 

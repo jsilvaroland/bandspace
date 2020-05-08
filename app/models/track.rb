@@ -4,4 +4,6 @@ class Track < ApplicationRecord
     belongs_to :album, optional: true
     belongs_to :artist,
         class_name: :User
+
+    has_one_attached :photo
 end

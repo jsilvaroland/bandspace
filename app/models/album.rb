@@ -5,4 +5,6 @@ class Album < ApplicationRecord
     belongs_to :artist,
         class_name: :User
 
+    has_one_attached :photo
+
 end
