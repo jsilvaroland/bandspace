@@ -3,6 +3,7 @@ import * as TracksApiUtil from '../util/tracks_api_util';
 export const RECEIVE_TRACKS = 'RECEIVE_TRACKS';
 export const RECEIVE_TRACK = 'RECEIVE_TRACK';
 export const REMOVE_TRACK = 'REMOVE_TRACK';
+export const CLEAR_TRACKS = 'CLEAR_TRACKS';
 
 const receiveTracks = tracks => ({
     type: RECEIVE_TRACKS,
@@ -17,6 +18,11 @@ const receiveTrack = track => ({
 const removeTrack = trackId => ({
     type: REMOVE_TRACK,
     trackId
+});
+
+export const clearTracks = () => ({
+    type: CLEAR_TRACKS,
+    tracks: []
 });
 
 export const fetchArtistSingles = artistId => dispatch => (

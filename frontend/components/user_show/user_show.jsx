@@ -1,21 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-// maybe have current user page be in state?
+import ReleaseIndex from './release_index';
 
 class UserShow extends React.Component {
-    constructor(props) {
+    constructor(props) {  // do i need constructor
         super(props);
-        this.state = {
-            
-        };
-
-        // this.listReleases = this.listReleases.bind(this);
     }
-
-    // listReleases() {
-    //     const { pageAlbums, pageSingles } = this.props;
-    // }
 
     componentDidMount() {
         const { fetchUser, fetchArtistAlbums, fetchArtistSingles, pageUserId } = this.props;
@@ -24,21 +15,28 @@ class UserShow extends React.Component {
             .then(fetchArtistSingles(pageUserId));
     }
 
+    componentWillUnmount() {
+        const { clearAlbums, clearTracks } = this.props;
+        clearAlbums();
+        clearTracks();
+    }
+
     render() {  // will first write if you are nOT owner of this page
-        const { pageUserId } = this.props;
-        // if (this.props.pageAlbum) {
-        // debugger;
-        if ( this.props.currentUser && this.props.currentUser.id === this.props.pageUserId) {
-            return(
-                <div className="my-user-show">
-                    <h1>My Show Page</h1>
-                </div>
-            )
-        } else {
+        const { pageUserId, pageAlbums, pageSingles } = this.props;
+            
+        // if ( this.props.currentUser && this.props.currentUser.id === this.props.pageUserId) {
+        //     return(
+        //         <div className="my-user-show">
+        //             <h1>My Show Page</h1>
+        //         </div>
+        //     )
+        // } else {
             return (
                 <div className="user-show">
                     <div className="header-wrapper">
-                        <div className="header-placeholder"></div>
+                        <div className="header-placeholder">
+                            <img className="banner-art" src={eval(`window.banner${pageUserId}`)} />
+                        </div>
                         <div className="artist-navbar-wrapper">
                             <ol className="artist-navbar">
                                 <li>
@@ -48,16 +46,16 @@ class UserShow extends React.Component {
                             </ol>
                         </div>
                     </div>
-                    <div className="music-column">
-                        {/* {listReleases()} */}
-                    </div>
+                    <ReleaseIndex 
+                        pageAlbums={pageAlbums}
+                        pageSingles={pageSingles}
+                    />
                     <div className="artist-info-column">
 
                     </div>
                     
                 </div>
             )
-        }
         // }
         
         // make classname conditional based on if user is an artist or fan

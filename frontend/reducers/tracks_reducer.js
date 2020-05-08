@@ -1,7 +1,8 @@
 import { 
     RECEIVE_TRACKS,
     RECEIVE_TRACK,
-    REMOVE_TRACK 
+    REMOVE_TRACK, 
+    CLEAR_TRACKS,
 } from '../actions/tracks_actions';
 
 const tracksReducer = (oldState = {}, action) => {
@@ -16,6 +17,8 @@ const tracksReducer = (oldState = {}, action) => {
             const newState = Object.assign({}, oldState);
             delete newState[action.trackId];
             return newState;
+        case CLEAR_TRACKS:
+            return [];
         default:
             return oldState;
     }  

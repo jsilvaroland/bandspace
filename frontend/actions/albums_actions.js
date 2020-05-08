@@ -3,6 +3,7 @@ import * as AlbumsApiUtil from '../util/albums_api_util';
 export const RECEIVE_ALBUMS = 'RECEIVE_ALBUMS';
 export const RECEIVE_ALBUM = 'RECEIVE_ALBUM';
 export const REMOVE_ALBUM = 'REMOVE_ALBUM';
+export const CLEAR_ALBUMS = 'CLEAR_ALBUMS';
 
 const receiveAlbums = albums => ({
     type: RECEIVE_ALBUMS,
@@ -17,6 +18,11 @@ const receiveAlbum = album => ({
 const removeAlbum = albumId => ({
     type: REMOVE_ALBUM,
     albumId
+});
+
+export const clearAlbums = () => ({
+    type: CLEAR_ALBUMS,
+    albums: []
 });
 
 export const fetchAllAlbums = () => dispatch => (

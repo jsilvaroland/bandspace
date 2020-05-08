@@ -1,0 +1,58 @@
+.artist-index-wrapper {
+    width: 980px;
+    padding: 35px 30px 45px;
+}
+
+.artist-index-title {
+    font-size: 36px;
+    font-weight: bold;
+    color: #333333;
+    margin-top: 26px;
+    margin-bottom: 12px;
+}
+
+.artist-index-body {
+    padding-top: 10px;
+    border-top: 1px solid #b2b2b2;
+}
+
+.sort-controls {
+    display: none; // for now xD
+
+}
+
+.artist-list {
+    display: block;
+}
+
+.artists-list li {
+    display: inline-block;
+    height: 175px;
+    width: 138px;
+    margin-right: 30px;
+    margin-bottom: 20px;
+}
+
+a.artist-link {
+    text-decoration: none;
+}
+
+a.artist-link:hover {
+    text-decoration: underline;
+    text-decoration-color: #0687F5;
+}
+
+.artist-art {
+    min-height: 138px;
+    max-height: 138px;
+    min-width: 138px;
+    max-width: 138px;
+    background-color: rgb(242, 242, 242);
+}
+
+.artist-username {
+    font-size: 14px;
+    font-weight: 600;
+    color: #0687F5;
+    padding: 10px 0 5px;
+}

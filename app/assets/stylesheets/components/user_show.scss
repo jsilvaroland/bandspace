@@ -17,7 +17,14 @@
     width: 975px;
     height: 136px; // change once get images from activestorage
     min-height: 40px;
-    background-color: blue;
+    background-color: rgb(242, 242, 242);
+}
+
+.banner-art {
+    min-height: 136px;
+    max-height: 136px;
+    min-width: 975px;
+    max-width: 975px;
 }
 
 .artist-navbar {
@@ -62,6 +69,51 @@
 }
 
 .music-column, .artist-info-column { // TEMPORARILY
-    height: 1000px;
-    background-color: green;
+    min-height: 582px;
 }
+
+.artist-info-column { // TEMPORARILY
+    background-color: rgb(242, 242, 242);
+}
+
+.releases-list {
+    display: block;
+    width: 795px;
+}
+
+a.release-link {
+    text-decoration: none;
+}
+
+a.release-link:hover {
+    text-decoration: underline;
+    text-decoration-color: #0687F5;
+}
+
+.releases-list > li {
+    display: inline-block;
+    position: relative;
+    min-height: 232px;
+    margin-right: 30px;
+    margin-bottom: 30px;
+}
+
+
+
+.release-art {
+    min-height: 232px;
+    max-height: 232px;
+    min-width: 232px;
+    max-width: 232px;
+    background-color: rgb(242, 242, 242); // placeholder
+}
+
+.releases-list p {
+    width: 100%;
+    font-weight: 600;
+    color: #0687F5;
+    margin: 0.7em 0 0.3em 0;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+}
+

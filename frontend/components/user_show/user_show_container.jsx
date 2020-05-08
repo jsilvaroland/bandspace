@@ -3,8 +3,8 @@ import { withRouter } from 'react-router-dom';
 
 import UserShow from './user_show';
 import { fetchUser } from '../../actions/users_actions';
-import { fetchArtistAlbums } from '../../actions/albums_actions';
-
+import { fetchArtistAlbums, clearAlbums } from '../../actions/albums_actions';
+import { clearTracks } from '../../actions/tracks_actions';
 
 const mapStateToProps = (state, ownProps) => {
     const pageUserId = parseInt(ownProps.match.params.userId);
@@ -25,7 +25,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     return ({
         fetchUser: () => dispatch(fetchUser(ownProps.match.params.userId)),
         fetchArtistAlbums: userId => dispatch(fetchArtistAlbums(userId)),
-        fetchArtistSingles: userId => dispatch(fetchArtistSingles(userId))
+        fetchArtistSingles: userId => dispatch(fetchArtistSingles(userId)),
+        clearAlbums: () => dispatch(clearAlbums()),
+        clearTracks: () => dispatch(clearTracks()),
     });
 };
 

@@ -1,7 +1,8 @@
 import { 
     RECEIVE_ALBUMS, 
     RECEIVE_ALBUM, 
-    REMOVE_ALBUM 
+    REMOVE_ALBUM,
+    CLEAR_ALBUMS,
 } from '../actions/albums_actions';
 
 const albumsReducer = (oldState = {}, action) => {
@@ -15,6 +16,8 @@ const albumsReducer = (oldState = {}, action) => {
         case REMOVE_ALBUM:
             delete newState[action.albumId];
             return newState;
+        case CLEAR_ALBUMS:
+            return [];
         default:
             return oldState;
     }
