@@ -1,5 +1,6 @@
 html, body, #root, #bandspace {
     height: 100%;
+    background-color: #f8f8f8;
 }
 
 body {
@@ -15,6 +16,7 @@ body {
     display: flex;
     justify-content: center;
     width: 100%;
+    background-color: #FFF;
 }
 
 .main-wrapper {

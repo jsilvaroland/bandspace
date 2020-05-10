@@ -26,7 +26,7 @@ class UserShow extends React.Component {
 
     render() {  // will first write if you are nOT owner of this page
         const { pageUser, pageUserId, pageAlbums, pageSingles } = this.props;
-
+        // debugger
         if ( !this.state.refetchedReleases && pageUserId && pageUserId !== this.state.pageId) {
             const { clearAlbums, clearTracks, fetchUser, fetchArtistAlbums, fetchArtistSingles } = this.props;
             clearAlbums();
@@ -45,31 +45,35 @@ class UserShow extends React.Component {
         //         </div>
         //     )
         // } else {
-            return (
-                <div className="user-show">
-                    <div className="header-wrapper">
-                        <div className="header-placeholder">
-                            <img className="banner-art" src={pageUser.userBanner} />
+            if (pageUser && pageUserId) {
+                return (
+                    <div className="user-show">
+                        <div className="header-wrapper">
+                            <div className="header-placeholder">
+                                <img className="banner-art" src={pageUser.userBanner} />
+                            </div>
+                            <div className="artist-navbar-wrapper">
+                                <ol className="artist-navbar">
+                                    <li>
+                                        <Link id="artist-navbar-active" to={`/artists/${pageUserId}`}>music</Link>
+                                    </li> 
+                                    {/* add a classname to this when it is active, will have active styling */}
+                                </ol>
+                            </div>
                         </div>
-                        <div className="artist-navbar-wrapper">
-                            <ol className="artist-navbar">
-                                <li>
-                                    <Link id="artist-navbar-active" to={`/artists/${pageUserId}`}>music</Link>
-                                </li> 
-                                {/* add a classname to this when it is active, will have active styling */}
-                            </ol>
+                        <ReleaseIndex 
+                            pageAlbums={pageAlbums}
+                            pageSingles={pageSingles}
+                        />
+                        <div className="artist-info-column">
+    
                         </div>
+                        
                     </div>
-                    <ReleaseIndex 
-                        pageAlbums={pageAlbums}
-                        pageSingles={pageSingles}
-                    />
-                    <div className="artist-info-column">
-
-                    </div>
-                    
-                </div>
-            )
+                )
+            } else {
+                return <div></div>
+            }
         // }
         
         // make classname conditional based on if user is an artist or fan
