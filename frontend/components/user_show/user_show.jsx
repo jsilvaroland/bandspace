@@ -6,6 +6,9 @@ import ReleaseIndex from './release_index';
 class UserShow extends React.Component {
     constructor(props) {  // do i need constructor
         super(props);
+        this.state = {
+            pageId: parseInt(this.props.match.params.userId),
+        };
     }
 
     componentDidMount() {
@@ -23,6 +26,18 @@ class UserShow extends React.Component {
 
     render() {  // will first write if you are nOT owner of this page
         const { pageUser, pageUserId, pageAlbums, pageSingles } = this.props;
+
+        if ( !this.state.refetchedReleases && pageUserId && pageUserId !== this.state.pageId) {
+            const { clearAlbums, clearTracks, fetchUser, fetchArtistAlbums, fetchArtistSingles } = this.props;
+            clearAlbums();
+            clearTracks();
+            
+            fetchUser()
+                .then(fetchArtistAlbums(pageUserId))
+                .then(fetchArtistSingles(pageUserId));
+            this.setState({ pageId: parseInt(this.props.match.params.userId) });
+        }
+
         // if ( this.props.currentUser && this.props.currentUser.id === this.props.pageUserId) {
         //     return(
         //         <div className="my-user-show">
