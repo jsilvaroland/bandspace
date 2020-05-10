@@ -6,6 +6,7 @@
     border-width: 0 1px 1px;
     border-style: solid;
     border-color: rgb(229, 229, 229);
+    height: 100%
 }
 
 .header-wrapper {
@@ -69,7 +70,7 @@
 }
 
 .music-column, .artist-info-column { // TEMPORARILY
-    min-height: 582px;
+    min-height: 232px;
 }
 
 .artist-info-column { // TEMPORARILY
