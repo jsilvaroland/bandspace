@@ -4,6 +4,13 @@ import { Link } from 'react-router-dom';
 import TrackIndex from './track_index';
 
 class AlbumShow extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            pageId: parseInt(this.props.match.params.albumId),
+        };
+    }
+
     componentDidMount() {
         const { fetchUser, pageAlbumId, fetchAlbum, fetchAlbumTracks } = this.props;
         fetchUser()
@@ -18,8 +25,23 @@ class AlbumShow extends React.Component {
         clearTracks();
     }
 
+    componentDidUpdate() {
+        const { pageAlbumId } = this.props;
+        if (pageAlbumId && pageAlbumId !== this.state.pageId) {
+            const { clearAlbums, clearTracks, fetchUser, fetchAlbum, fetchAlbumTracks } = this.props;
+            clearAlbums();
+            clearTracks();
+
+            fetchUser()
+                .then(fetchAlbum(pageAlbumId))
+                .then(fetchAlbumTracks(pageAlbumId));
+            this.setState({ pageId: parseInt(this.props.match.params.albumId) });
+        }
+    }
+
     render() {
         const { pageUser, pageTracks, pageAlbum } = this.props;
+
         if (pageUser && pageTracks && pageAlbum) {
             return (
                 <div className="user-show">

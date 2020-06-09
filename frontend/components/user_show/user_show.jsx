@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import ReleaseIndex from './release_index';
 
 class UserShow extends React.Component {
-    constructor(props) {  // do i need constructor
+    constructor(props) {
         super(props);
         this.state = {
             pageId: parseInt(this.props.match.params.userId),
@@ -24,18 +24,23 @@ class UserShow extends React.Component {
         clearTracks();
     }
 
-    render() {  // will first write if you are nOT owner of this page
-        const { pageUser, pageUserId, pageAlbums, pageSingles } = this.props;
+    componentDidUpdate() {
+        const { pageUserId } = this.props;
+
         if (pageUserId && pageUserId !== this.state.pageId) {
             const { clearAlbums, clearTracks, fetchUser, fetchArtistAlbums, fetchArtistSingles } = this.props;
             clearAlbums();
             clearTracks();
-            
+
             fetchUser()
                 .then(fetchArtistAlbums(pageUserId))
                 .then(fetchArtistSingles(pageUserId));
             this.setState({ pageId: parseInt(this.props.match.params.userId) });
         }
+    }
+
+    render() {  // will first write if you are nOT owner of this page
+        const { pageUser, pageUserId, pageAlbums, pageSingles } = this.props;
 
         // if ( this.props.currentUser && this.props.currentUser.id === this.props.pageUserId) {
         //     return(
