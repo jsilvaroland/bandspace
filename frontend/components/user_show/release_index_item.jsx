@@ -26,7 +26,6 @@ const ReleaseIndexItem = props => {
                     to={`/artists/${album.artistId}/albums/${album.id}`}
                 >
                     <div className="release-art">
-                        {/* <img className="release-art" src={eval(`window.image${album.id}`)} /> */}
                         <img className="release-art" src={album.albumArt} />
 
                     </div>

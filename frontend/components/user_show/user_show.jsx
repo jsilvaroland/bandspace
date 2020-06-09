@@ -26,8 +26,7 @@ class UserShow extends React.Component {
 
     render() {  // will first write if you are nOT owner of this page
         const { pageUser, pageUserId, pageAlbums, pageSingles } = this.props;
-        // debugger
-        if ( !this.state.refetchedReleases && pageUserId && pageUserId !== this.state.pageId) {
+        if (pageUserId && pageUserId !== this.state.pageId) {
             const { clearAlbums, clearTracks, fetchUser, fetchArtistAlbums, fetchArtistSingles } = this.props;
             clearAlbums();
             clearTracks();
@@ -72,6 +71,7 @@ class UserShow extends React.Component {
                     </div>
                 )
             } else {
+                
                 return <div></div>
             }
         // }

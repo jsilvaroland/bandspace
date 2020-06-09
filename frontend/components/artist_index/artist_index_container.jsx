@@ -9,7 +9,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    fetchAllUsers: () => dispatch(fetchAllUsers())
+    fetchAllUsers: () => dispatch(fetchAllUsers()),
+    //might want a clearUsers here
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ArtistIndex);
