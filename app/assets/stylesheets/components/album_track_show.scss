@@ -22,3 +22,18 @@
 .inline-player {
     margin: 24px 0 17px;
 }
+
+.release-art-350 {
+    min-height: 350px;
+    max-height: 350px;
+    min-width: 350px;
+    max-width: 350px;
+    background-color: rgb(242, 242, 242); // placeholder
+}
+
+.music-column-alb-or-track {
+    display: flex;
+    justify-content: space-between;
+    width: 756px;
+    float: left;
+}

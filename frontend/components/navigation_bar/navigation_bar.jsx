@@ -90,7 +90,6 @@ class NavigationBar extends React.Component {
             </ul>
         );
 
-
         if (!currentUser && pathname == '/') {
             return (
                 <div className={mainNavStatus}>

@@ -47,15 +47,21 @@ class TrackShow extends React.Component {
     render() {
         const { pageUser, pageTrack, pageAlbum } = this.props;
 
-        if (pageUser && pageTrack) {
-            let fromAlbum;
+        if ((pageUser && pageTrack && !pageTrack.albumId) || (pageUser && pageTrack && pageAlbum)) {
+            let fromAlbum, trackArt;
 
-            if (pageAlbum) {
+            if (pageTrack.albumId) {
                 fromAlbum = (<span>from&nbsp;
-                    <Link to={`/artists/${pageUser.id}/albums/${pageAlbum.id}`}>{pageAlbum.title}</Link>
+                    <Link to={`/artists/${pageUser.id}/albums/${pageAlbum.id}`}>
+                        {pageAlbum.title}
+                    </Link>
                 </span>)
+
+                trackArt = pageAlbum.albumArt;
+            } else {
+                trackArt = pageTrack.trackArt
             }
-            
+
             return (
                 <div className="user-show">
                     <div className="header-wrapper">
@@ -71,12 +77,17 @@ class TrackShow extends React.Component {
                             </ol>
                         </div>
                     </div>
-                    <div className="music-column">
-                        <div className="track-title">{pageTrack.title}</div>
-                        <div className="release-by">{fromAlbum} by&nbsp;
-                            <Link to={`/artists/${pageUser.id}`}>{pageUser.username}</Link>
-                        </div>
-                        <div className="inline-player">Player goes here</div>
+                    <div className="music-column-alb-or-track">
+                        <span>
+                            <div className="track-title">{pageTrack.title}</div>
+                            <div className="release-by">{fromAlbum} by&nbsp;
+                                <Link to={`/artists/${pageUser.id}`}>{pageUser.username}</Link>
+                            </div>
+                            <div className="inline-player">Player goes here</div>
+                        </span>
+                        <span>
+                            <img className="release-art-350" src={trackArt} />
+                        </span>
                     </div>
                     <div className="artist-info-column">
                         <span className="artist-username-bio">{pageUser.username}</span>

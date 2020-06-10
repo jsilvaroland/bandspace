@@ -7,7 +7,10 @@ class ArtistIndex extends React.Component {
     }
 
     componentWillUnmount() {
-        this.props.clearAllUsers();
+        const { clearAllUsers, currentUserId, fetchUser } = this.props;
+        
+        clearAllUsers();
+        fetchUser(currentUserId);
     }
 
     render() {
