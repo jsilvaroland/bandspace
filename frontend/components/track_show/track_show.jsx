@@ -45,9 +45,17 @@ class TrackShow extends React.Component {
     }
 
     render() {
-        const { pageUser, pageTrack } = this.props;
+        const { pageUser, pageTrack, pageAlbum } = this.props;
 
         if (pageUser && pageTrack) {
+            let fromAlbum;
+
+            if (pageAlbum) {
+                fromAlbum = (<span>from&nbsp;
+                    <Link to={`/artists/${pageUser.id}/albums/${pageAlbum.id}`}>{pageAlbum.title}</Link>
+                </span>)
+            }
+            
             return (
                 <div className="user-show">
                     <div className="header-wrapper">
@@ -64,11 +72,14 @@ class TrackShow extends React.Component {
                         </div>
                     </div>
                     <div className="music-column">
-                        {/* maybe a different class name for this? */}
-                        <p className="track-title">{pageTrack.title}</p>
+                        <div className="track-title">{pageTrack.title}</div>
+                        <div className="release-by">{fromAlbum} by&nbsp;
+                            <Link to={`/artists/${pageUser.id}`}>{pageUser.username}</Link>
+                        </div>
+                        <div className="inline-player">Player goes here</div>
                     </div>
                     <div className="artist-info-column">
-
+                        <span className="artist-username-bio">{pageUser.username}</span>
                     </div>
 
                 </div>

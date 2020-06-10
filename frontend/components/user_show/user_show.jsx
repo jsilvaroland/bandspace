@@ -70,7 +70,7 @@ class UserShow extends React.Component {
                             pageSingles={pageSingles}
                         />
                         <div className="artist-info-column">
-    
+                            <span className="artist-username-bio">{pageUser.username}</span>
                         </div>
                         
                     </div>

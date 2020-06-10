@@ -57,14 +57,17 @@ class AlbumShow extends React.Component {
                             </ol>
                         </div>
                     </div>
-                    <TrackIndex
-                        pageTracks={pageTracks}
-                        pageAlbumTitle={pageAlbum.title}
-                    />
-                    <div className="artist-info-column">
-                        Artist info here
+                    <div className="music-column">
+                        <div className="album-title">{pageAlbum.title}</div>
+                        <div className="release-by">by&nbsp;
+                            <Link to={`/artists/${pageUser.id}`}>{pageUser.username}</Link>
+                        </div>
+                        <div className="inline-player">Player goes here</div>
+                        <TrackIndex pageTracks={pageTracks} />
                     </div>
-    
+                    <div className="artist-info-column">
+                        <span className="artist-username-bio">{pageUser.username}</span>
+                    </div>
                 </div>
             );
         } else {

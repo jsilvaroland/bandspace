@@ -22,7 +22,6 @@ const removeAlbum = albumId => ({
 
 export const clearAlbums = () => ({
     type: CLEAR_ALBUMS,
-    albums: []
 });
 
 export const fetchAllAlbums = () => dispatch => (

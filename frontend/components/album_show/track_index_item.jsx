@@ -10,7 +10,7 @@ const TrackIndexItem = props => {
                 className="track-link"
                 to={`/artists/${track.artistId}/tracks/${track.id}`}
             >
-                <p className="track-title">{track.title}</p>
+                <p className="track-item-title">{track.title}</p>
             </Link>
         </li>
     )

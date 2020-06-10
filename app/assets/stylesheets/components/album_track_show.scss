@@ -1,0 +1,24 @@
+.album-title, .track-title {
+    font-size: 28px;
+    color: #363636;
+    margin: -4px 30px 8px 0;
+}
+
+.release-by {
+    color: #363636;
+    font-size: 14px;
+}
+
+.release-by a {
+    text-decoration: none;
+    color: #0687F5;
+}
+
+.release-by a:hover {
+    text-decoration: underline;
+    text-decoration-color: #0687F5;
+}
+
+.inline-player {
+    margin: 24px 0 17px;
+}

@@ -17,7 +17,7 @@ const albumsReducer = (oldState = {}, action) => {
             delete newState[action.albumId];
             return newState;
         case CLEAR_ALBUMS:
-            return [];
+            return {};
         default:
             return oldState;
     }

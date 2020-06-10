@@ -6,6 +6,10 @@ class ArtistIndex extends React.Component {
         this.props.fetchAllUsers();
     }
 
+    componentWillUnmount() {
+        this.props.clearAllUsers();
+    }
+
     render() {
         const { allArtists } = this.props;
 
