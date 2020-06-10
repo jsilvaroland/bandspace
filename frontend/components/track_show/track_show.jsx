@@ -1,47 +1,53 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import TrackIndex from './track_index';
-
-class AlbumShow extends React.Component {
+class TrackShow extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            pageId: parseInt(this.props.match.params.albumId),
+            pageId: parseInt(this.props.match.params.trackId),
         };
     }
 
     componentDidMount() {
-        const { fetchUser, pageAlbumId, fetchAlbum, fetchAlbumTracks } = this.props;
-        fetchUser()
-            .then(fetchAlbum(pageAlbumId))
-            .then(fetchAlbumTracks(pageAlbumId));
-    }
+        const { fetchUser, fetchTrack, pageTrackId } = this.props;
 
-    componentWillUnmount() {
-        const { clearTracks, clearAlbums } = this.props;
-        clearAlbums();
-        clearTracks();
+        fetchUser()
+            .then(fetchTrack(pageTrackId));
     }
 
     componentDidUpdate() {
-        const { pageAlbumId } = this.props;
-        if (pageAlbumId && pageAlbumId !== this.state.pageId) {
-            const { clearAlbums, clearTracks, fetchUser, fetchAlbum, fetchAlbumTracks } = this.props;
+        const { fetchUser, pageTrack, fetchAlbum, pageAlbum, pageTrackId } = this.props;
+        
+        // what if pageAlbum does exist but it's wrong one, gotta refetch album
+
+        if (!pageAlbum && pageTrack && pageTrack.albumId) {
+            fetchUser()
+                .then(fetchAlbum(pageTrack.albumId));
+        }
+
+        if (pageTrackId && pageTrackId !== this.state.pageId) {
+            const { clearAlbums, clearTracks, fetchTrack } = this.props;
             clearAlbums();
             clearTracks();
 
             fetchUser()
-                .then(fetchAlbum(pageAlbumId))
-                .then(fetchAlbumTracks(pageAlbumId));
-            this.setState({ pageId: parseInt(this.props.match.params.albumId) });
+                .then(fetchTrack(pageTrackId));
+            this.setState({ pageId: parseInt(this.props.match.params.trackId) });
         }
     }
 
-    render() {
-        const { pageUser, pageTracks, pageAlbum } = this.props;
+    componentWillUnmount() {
+        const { clearTracks, clearAlbums } = this.props;
 
-        if (pageUser && pageTracks && pageAlbum) {
+        clearTracks();
+        clearAlbums();
+    }
+
+    render() {
+        const { pageUser, pageTrack } = this.props;
+
+        if (pageUser && pageTrack) {
             return (
                 <div className="user-show">
                     <div className="header-wrapper">
@@ -57,14 +63,14 @@ class AlbumShow extends React.Component {
                             </ol>
                         </div>
                     </div>
-                    <TrackIndex
-                        pageTracks={pageTracks}
-                        pageAlbumTitle={pageAlbum.title}
-                    />
-                    <div className="artist-info-column">
-                        Artist info here
+                    <div className="music-column">
+                        {/* maybe a different class name for this? */}
+                        <p className="track-title">{pageTrack.title}</p>
                     </div>
-    
+                    <div className="artist-info-column">
+
+                    </div>
+
                 </div>
             );
         } else {
@@ -73,4 +79,4 @@ class AlbumShow extends React.Component {
     }
 }
 
-export default AlbumShow;
+export default TrackShow;
