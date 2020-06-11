@@ -13,6 +13,7 @@ class UserShow extends React.Component {
 
     componentDidMount() {
         const { fetchUser, fetchArtistAlbums, fetchArtistSingles, pageUserId } = this.props;
+        
         fetchUser()
             .then(fetchArtistAlbums(pageUserId))
             .then(fetchArtistSingles(pageUserId));
@@ -42,13 +43,13 @@ class UserShow extends React.Component {
     render() {  // will first write if you are nOT owner of this page
         const { pageUser, pageUserId, pageAlbums, pageSingles } = this.props;
 
-        if ( this.props.currentUser && this.props.currentUser.id === this.props.pageUserId) {
-            return(
-                <div className="my-user-show">
-                    <h1>My Show Page</h1>
-                </div>
-            )
-        } else {
+        // if ( this.props.currentUser && this.props.currentUser.id === this.props.pageUserId) {
+        //     return(
+        //         <div className="my-user-show">
+        //             <h1>My Show Page</h1>
+        //         </div>
+        //     )
+        // } else {
             if (pageUser && pageUserId) {
                 return (
                     <div className="user-show">
@@ -78,7 +79,7 @@ class UserShow extends React.Component {
             } else {
                 return <div></div>
             }
-        }
+        // }
         
         // make classname conditional based on if user is an artist or fan
         // make it also conditional based on if current user is equal to the wildcard userId

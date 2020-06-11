@@ -14,12 +14,14 @@ const mapStateToProps = (state, ownProps) => {
     const pageAlbumId = parseInt(ownProps.match.params.albumId);
     const pageAlbum = Object.values(state.entities.albums)[0];
     const pageTracks = Object.values(state.entities.tracks);
+    const currentUserId = state.session.id;
     return ({
         pageUserId,
         pageUser,
         pageTracks,
         pageAlbumId,
         pageAlbum,
+        currentUserId,
     });
 };
 

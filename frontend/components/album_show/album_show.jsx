@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 import TrackIndex from './track_index';
 
@@ -12,7 +12,11 @@ class AlbumShow extends React.Component {
     }
 
     componentDidMount() {
-        const { fetchUser, pageAlbumId, fetchAlbum, fetchAlbumTracks } = this.props;
+        const { clearTracks, clearAlbums, fetchUser, pageAlbumId, fetchAlbum, fetchAlbumTracks } = this.props;
+
+        clearAlbums();
+        clearTracks();
+
         fetchUser()
             .then(fetchAlbum(pageAlbumId))
             .then(fetchAlbumTracks(pageAlbumId));
@@ -39,9 +43,26 @@ class AlbumShow extends React.Component {
     }
 
     render() {
-        const { pageUser, pageTracks, pageAlbum } = this.props;
+        const { pageUser, pageTracks, pageAlbum, currentUserId } = this.props;
 
         if (pageUser && pageTracks && pageAlbum) {
+            if (!pageUser.createdAlbumIds.includes(pageAlbum.id)) {
+                return <div>Page does not exist</div>
+            }
+
+            let editDeleteButtons;
+            if (pageUser.id === currentUserId) {
+                editDeleteButtons = (<ul className="edit-delete">
+                    <li>
+                        <Link className="edit-delete-buttons" to={`/artists/${pageUser.id}/albums/${pageAlbum.id}/edit`}>Edit</Link>
+                    </li>
+                    <li>
+                        <button className="edit-delete-buttons">Delete</button>
+                        {/* add this functionality in a bit */}
+                    </li>
+                </ul>)
+            }
+
             return (
                 <div className="user-show">
                     <div className="header-wrapper">
@@ -63,6 +84,7 @@ class AlbumShow extends React.Component {
                             <div className="release-by">by&nbsp;
                                 <Link to={`/artists/${pageUser.id}`}>{pageUser.username}</Link>
                             </div>
+                            {editDeleteButtons}
                             <div className="inline-player">Player goes here</div>
                             <TrackIndex pageTracks={pageTracks} />
                         </span>
