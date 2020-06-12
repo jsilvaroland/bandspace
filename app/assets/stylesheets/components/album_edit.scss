@@ -1,0 +1,79 @@
+.album-edit {
+    width: 935px;
+    padding: 20px 20px 96px;
+}
+
+.edit-album-form {
+    display: flex;
+}
+
+.left-panel-album {
+    display: flex;
+    height: 73px;
+    width: 455px;
+    padding: 10px 1px 10px 10px;
+    border-top: 1px solid #FFFFFF;
+    border-bottom: 1px solid #FFFFFF;
+}
+
+.left-panel-album-wrapper {
+    border-top: 1px solid rgb(219, 219, 219);
+    border-bottom: 1px solid rgb(219, 219, 219);
+}
+
+.release-art-72 {
+    height: 72px;
+    width: 72px;
+    margin-right: 10px;
+}
+
+.album-title-artist {
+    color: #363636;
+}
+
+.album-title-artist p:first-child {
+    font-size: 20px;
+}
+
+.album-title-artist p:last-child {
+    font-size: 11px;
+}
+
+.album-title-artist span {
+    font-weight: bold;
+}
+
+h3.tracks {
+    color: #808080;
+    margin-bottom: 16px;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.tracks-edit {
+    padding: 20px 0 20px 10px;
+}
+
+.edit-album-track-item {
+    padding: 11px 0 11px 10px;
+    background-image: linear-gradient(to right, rgb(198, 198, 198) 20%, rgba(255,255,255,0) 0%);
+    background-position: top;
+    background-size: 4px 1px;
+    background-repeat: repeat-x;
+}
+
+.edit-album-track-item > span:first-child {
+    padding: 0 17px 0 55px;
+    font-size: 15px;
+    color: #999999;
+}
+
+.edit-album-track-item > span:nth-child(2) {
+    font-size: 15px;
+    color: #363636;
+}
+
+.left-panel-album:hover, .edit-album-track-item:hover {
+    background-color: rgb(252, 252, 252);
+    cursor: pointer;
+}
