@@ -2,8 +2,8 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { fetchAlbum, updateAlbum } from '../../actions/albums_actions';
-import { fetchAlbumTracks, updateTrack } from '../../actions/tracks_actions';
+import { fetchAlbum, updateAlbum, clearAlbums } from '../../actions/albums_actions';
+import { fetchAlbumTracks, updateTrack, clearTracks } from '../../actions/tracks_actions';
 import EditAlbumForm from './edit_album_form';
 
 const mapStateToProps = (state, ownProps) => {
@@ -28,6 +28,8 @@ const mapDispatchToProps = dispatch => {
         fetchAlbumTracks: albumId => dispatch(fetchAlbumTracks(albumId)),
         updateAlbum: album => dispatch(updateAlbum(album)),
         updateTrack: track => dispatch(updateTrack(track)),
+        clearAlbums: () => dispatch(clearAlbums()),
+        clearTracks: () => dispatch(clearTracks()),
     });
 };
 

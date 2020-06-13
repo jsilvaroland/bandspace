@@ -56,6 +56,7 @@ h3.tracks {
 
 .edit-album-track-item {
     padding: 11px 0 11px 10px;
+    height: 52px; // temporary
     background-image: linear-gradient(to right, rgb(198, 198, 198) 20%, rgba(255,255,255,0) 0%);
     background-position: top;
     background-size: 4px 1px;
@@ -76,4 +77,46 @@ h3.tracks {
 .left-panel-album:hover, .edit-album-track-item:hover {
     background-color: rgb(252, 252, 252);
     cursor: pointer;
+}
+
+.add-track {
+    font-size: 22px;
+    color: #0687f5;
+}
+
+.add-track:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.save {
+    padding: 20px 0 20px 10px;
+}
+
+button.update, button.update-disabled {
+    height: 32px;
+    width: 108px;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #0ec200;
+    color: #FFFFFF;
+    border: 1px solid #51924c;
+}
+
+button.update-disabled {
+    opacity: 0.3;
+}
+
+button.update:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+button.update:focus, button.update-disabled:focus {
+    outline: none;
+}
+
+.right-panel {
+    display: flex;
+    flex-direction: column;
 }

@@ -10,9 +10,12 @@ class EditAlbumForm extends React.Component {
             albumId: props.albumId,
             album: undefined,
             tracks: [],
+            //errors                // will have to do some setState({ errors })
         };
-        // this.handleSubmit = this.handleSubmit.bind(this);
+        this.anyChanges = false;
         this.handlePanelChange = this.handlePanelChange.bind(this);
+        this.handleAudioUpload = this.handleAudioUpload.bind(this);
+        this.handleUpdate = this.handleUpdate.bind(this);
         this.change = this.change.bind(this);
     }
 
@@ -31,6 +34,11 @@ class EditAlbumForm extends React.Component {
         }
     }
 
+    componentWillUnmount() {
+        this.props.clearAlbums();
+        this.props.clearTracks();
+    }
+
     handlePanelChange(panel) {
         this.setState({ activePanel: panel });
     }
@@ -43,9 +51,21 @@ class EditAlbumForm extends React.Component {
                 fieldCopy = this.state[field]:
                 fieldCopy = this.state[field][i];
 
-            fieldCopy[subfield] = e.target.value; // sets album[title] to targ val
+            fieldCopy[subfield] = e.target.value;
             this.setState({ fieldCopy: e.target.value });
+            this.anyChanges = true;
         };
+    }
+
+    handleAudioUpload() {
+        console.log('inside audio upload');
+        // don't forget to add trackId to album's trackIds array after upload
+    }
+
+    handleUpdate() {
+        const { album, tracks } = this.state;
+        this.props.updateAlbum(album);
+        tracks.forEach(track => this.props.updateTrack(track));
     }
 
     render() {
@@ -53,8 +73,17 @@ class EditAlbumForm extends React.Component {
         const { album, tracks, activePanel } = this.state;
 
         if (album && tracks.length === album.trackIds.length && currentUser) {
-            let titleText, aboutLabel, aboutField; 
-            
+            let updateBtn, titleText, aboutLabel, aboutField, lyricsLabel, 
+            lyricsField, creditsLabel, creditsField; 
+
+            this.anyChanges ?
+                updateBtn = (<button className='update' onClick={this.handleUpdate}>
+                                Update
+                            </button>) :
+                updateBtn = (<button className='update-disabled'>
+                                Update
+                            </button>) 
+
             if (activePanel === 0) {
                 titleText = (<input
                             type="text"
@@ -66,26 +95,51 @@ class EditAlbumForm extends React.Component {
                 aboutField = (<input className="about-album-input"
                     type="textarea"
                     value={this.state.album.description}
+                    placeholder="(optional)"
                     onChange={this.change('album', 'description')}
                 />)
-                
+
+                creditsLabel = (<label className="album-credits-label">album credits:</label>)
+                creditsField = (<input className="credits-album-input"
+                    type="textarea"
+                    value={this.state.album.credits}
+                    placeholder="(optional)"
+                    onChange={this.change('album', 'credits')}
+                />)
             } else {
                 titleText = (<input
                             type="text"
                             value={this.state.tracks[activePanel - 1].title} 
                             onChange={this.change('tracks', 'title', activePanel - 1)}
                             />);
-                aboutLabel = (<label className="album-about-label">about this track:</label>)
-                aboutField = (<input className="about-album-input"
+
+                aboutLabel = (<label className="track-about-label">about this track:</label>)
+                aboutField = (<input className="about-track-input"
                     type="textarea"
                     value={this.state.tracks[activePanel - 1].description}
+                    placeholder="(optional)"
                     onChange={this.change('tracks', 'description', activePanel - 1)}
                 />)
-                debugger
+
+                lyricsLabel = (<label className="track-lyrics-label">lyrics:</label>)
+                lyricsField = (<input className="lyrics-track-input"
+                    type="textarea"
+                    value={this.state.tracks[activePanel - 1].lyrics}
+                    placeholder="(optional)"
+                    onChange={this.change('tracks', 'lyrics', activePanel - 1)}
+                />)
+
+                creditsLabel = (<label className="track-credits-label">track credits:</label>)
+                creditsField = (<input className="credits-track-input"
+                    type="textarea"
+                    value={this.state.tracks[activePanel - 1].credits}
+                    placeholder="(optional)"
+                    onChange={this.change('tracks', 'credits', activePanel - 1)}
+                />)
             }
 
-            // active panel should change, so should the text area
-                            
+            
+
             return (
                 <div className="album-edit">
                     <form className="edit-album-form">
@@ -101,12 +155,23 @@ class EditAlbumForm extends React.Component {
                                     </span>
                                 </div>
                             </div>
-                            <EditAlbumTrackIndex handlePanelChange={this.handlePanelChange} tracks={tracks} />
+                            <EditAlbumTrackIndex 
+                                handlePanelChange={this.handlePanelChange} 
+                                handleAudioUpload={this.handleAudioUpload}
+                                tracks={tracks} 
+                            />
+                            <div className="save">
+                                {updateBtn}
+                            </div>
                         </div>
                         <div className="right-panel">
                             {titleText}
                             {aboutLabel}
                             {aboutField}
+                            {lyricsLabel}
+                            {lyricsField}
+                            {creditsLabel}
+                            {creditsField}
                         </div>
                     </form>
                 </div>
