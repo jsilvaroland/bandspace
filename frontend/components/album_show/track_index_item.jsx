@@ -15,13 +15,21 @@ class TrackIndexItem extends React.Component {
         }
     }
 
+    handleClickPlay() {
+
+    }
+
     render() {
-        const { track, clickPlay } = this.props;
+        const { track, clickPlay, activeTrack, playing } = this.props;
         let playButton;
         
         // on click, have the play button call a function on album show that changes the music player
 
-        (this.state.playing) ?
+        if (playing && activeTrack === track) {
+            console.log('true');
+        }
+
+        (playing && activeTrack === track) ?
             playButton = (<div className="play-button" onClick={() => clickPlay(track, this.audio)}>
                 <FontAwesomeIcon icon={faPause} />
             </div>) :

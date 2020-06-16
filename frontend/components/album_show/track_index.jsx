@@ -4,13 +4,10 @@ import TrackIndexItem from './track_index_item';
 class TrackIndex extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            playing: props.playing
-        };
     }
 
     render() {
-        const { pageTracks, clickPlay } = this.props;
+        const { pageTracks, clickPlay, activeTrack, playing } = this.props;
         return (
             <div> 
             {/* maybe a different class name for this? */}
@@ -19,7 +16,8 @@ class TrackIndex extends React.Component {
                         pageTracks.map(track => (
                             <TrackIndexItem
                                 clickPlay={clickPlay}
-                                playing={this.state.playing}
+                                activeTrack={activeTrack}
+                                playing={playing}
                                 key={track.id}
                                 track={track}
                             />

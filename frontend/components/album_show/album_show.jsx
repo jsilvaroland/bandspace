@@ -149,7 +149,7 @@ class AlbumShow extends React.Component {
                             </div>
                             {editDeleteButtons}
                             <MusicPlayer playing={this.state.playing} clickPlay={this.clickPlay} activeAudio={this.audio} activeTrack={activeTrack} />
-                            <TrackIndex playing={this.state.playing} clickPlay={this.clickPlay} pageTracks={pageTracks} />
+                            <TrackIndex playing={this.state.playing} clickPlay={this.clickPlay} pageTracks={pageTracks} activeTrack={activeTrack} />
                         </span>
                         <span>
                             <img className="release-art-350" src={pageAlbum.albumArt} />
