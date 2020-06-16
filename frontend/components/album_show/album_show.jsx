@@ -72,17 +72,23 @@ class AlbumShow extends React.Component {
         }
 
         // if no music playing...
-        if (!isPlaying) {
+        if (!isPlaying && track.trackSong !== activeTrack.trackSong) {
+            this.audio.currentTime = 0;
+            this.audio = audio;
+            this.audio.play();
+            this.setState({ playing: true, activeTrack: track });
+        } else if (!isPlaying && track.trackSong === activeTrack.trackSong) {
             this.audio.play();
             this.setState({ playing: true, activeTrack: track });
         } else if (track.trackSong !== activeTrack.trackSong)  { // music is playing, but now we want to switch up the music
-            console.log('different song is now active');
+            // music is playing, play different song
             this.audio.pause();
             this.audio.currentTime = 0;
             this.audio = audio;
             this.audio.play();
             this.setState({ playing: true, activeTrack: track });
-        } else { // music is playing, but now we want to pause that song
+        } else {
+            // music playing, pause that song
             this.audio.pause();
             this.setState({ playing: false });
         }
