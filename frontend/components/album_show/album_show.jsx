@@ -2,13 +2,16 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import TrackIndex from './track_index';
+import MusicPlayer from '../music_player/music_player';
 
 class AlbumShow extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            playing: false,
             pageId: parseInt(this.props.match.params.albumId),
         };
+        this.clickPlay = this.clickPlay.bind(this);
     }
 
     componentDidMount() {
@@ -24,12 +27,14 @@ class AlbumShow extends React.Component {
 
     componentWillUnmount() {
         const { clearTracks, clearAlbums } = this.props;
+        this.audio.pause();
+        this.audio.currentTime = 0;
         clearAlbums();
         clearTracks();
     }
 
     componentDidUpdate() {
-        const { pageAlbumId } = this.props;
+        const { pageAlbumId, pageAlbum, pageTracks } = this.props;
         if (pageAlbumId && pageAlbumId !== this.state.pageId) {
             const { clearAlbums, clearTracks, fetchUser, fetchAlbum, fetchAlbumTracks } = this.props;
             clearAlbums();
@@ -39,13 +44,54 @@ class AlbumShow extends React.Component {
                 .then(fetchAlbum(pageAlbumId))
                 .then(fetchAlbumTracks(pageAlbumId));
             this.setState({ pageId: parseInt(this.props.match.params.albumId) });
+            if (pageAlbum && pageAlbum.trackIds.length === pageTracks.length && !this.state.activeTrack) {
+                this.setState({ 
+                    activeTrack: pageTracks[0],
+                });
+            }
+        }
+    }
+
+    setFeaturedAudio() {
+        this.featuredAudio = new Audio(this.props.pageTracks[0].trackSong);
+        this.audio = this.featuredAudio;
+    }
+
+    clickPlay(track, audio) {
+            
+        // if music is currently playing, first stop that music.
+        // if different song is playing, stop that
+
+        const isPlaying = this.state.playing;
+        let activeTrack;
+
+        if (!this.state.activeTrack) {
+            activeTrack = track;
+        } else {
+            activeTrack = this.state.activeTrack;
+        }
+
+        // if no music playing...
+        if (!isPlaying) {
+            this.audio.play();
+            this.setState({ playing: true, activeTrack: track });
+        } else if (track.trackSong !== activeTrack.trackSong)  { // music is playing, but now we want to switch up the music
+            console.log('different song is now active');
+            this.audio.pause();
+            this.audio.currentTime = 0;
+            this.audio = audio;
+            this.audio.play();
+            this.setState({ playing: true, activeTrack: track });
+        } else { // music is playing, but now we want to pause that song
+            this.audio.pause();
+            this.setState({ playing: false });
         }
     }
 
     render() {
         const { pageUser, pageTracks, pageAlbum, currentUserId } = this.props;
 
-        if (pageUser && pageTracks && pageAlbum) {
+        if (pageUser && pageAlbum && pageAlbum.trackIds.length === pageTracks.length) {
             if (!pageUser.createdAlbumIds.includes(pageAlbum.id)) {
                 return <div>Page does not exist</div>
             }
@@ -61,6 +107,17 @@ class AlbumShow extends React.Component {
                         {/* add this functionality in a bit */}
                     </li>
                 </ul>)
+            }
+
+            if (!this.featuredAudio) {
+                this.setFeaturedAudio();
+            }
+
+            let activeTrack;
+            if (!this.state.activeTrack) {
+                activeTrack = pageTracks[0]; 
+            } else {
+                activeTrack = this.state.activeTrack;
             }
 
             return (
@@ -85,8 +142,8 @@ class AlbumShow extends React.Component {
                                 <Link to={`/artists/${pageUser.id}`}>{pageUser.username}</Link>
                             </div>
                             {editDeleteButtons}
-                            <div className="inline-player">Player goes here</div>
-                            <TrackIndex pageTracks={pageTracks} />
+                            <MusicPlayer playing={this.state.playing} clickPlay={this.clickPlay} activeAudio={this.audio} activeTrack={activeTrack} />
+                            <TrackIndex playing={this.state.playing} clickPlay={this.clickPlay} pageTracks={pageTracks} />
                         </span>
                         <span>
                             <img className="release-art-350" src={pageAlbum.albumArt} />

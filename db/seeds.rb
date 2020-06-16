@@ -137,7 +137,7 @@ gt.photo.attach(io: gt_art, filename: 'image-36.png')
 
 ###########
 
-Track.create!({
+mercury = Track.create!({
     title: 'Mercury',
     artist_id: demo_user.id,
     album_id: planets.id,
@@ -146,7 +146,10 @@ Track.create!({
     credits: ''
 })
 
-Track.create!({
+mercury_song = open('https://bandspace-seeds.s3-us-west-1.amazonaws.com/Mercury.mp3')
+mercury.song.attach(io: mercury_song, filename: 'Mercury.mp3')
+
+venus = Track.create!({
     title: 'Venus',
     artist_id: demo_user.id,
     album_id: planets.id,
@@ -155,7 +158,10 @@ Track.create!({
     credits: ''
 })
 
-Track.create!({
+venus_song = open('https://bandspace-seeds.s3-us-west-1.amazonaws.com/Venus.mp3')
+venus.song.attach(io: venus_song, filename: 'Venus.mp3')
+
+earth = Track.create!({
     title: 'Earth',
     artist_id: demo_user.id,
     album_id: planets.id,
@@ -164,7 +170,10 @@ Track.create!({
     credits: ''
 })
 
-Track.create!({
+earth_song = open('https://bandspace-seeds.s3-us-west-1.amazonaws.com/Earth.mp3')
+earth.song.attach(io: earth_song, filename: 'Earth.mp3')
+
+mars = Track.create!({
     title: 'Mars',
     artist_id: demo_user.id,
     album_id: planets.id,
@@ -173,7 +182,10 @@ Track.create!({
     credits: ''
 })
 
-Track.create!({
+mars_song = open('https://bandspace-seeds.s3-us-west-1.amazonaws.com/Mars.mp3')
+mars.song.attach(io: mars_song, filename: 'Mars.mp3')
+
+jupiter = Track.create!({
     title: 'Jupiter',
     artist_id: demo_user.id,
     album_id: planets.id,
@@ -182,7 +194,10 @@ Track.create!({
     credits: ''
 })
 
-Track.create!({
+jupiter_song = open('https://bandspace-seeds.s3-us-west-1.amazonaws.com/Jupiter.mp3')
+jupiter.song.attach(io: jupiter_song, filename: 'Jupiter.mp3')
+
+saturn = Track.create!({
     title: 'Saturn',
     artist_id: demo_user.id,
     album_id: planets.id,
@@ -191,7 +206,10 @@ Track.create!({
     credits: ''
 })
 
-Track.create!({
+saturn_song = open('https://bandspace-seeds.s3-us-west-1.amazonaws.com/Saturn.mp3')
+saturn.song.attach(io: saturn_song, filename: 'Saturn.mp3')
+
+uranus = Track.create!({
     title: 'Uranus',
     artist_id: demo_user.id,
     album_id: planets.id,
@@ -200,7 +218,10 @@ Track.create!({
     credits: ''
 })
 
-Track.create!({
+uranus_song = open('https://bandspace-seeds.s3-us-west-1.amazonaws.com/Uranus.mp3')
+uranus.song.attach(io: uranus_song, filename: 'Uranus.mp3')
+
+neptune = Track.create!({
     title: 'Neptune',
     artist_id: demo_user.id,
     album_id: planets.id,
@@ -208,6 +229,9 @@ Track.create!({
     description: '',
     credits: ''
 })
+
+neptune_song = open('https://bandspace-seeds.s3-us-west-1.amazonaws.com/Neptune.mp3')
+neptune.song.attach(io: neptune_song, filename: 'Neptune.mp3')
 
 Track.create!({
     title: 'Adrift',

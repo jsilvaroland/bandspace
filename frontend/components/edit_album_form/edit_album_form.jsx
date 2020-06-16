@@ -60,12 +60,15 @@ class EditAlbumForm extends React.Component {
     handleAudioUpload() {
         console.log('inside audio upload');
         // don't forget to add trackId to album's trackIds array after upload
+        // basically what you do is add a track to this.state.tracks
+        debugger
     }
 
     handleUpdate() {
         const { album, tracks } = this.state;
         this.props.updateAlbum(album);
         tracks.forEach(track => this.props.updateTrack(track));
+        // redirect? or have something that says update successful
     }
 
     render() {
