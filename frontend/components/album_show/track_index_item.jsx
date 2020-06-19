@@ -7,28 +7,22 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 class TrackIndexItem extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            playing: props.playing
-        };
+        this.state = {};
         if (this.props.id !== 0) {
             this.audio = new Audio(props.track.trackSong);
         }
     }
 
-    handleClickPlay() {
-
+    componentDidMount() {
+        this.audio.addEventListener('loadeddata', () => {
+            this.setState({ audioDuration: this.audio.duration });
+        });
     }
 
     render() {
         const { track, clickPlay, activeTrack, playing } = this.props;
         let playButton;
         
-        // on click, have the play button call a function on album show that changes the music player
-
-        if (playing && activeTrack === track) {
-            console.log('true');
-        }
-
         (playing && activeTrack === track) ?
             playButton = (<div className="play-button" onClick={() => clickPlay(track, this.audio)}>
                 <FontAwesomeIcon icon={faPause} />
@@ -47,6 +41,7 @@ class TrackIndexItem extends React.Component {
                 >
                     <span className="track-item-title">{track.title}</span>
                 </Link>
+                <span className="track-item-duration">{this.state.audioDuration}</span>
             </li>
         )
     }

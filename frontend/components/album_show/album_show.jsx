@@ -27,8 +27,10 @@ class AlbumShow extends React.Component {
 
     componentWillUnmount() {
         const { clearTracks, clearAlbums } = this.props;
-        this.audio.pause();
-        this.audio.currentTime = 0;
+        if (this.audio) {
+            this.audio.pause();
+            this.audio.currentTime = 0;
+        }
         clearAlbums();
         clearTracks();
     }
@@ -58,7 +60,6 @@ class AlbumShow extends React.Component {
     }
 
     clickPlay(track, audio) {
-            
         // if music is currently playing, first stop that music.
         // if different song is playing, stop that
 
@@ -96,6 +97,16 @@ class AlbumShow extends React.Component {
 
     render() {
         const { pageUser, pageTracks, pageAlbum, currentUserId } = this.props;
+
+        ///
+
+        // if (pageUser && pageAlbum && pageAlbum.trackIds.length === pageTracks.length && !this.featuredAudio) { 
+        //     console.log('here');
+        //     this.setFeaturedAudio();
+        //     return (<div></div>)
+        // }
+
+        ///
 
         if (pageUser && pageAlbum && pageAlbum.trackIds.length === pageTracks.length) {
             if (!pageUser.createdAlbumIds.includes(pageAlbum.id)) {
@@ -148,8 +159,18 @@ class AlbumShow extends React.Component {
                                 <Link to={`/artists/${pageUser.id}`}>{pageUser.username}</Link>
                             </div>
                             {editDeleteButtons}
-                            <MusicPlayer playing={this.state.playing} clickPlay={this.clickPlay} activeAudio={this.audio} activeTrack={activeTrack} />
-                            <TrackIndex playing={this.state.playing} clickPlay={this.clickPlay} pageTracks={pageTracks} activeTrack={activeTrack} />
+                            <MusicPlayer
+                                playing={this.state.playing} 
+                                clickPlay={this.clickPlay} 
+                                activeAudio={this.audio} 
+                                activeTrack={activeTrack} 
+                            />
+                            <TrackIndex
+                                playing={this.state.playing} 
+                                clickPlay={this.clickPlay} 
+                                pageTracks={pageTracks} 
+                                activeTrack={activeTrack} 
+                            />
                         </span>
                         <span>
                             <img className="release-art-350" src={pageAlbum.albumArt} />

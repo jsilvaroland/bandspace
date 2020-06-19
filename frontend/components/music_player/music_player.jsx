@@ -5,10 +5,23 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 class MusicPlayer extends React.Component {
     constructor(props) {
         super(props);
-        // this.audio = new Audio(props.activeTrack.trackSong);
+        this.state = {};
+    }
+
+    componentDidMount() { //maybe component did update?
+        this.setAudioDuration(this.props.activeAudio);
+        console.log(this.state);
+    }
+
+    setAudioDuration(audio) {
+        audio.addEventListener('loadeddata', () => {
+            console.log('data loaded');
+            this.setState({ audioDuration: audio.duration });
+        });
     }
     
     render() {
+
         const { clickPlay, playing, activeTrack, activeAudio } = this.props;
         let playButton; 
 
@@ -20,18 +33,23 @@ class MusicPlayer extends React.Component {
                             <FontAwesomeIcon icon={faPlay} />
                         </div>)
 
+        console.log(activeAudio);
 
-
-        return (
-            <div className="inline-player">
-                <button className="play-button" onClick={() => clickPlay(activeTrack, activeAudio)}>
-                    {playButton}
-                </button>
-                <div>
-                    {activeTrack.title}
+        if (!this.state.audioDuration) {
+            return <div></div>;
+        } else {
+            return (
+                <div className="inline-player">
+                    <button className="play-button" onClick={() => clickPlay(activeTrack, activeAudio)}>
+                        {playButton}
+                    </button>
+                    <div>
+                        {activeTrack.title}
+                        {this.state.audioDuration}
+                    </div>
                 </div>
-            </div>
-        )
+            )
+        }
     }
 }
 
