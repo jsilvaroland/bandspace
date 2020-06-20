@@ -71,7 +71,6 @@ class AlbumShow extends React.Component {
         } else {
             activeTrack = this.state.activeTrack;
         }
-
         // if no music playing...
         if (!isPlaying && track.trackSong !== activeTrack.trackSong) {
             this.audio.currentTime = 0;
@@ -79,6 +78,7 @@ class AlbumShow extends React.Component {
             this.audio.play();
             this.setState({ playing: true, activeTrack: track });
         } else if (!isPlaying && track.trackSong === activeTrack.trackSong) {
+            this.audio = audio;
             this.audio.play();
             this.setState({ playing: true, activeTrack: track });
         } else if (track.trackSong !== activeTrack.trackSong)  { // music is playing, but now we want to switch up the music
@@ -159,6 +159,7 @@ class AlbumShow extends React.Component {
                                 <Link to={`/artists/${pageUser.id}`}>{pageUser.username}</Link>
                             </div>
                             {editDeleteButtons}
+                            {/* {this.loadMusicPlayer(this.state.playing, this.clickPlay, activeAudio, activeTrack)} */}
                             <MusicPlayer
                                 playing={this.state.playing} 
                                 clickPlay={this.clickPlay} 

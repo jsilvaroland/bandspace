@@ -5,19 +5,33 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 class MusicPlayer extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            activeAudio: props.activeAudio
+        };
+        this.loadAudioData = this.loadAudioData.bind(this);
     }
 
     componentDidMount() { //maybe component did update?
         this.setAudioDuration(this.props.activeAudio);
-        console.log(this.state);
+    }
+
+    componentDidUpdate() {
+        if (this.props.activeAudio !== this.state.activeAudio) {
+            this.setState({ activeAudio: this.props.activeAudio });
+            this.setAudioDuration(this.state.activeAudio);
+        }
+
+        if (this.state.audioDuration !== this.props.activeAudio.duration) {
+            this.setState({ audioDuration: this.props.activeAudio.duration });
+        }
     }
 
     setAudioDuration(audio) {
-        audio.addEventListener('loadeddata', () => {
-            console.log('data loaded');
-            this.setState({ audioDuration: audio.duration });
-        });
+        audio.addEventListener('loadeddata', e => this.loadAudioData(e));
+    }
+
+    loadAudioData(e) {
+        this.setState({ audioDuration: e.target.duration });
     }
     
     render() {
@@ -33,11 +47,7 @@ class MusicPlayer extends React.Component {
                             <FontAwesomeIcon icon={faPlay} />
                         </div>)
 
-        console.log(activeAudio);
-
-        if (!this.state.audioDuration) {
-            return <div></div>;
-        } else {
+        if (this.props.activeAudio.duration) {
             return (
                 <div className="inline-player">
                     <button className="play-button" onClick={() => clickPlay(activeTrack, activeAudio)}>
@@ -45,10 +55,12 @@ class MusicPlayer extends React.Component {
                     </button>
                     <div>
                         {activeTrack.title}
-                        {this.state.audioDuration}
+                        {this.state.activeAudio.duration}
                     </div>
                 </div>
             )
+        } else {
+            return <div></div>
         }
     }
 }
