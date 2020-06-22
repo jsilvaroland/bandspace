@@ -21,7 +21,7 @@ class TrackIndexItem extends React.Component {
 
     render() {
         const { track, clickPlay, activeTrack, playing } = this.props;
-        let playButton;
+        let playButton, minutes, seconds;
         
         (playing && activeTrack === track) ?
             playButton = (<div className="play-button" onClick={() => clickPlay(track, this.audio)}>
@@ -31,6 +31,9 @@ class TrackIndexItem extends React.Component {
                 <FontAwesomeIcon icon={faPlay} />
             </div>)
 
+        // might come back to make sure this works if a track is like X:0Y in duration
+        minutes = Math.floor(this.state.audioDuration / 60);
+        seconds = Math.floor(this.state.audioDuration % 60);
 
         return (
             <li>
@@ -41,7 +44,7 @@ class TrackIndexItem extends React.Component {
                 >
                     <span className="track-item-title">{track.title}</span>
                 </Link>
-                <span className="track-item-duration">{this.state.audioDuration}</span>
+                <span className="track-item-duration">{`${minutes}:${seconds}`}</span>
             </li>
         )
     }

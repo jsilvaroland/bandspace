@@ -6,7 +6,8 @@ class MusicPlayer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            activeAudio: props.activeAudio
+            activeAudio: props.activeAudio,
+            currentTime: 0,
         };
         this.loadAudioData = this.loadAudioData.bind(this);
     }
@@ -16,6 +17,10 @@ class MusicPlayer extends React.Component {
     }
 
     componentDidUpdate() {
+        // if audio switches, setState currentTime: 0
+
+
+
         if (this.props.activeAudio !== this.state.activeAudio) {
             this.setState({ activeAudio: this.props.activeAudio });
             this.setAudioDuration(this.state.activeAudio);
@@ -30,14 +35,25 @@ class MusicPlayer extends React.Component {
         audio.addEventListener('loadeddata', e => this.loadAudioData(e));
     }
 
+    getPlaybackTime(audio) {
+        audio.addEventListener('timeupdate', () => {
+            this.setState({ currentTime: this.state.currentTime++ });
+        });
+    }
+
     loadAudioData(e) {
         this.setState({ audioDuration: e.target.duration });
+    }
+
+    formatSeconds(seconds) {
+        return ("0" + seconds).slice(-2);
     }
     
     render() {
 
         const { clickPlay, playing, activeTrack, activeAudio } = this.props;
-        let playButton; 
+        let playButton, totalMinutes, totalSeconds, currentMinutes, 
+        currentSeconds, formattedTotalTime, formattedCurrentTime;
 
         (playing) ?
             playButton = (<div className="play-button">
@@ -47,7 +63,12 @@ class MusicPlayer extends React.Component {
                             <FontAwesomeIcon icon={faPlay} />
                         </div>)
 
-        if (this.props.activeAudio.duration) {
+        if (activeAudio.duration) {
+            totalMinutes = Math.floor(this.state.activeAudio.duration / 60);
+            totalSeconds = Math.floor(this.state.activeAudio.duration % 60);
+            currentMinutes = Math.floor(this.state.currentTime / 60);
+            currentSeconds = Math.floor(this.state.currentTime % 60);
+
             return (
                 <div className="inline-player">
                     <button className="play-button" onClick={() => clickPlay(activeTrack, activeAudio)}>
@@ -55,7 +76,7 @@ class MusicPlayer extends React.Component {
                     </button>
                     <div>
                         {activeTrack.title}
-                        {this.state.activeAudio.duration}
+                        {`${currentMinutes}:${this.formatSeconds(currentSeconds)} / ${totalMinutes}:${this.formatSeconds(totalSeconds)}`}
                     </div>
                 </div>
             )
