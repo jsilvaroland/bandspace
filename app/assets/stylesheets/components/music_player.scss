@@ -1,3 +1,15 @@
 .play-button {
 
 }
+
+.next-button, .next-button-disabled {
+    margin-left: 5px;
+}
+
+.next-button-disabled, .prev-button-disabled {
+    opacity: 0.25;
+}
+
+.prev-button, .prev-button-disabled {
+    margin-right: 5px;
+}

@@ -12,6 +12,8 @@ class AlbumShow extends React.Component {
             pageId: parseInt(this.props.match.params.albumId),
         };
         this.clickPlay = this.clickPlay.bind(this);
+        this.next = this.next.bind(this);
+        this.prev = this.prev.bind(this);
     }
 
     componentDidMount() {
@@ -95,18 +97,36 @@ class AlbumShow extends React.Component {
         }
     }
 
+    prev() {
+        let currentTrackId = this.props.pageTracks.indexOf(this.state.activeTrack) + 1;
+        const prevPlay = document.getElementsByClassName('play-button')[currentTrackId];
+        prevPlay.click();
+    }
+
+    next() {
+        let currentTrackId = this.props.pageTracks.indexOf(this.state.activeTrack) + 1;
+        const nextPlay = document.getElementsByClassName('play-button')[currentTrackId + 2];
+
+        if (nextPlay) {
+            nextPlay.click();
+        } else {
+            this.setState({ playing: false, activeTrack: this.props.pageTracks[0] });
+            this.audio = this.featuredAudio;
+        }
+    }
+
+    hasNextTrack() {
+        const { pageTracks } = this.props;
+        return pageTracks.length !== pageTracks.indexOf(this.state.activeTrack) + 1;
+    }
+
+    hasPrevTrack() {
+        if (!this.state.activeTrack) return false;
+        return this.props.pageTracks.indexOf(this.state.activeTrack) !== 0;
+    }
+
     render() {
         const { pageUser, pageTracks, pageAlbum, currentUserId } = this.props;
-
-        ///
-
-        // if (pageUser && pageAlbum && pageAlbum.trackIds.length === pageTracks.length && !this.featuredAudio) { 
-        //     console.log('here');
-        //     this.setFeaturedAudio();
-        //     return (<div></div>)
-        // }
-
-        ///
 
         if (pageUser && pageAlbum && pageAlbum.trackIds.length === pageTracks.length) {
             if (!pageUser.createdAlbumIds.includes(pageAlbum.id)) {
@@ -163,8 +183,12 @@ class AlbumShow extends React.Component {
                             <MusicPlayer
                                 playing={this.state.playing} 
                                 clickPlay={this.clickPlay} 
+                                next={this.next}
+                                prev={this.prev}
                                 activeAudio={this.audio} 
-                                activeTrack={activeTrack} 
+                                activeTrack={activeTrack}
+                                hasNextTrack={this.hasNextTrack()}
+                                hasPrevTrack={this.hasPrevTrack()}
                             />
                             <TrackIndex
                                 playing={this.state.playing} 
