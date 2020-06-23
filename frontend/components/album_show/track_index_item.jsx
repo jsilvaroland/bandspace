@@ -24,10 +24,10 @@ class TrackIndexItem extends React.Component {
         let playButton, minutes, seconds;
         
         (playing && activeTrack === track) ?
-            playButton = (<div className="play-button" onClick={() => clickPlay(track, this.audio)}>
+            playButton = (<div className="mini-play-button" onClick={() => clickPlay(track, this.audio)}>
                 <FontAwesomeIcon icon={faPause} />
             </div>) :
-            playButton = (<div className="play-button" onClick={() => clickPlay(track, this.audio)}>
+            playButton = (<div className="mini-play-button" onClick={() => clickPlay(track, this.audio)}>
                 <FontAwesomeIcon icon={faPlay} />
             </div>)
 

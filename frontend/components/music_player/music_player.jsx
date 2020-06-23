@@ -49,7 +49,7 @@ class MusicPlayer extends React.Component {
                 clearInterval(this.currentTimeInterval);
                 this.currentTimeInterval = setInterval(() => {
                     this.setState({ currentTime: this.props.activeAudio.currentTime });
-                }, 500);
+                }, 1);
             };
         }
     }
@@ -82,30 +82,31 @@ class MusicPlayer extends React.Component {
     
     render() {
         const { clickPlay, playing, activeTrack, activeAudio, next, prev } = this.props;
-        this.slider = (<input className="slider"
-                            type="range" 
-                            min="0" 
-                            max={this.state.activeAudio.duration}
-                            value={this.state.activeAudio.currentTime}
-                            onChange={this.changeTime}
-                        />)
         
         let playButton, totalMinutes, totalSeconds, currentMinutes, 
         currentSeconds, prevBtn, nextBtn;
 
         (playing) ?
-            playButton = (<div className="play-button">
+            playButton = (<span className="play-button">
                             <FontAwesomeIcon icon={faPause} />
-                        </div>) :
-            playButton = (<div className="play-button">
+                        </span>) :
+            playButton = (<span className="play-button">
                             <FontAwesomeIcon icon={faPlay} />
-                        </div>)
+                        </span>)
 
         if (activeAudio.duration) {
             totalMinutes = Math.floor(this.state.activeAudio.duration / 60);
             totalSeconds = Math.floor(this.state.activeAudio.duration % 60);
             currentMinutes = Math.floor(this.state.activeAudio.currentTime / 60);
             currentSeconds = Math.floor(this.state.activeAudio.currentTime % 60);
+
+            this.slider = (<input className="slider"
+                type="range"
+                min="0"
+                max={this.state.activeAudio.duration}
+                value={this.state.activeAudio.currentTime}
+                onChange={this.changeTime}
+            />)
 
             this.props.hasNextTrack ?
                 nextBtn = (<span className='next-button' onClick={() => next()}>
@@ -125,18 +126,22 @@ class MusicPlayer extends React.Component {
 
             return (
                 <div className="inline-player">
-                    <button className="play-button" onClick={() => clickPlay(activeTrack, activeAudio)}>
+                    <span className="play-button-wrapper" onClick={() => clickPlay(activeTrack, activeAudio)}>
                         {playButton}
-                    </button>
-                    <div>
-                        {activeTrack.title}
-                        {`${currentMinutes}:${this.formatSeconds(currentSeconds)} / ${totalMinutes}:${this.formatSeconds(totalSeconds)}`}
-                    </div>
-                    <div>
-                        <span>{this.slider}</span>
-                        {prevBtn}
-                        {nextBtn}
-                    </div>
+                    </span>
+                    <span>
+                        <div className="track-info">
+                            <span className="player-track-title">{activeTrack.title}</span>
+                            <span className="time-elapsed-total">
+                                {`${currentMinutes}:${this.formatSeconds(currentSeconds)} / ${totalMinutes}:${this.formatSeconds(totalSeconds)}`}
+                            </span>
+                        </div>
+                        <div>
+                            <span>{this.slider}</span>
+                            {prevBtn}
+                            {nextBtn}
+                        </div>
+                    </span>
                 </div>
             )
         } else {

@@ -1,5 +1,32 @@
-.play-button {
 
+.play-button {
+    line-height: 100%;
+    font-size: 20px;
+    margin-top: 14px;
+    margin-left: 18px;
+}
+
+.play-button-wrapper {
+    display: flex;
+    border: 1px solid rgb(217, 217, 217);
+    border-radius: 2px;
+    min-height: 48px;
+    min-width: 52px;
+}
+
+.track-info {
+    font-size: 12px;
+    margin: 8px 10px 6px;
+}
+
+.time-elapsed-total {
+    color: #888888;
+}
+
+.player-track-title {
+    color: #363636;
+    font-weight: 500;
+    margin-right: 6px;
 }
 
 .next-button, .next-button-disabled {
@@ -12,4 +39,47 @@
 
 .prev-button, .prev-button-disabled {
     margin-right: 5px;
+}
+
+.slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 248px;
+  height: 8px;
+  background: rgb(245, 245, 245); /* Grey background */
+  border: 1px solid rgb(217, 217, 217);
+  opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+  -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+  transition: opacity .2s;
+  margin: 0 10px 10px 10px;
+  pointer-events: none;
+}
+
+.slider:focus {
+    outline: none;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background: #fff;
+    border: 1px solid rgb(191, 191, 191);
+    left: 0px;
+    width: 24px;
+    height: 12px;
+    margin-left: -1px;
+    overflow: hidden;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+.slider::-moz-range-thumb {
+    background: #fff;
+    border: 1px solid rgb(191, 191, 191);
+    left: 0px;
+    width: 24px;
+    height: 12px;
+    margin-left: -1px;
+    overflow: hidden;
+    cursor: pointer;
+    pointer-events: auto;
 }

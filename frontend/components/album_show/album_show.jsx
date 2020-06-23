@@ -99,13 +99,19 @@ class AlbumShow extends React.Component {
 
     prev() {
         let currentTrackId = this.props.pageTracks.indexOf(this.state.activeTrack) + 1;
-        const prevPlay = document.getElementsByClassName('play-button')[currentTrackId];
+        const prevPlay = document.getElementsByClassName('mini-play-button')[currentTrackId - 2];
         prevPlay.click();
     }
 
     next() {
-        let currentTrackId = this.props.pageTracks.indexOf(this.state.activeTrack) + 1;
-        const nextPlay = document.getElementsByClassName('play-button')[currentTrackId + 2];
+        let currentTrackId
+        if (this.state.activeTrack) {
+            currentTrackId = this.props.pageTracks.indexOf(this.state.activeTrack) + 1;
+        } else {
+            currentTrackId = 1;
+        }
+
+        const nextPlay = document.getElementsByClassName('mini-play-button')[currentTrackId];
 
         if (nextPlay) {
             nextPlay.click();
