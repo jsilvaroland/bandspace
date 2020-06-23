@@ -104,7 +104,7 @@ class AlbumShow extends React.Component {
     }
 
     next() {
-        let currentTrackId
+        let currentTrackId;
         if (this.state.activeTrack) {
             currentTrackId = this.props.pageTracks.indexOf(this.state.activeTrack) + 1;
         } else {
@@ -116,6 +116,7 @@ class AlbumShow extends React.Component {
         if (nextPlay) {
             nextPlay.click();
         } else {
+            this.audio.pause();
             this.setState({ playing: false, activeTrack: this.props.pageTracks[0] });
             this.audio = this.featuredAudio;
         }

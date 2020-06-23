@@ -1,12 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import MusicPlayer from '../music_player/music_player';
 
 class TrackShow extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            playing: false,
             pageId: parseInt(this.props.match.params.trackId),
         };
+        this.clickPlay = this.clickPlay.bind(this);
     }
 
     componentDidMount() {
@@ -20,6 +23,10 @@ class TrackShow extends React.Component {
         const { fetchUser, pageTrack, fetchAlbum, pageAlbum, pageTrackId } = this.props;
         
         // what if pageAlbum does exist but it's wrong one, gotta refetch album
+
+        if (pageTrack) {
+            this.audio = new Audio(pageTrack.trackSong);
+        }
 
         if (!pageAlbum && pageTrack && pageTrack.albumId) {
             fetchUser()
@@ -44,10 +51,46 @@ class TrackShow extends React.Component {
         clearAlbums();
     }
 
+    clickPlay(track, audio) {
+        // if music is currently playing, first stop that music.
+        // if different song is playing, stop that
+
+        const isPlaying = this.state.playing;
+        let activeTrack;
+
+        if (!this.state.activeTrack) {
+            activeTrack = track;
+        } else {
+            activeTrack = this.state.activeTrack;
+        }
+        // if no music playing...
+        if (!isPlaying && track.trackSong !== activeTrack.trackSong) {
+            this.audio.currentTime = 0;
+            this.audio = audio;
+            this.audio.play();
+            this.setState({ playing: true, activeTrack: track });
+        } else if (!isPlaying && track.trackSong === activeTrack.trackSong) {
+            this.audio = audio;
+            this.audio.play();
+            this.setState({ playing: true, activeTrack: track });
+        } else if (track.trackSong !== activeTrack.trackSong) { // music is playing, but now we want to switch up the music
+            // music is playing, play different song
+            this.audio.pause();
+            this.audio.currentTime = 0;
+            this.audio = audio;
+            this.audio.play();
+            this.setState({ playing: true, activeTrack: track });
+        } else {
+            // music playing, pause that song
+            this.audio.pause();
+            this.setState({ playing: false });
+        }
+    }
+
     render() {
         const { pageUser, pageTrack, pageAlbum } = this.props;
 
-        if ((pageUser && pageTrack && !pageTrack.albumId) || (pageUser && pageTrack && pageAlbum)) {
+        if (((pageUser && pageTrack && !pageTrack.albumId) || (pageUser && pageTrack && pageAlbum)) && this.audio) {
             let fromAlbum, trackArt;
 
             if (pageTrack.albumId) {
@@ -61,6 +104,8 @@ class TrackShow extends React.Component {
             } else {
                 trackArt = pageTrack.trackArt
             }
+
+            console.log(this.audio);
 
             return (
                 <div className="user-show">
@@ -83,7 +128,11 @@ class TrackShow extends React.Component {
                             <div className="release-by">{fromAlbum} by&nbsp;
                                 <Link to={`/artists/${pageUser.id}`}>{pageUser.username}</Link>
                             </div>
-                            <div className="inline-player">Player goes here</div>
+                            <MusicPlayer 
+                                activeTrack={pageTrack}
+                                activeAudio={this.audio}
+                                clickPlay={this.clickPlay}
+                            />
                         </span>
                         <span>
                             <img className="release-art-350" src={trackArt} />

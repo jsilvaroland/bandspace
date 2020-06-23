@@ -23,10 +23,16 @@
     color: #888888;
 }
 
-.player-track-title {
-    color: #363636;
-    font-weight: 500;
+.player-track-title a {
     margin-right: 6px;
+    font-weight: 500;
+    color: #363636;
+    text-decoration: none;
+}
+
+
+.player-track-title a:hover {
+    text-decoration: underline;
 }
 
 .next-button, .next-button-disabled {
