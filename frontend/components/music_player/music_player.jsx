@@ -10,19 +10,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class MusicPlayer extends React.Component {
     constructor(props) {
-        debugger
         super(props);
         this.state = {
             activeAudio: props.activeAudio,
             currentTime: props.activeAudio.currentTime,
         };
-        this.loadAudioData = this.loadAudioData.bind(this);
         this.changeTime = this.changeTime.bind(this);
     }
 
     componentDidMount() {
         const { activeAudio } = this.state;
-        console.log('setting audio duration');
         this.setAudioDuration(activeAudio);
 
         activeAudio.onplay = () => {
@@ -33,13 +30,19 @@ class MusicPlayer extends React.Component {
     }
 
     componentWillUnmount() {
-        console.log('component unmounting');
         clearInterval(this.currentTimeInterval);
     }
 
     componentDidUpdate() {
         if (this.state.activeAudio.currentTime === this.state.activeAudio.duration) {
             this.songFinish();
+        }
+
+        if (!this.state.audioDuration && !this.state.activeAudio.duration) {
+            debugger
+        } else {
+            console.log(this.state.activeAudio.duration)
+            console.log(this.state.audioDuration)
         }
 
         if (this.state.activeAudio.currentTime !== this.state.currentTime) {
@@ -59,23 +62,25 @@ class MusicPlayer extends React.Component {
     }
 
     songFinish() {
+        console.log('song finished');
         clearInterval(this.currentTimeInterval);
         this.props.activeAudio.currentTime = 0;
+        //
+        this.props.activeAudio.pause();
+        //
         this.props.next();
     }
 
     setAudioDuration(audio) {
-        audio.addEventListener('loadeddata', e => this.loadAudioData(e));
+        audio.addEventListener('loadeddata', e => {
+            this.setState({ audioDuration: e.target.duration });
+        });
     }
 
     updatePlaybackTime() {
         this.setState({ currentTime: this.state.activeAudio.currentTime });
     }
 
-    loadAudioData(e) {
-        console.log('loading audio duration');
-        this.setState({ audioDuration: e.target.duration });
-    }
 
     changeTime(e) {
         this.state.activeAudio.currentTime = e.target.value;
@@ -99,14 +104,21 @@ class MusicPlayer extends React.Component {
                             <FontAwesomeIcon icon={faPlay} />
                         </span>)
 
-        // if (this.state.activeAudio.duration) {
-        if (this.state.audioDuration) {
-            console.log('active audio duration is present')
-            totalMinutes = Math.floor(this.state.activeAudio.duration / 60);
-            totalSeconds = Math.floor(this.state.activeAudio.duration % 60);
-            currentMinutes = Math.floor(this.state.activeAudio.currentTime / 60);
-            currentSeconds = Math.floor(this.state.activeAudio.currentTime % 60);
+        console.log(this.state.audioDuration)        
 
+        if (this.state.audioDuration || this.state.activeAudio.duration) {
+            if (activeTrack) {
+                totalMinutes = Math.floor(this.state.activeAudio.duration / 60);
+                totalSeconds = Math.floor(this.state.activeAudio.duration % 60);
+                currentMinutes = Math.floor(this.state.activeAudio.currentTime / 60);
+                currentSeconds = Math.floor(this.state.activeAudio.currentTime % 60);
+            } else {
+                totalMinutes = Math.floor(this.state.audioDuration / 60);
+                totalSeconds = Math.floor(this.state.audioDuration % 60);
+                currentMinutes = Math.floor(this.state.activeAudio.currentTime / 60);
+                currentSeconds = Math.floor(this.state.activeAudio.currentTime % 60);
+            }
+    
             this.slider = (<input className="slider"
                 type="range"
                 min="0"

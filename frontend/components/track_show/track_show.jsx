@@ -10,6 +10,7 @@ class TrackShow extends React.Component {
             pageId: parseInt(this.props.match.params.trackId),
         };
         this.clickPlay = this.clickPlay.bind(this);
+        this.next = this.next.bind(this);
     }
 
     componentDidMount() {
@@ -24,8 +25,11 @@ class TrackShow extends React.Component {
         
         // what if pageAlbum does exist but it's wrong one, gotta refetch album
 
-        if (pageTrack) {
-            this.audio = new Audio(pageTrack.trackSong);
+        if (pageTrack && !this.audio) {
+            if (pageTrack !== this.state.activeTrack) {
+                this.setState({ activeTrack: pageTrack });
+                this.audio = new Audio(pageTrack.trackSong);
+            }
         }
 
         if (!pageAlbum && pageTrack && pageTrack.albumId) {
@@ -47,14 +51,16 @@ class TrackShow extends React.Component {
     componentWillUnmount() {
         const { clearTracks, clearAlbums } = this.props;
 
+        if (this.audio) {
+            this.audio.pause();
+            this.audio.currentTime = 0;
+        }
+
         clearTracks();
         clearAlbums();
     }
 
     clickPlay(track, audio) {
-        // if music is currently playing, first stop that music.
-        // if different song is playing, stop that
-
         const isPlaying = this.state.playing;
         let activeTrack;
 
@@ -63,28 +69,21 @@ class TrackShow extends React.Component {
         } else {
             activeTrack = this.state.activeTrack;
         }
-        // if no music playing...
-        if (!isPlaying && track.trackSong !== activeTrack.trackSong) {
-            this.audio.currentTime = 0;
-            this.audio = audio;
-            this.audio.play();
-            this.setState({ playing: true, activeTrack: track });
-        } else if (!isPlaying && track.trackSong === activeTrack.trackSong) {
-            this.audio = audio;
-            this.audio.play();
-            this.setState({ playing: true, activeTrack: track });
-        } else if (track.trackSong !== activeTrack.trackSong) { // music is playing, but now we want to switch up the music
-            // music is playing, play different song
-            this.audio.pause();
-            this.audio.currentTime = 0;
+
+        if (!isPlaying) {
             this.audio = audio;
             this.audio.play();
             this.setState({ playing: true, activeTrack: track });
         } else {
-            // music playing, pause that song
+            this.audio = audio;
             this.audio.pause();
             this.setState({ playing: false });
         }
+    }
+
+    next() {
+        this.audio.pause();
+        this.setState({ playing: false });
     }
 
     render() {
@@ -104,8 +103,6 @@ class TrackShow extends React.Component {
             } else {
                 trackArt = pageTrack.trackArt
             }
-
-            console.log(this.audio);
 
             return (
                 <div className="user-show">
@@ -129,9 +126,11 @@ class TrackShow extends React.Component {
                                 <Link to={`/artists/${pageUser.id}`}>{pageUser.username}</Link>
                             </div>
                             <MusicPlayer 
-                                activeTrack={pageTrack}
-                                activeAudio={this.audio}
+                                playing={this.state.playing}
                                 clickPlay={this.clickPlay}
+                                activeTrack={this.state.activeTrack}
+                                activeAudio={this.audio}
+                                next={this.next}
                             />
                         </span>
                         <span>
