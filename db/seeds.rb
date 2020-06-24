@@ -233,7 +233,7 @@ neptune = Track.create!({
 neptune_song = open('https://bandspace-seeds.s3-us-west-1.amazonaws.com/Neptune.mp3')
 neptune.song.attach(io: neptune_song, filename: 'Neptune.mp3')
 
-Track.create!({
+adrift = Track.create!({
     title: 'Adrift',
     artist_id: demo_user.id,
     album_id: itbo.id,
@@ -242,7 +242,10 @@ Track.create!({
     credits: ''
 })
 
-Track.create!({
+adrift_song = open('https://bandspace-seeds.s3-us-west-1.amazonaws.com/Adrift.mp3')
+adrift.song.attach(io: adrift_song, filename: 'Adrift.mp3')
+
+gravity = Track.create!({
     title: 'Gravity',
     artist_id: demo_user.id,
     album_id: itbo.id,
@@ -251,7 +254,10 @@ Track.create!({
     credits: ''
 })
 
-Track.create!({
+gravity_song = open('https://bandspace-seeds.s3-us-west-1.amazonaws.com/Gravity.mp3')
+gravity.song.attach(io: gravity_song, filename: 'Gravity.mp3')
+
+inevitability = Track.create!({
     title: 'Inevitability',
     artist_id: demo_user.id,
     album_id: itbo.id,
@@ -260,7 +266,10 @@ Track.create!({
     credits: ''
 })
 
-Track.create!({
+inevitability_song = open('https://bandspace-seeds.s3-us-west-1.amazonaws.com/Inevitability.mp3')
+inevitability.song.attach(io: inevitability_song, filename: 'Inevitability.mp3')
+
+event_horizon = Track.create!({
     title: 'Event Horizon',
     artist_id: demo_user.id,
     album_id: itbo.id,
@@ -269,7 +278,10 @@ Track.create!({
     credits: ''
 })
 
-Track.create!({
+event_horizon_song = open('https://bandspace-seeds.s3-us-west-1.amazonaws.com/EventHorizon.mp3')
+event_horizon.song.attach(io: event_horizon_song, filename: 'EventHorizon.mp3')
+
+spaghettification = Track.create!({
     title: 'Spaghettification',
     artist_id: demo_user.id,
     album_id: itbo.id,
@@ -278,7 +290,10 @@ Track.create!({
     credits: ''
 })
 
-Track.create!({
+spaghettification_song = open('https://bandspace-seeds.s3-us-west-1.amazonaws.com/Spaghettification.mp3')
+spaghettification.song.attach(io: spaghettification_song, filename: 'Spaghettification.mp3')
+
+singularity = Track.create!({
     title: 'Singularity',
     artist_id: demo_user.id,
     album_id: itbo.id,
@@ -286,6 +301,9 @@ Track.create!({
     description: '',
     credits: ''
 })
+
+singularity_song = open('https://bandspace-seeds.s3-us-west-1.amazonaws.com/Singularity.mp3')
+singularity.song.attach(io: singularity_song, filename: 'Singularity.mp3')
 
 demo_single_1 = Track.create!({
     title: 'Andromeda',
@@ -298,6 +316,9 @@ demo_single_1 = Track.create!({
 demo_single_1_art = open('https://bandspace-seeds.s3-us-west-1.amazonaws.com/image-85.jpg')
 demo_single_1.photo.attach(io: demo_single_1_art, filename: 'image-85.jpg')
 
+demo_single_1_song = open('https://bandspace-seeds.s3-us-west-1.amazonaws.com/Andromeda.mp3')
+demo_single_1.song.attach(io: demo_single_1_song, filename: 'Andromeda.mp3')
+
 demo_single_2 = Track.create!({
     title: 'Nebula',
     artist_id: demo_user.id,
@@ -308,6 +329,9 @@ demo_single_2 = Track.create!({
 
 demo_single_2_art = open('https://bandspace-seeds.s3-us-west-1.amazonaws.com/image-86.png')
 demo_single_2.photo.attach(io: demo_single_2_art, filename: 'image-86.png')
+
+demo_single_2_song = open('https://bandspace-seeds.s3-us-west-1.amazonaws.com/Nebula.mp3')
+demo_single_2.song.attach(io: demo_single_2_song, filename: 'Nebula.mp3')
 
 Track.create!({
     title: 'Detection',

@@ -38,13 +38,6 @@ class MusicPlayer extends React.Component {
             this.songFinish();
         }
 
-        if (!this.state.audioDuration && !this.state.activeAudio.duration) {
-            debugger
-        } else {
-            console.log(this.state.activeAudio.duration)
-            console.log(this.state.audioDuration)
-        }
-
         if (this.state.activeAudio.currentTime !== this.state.currentTime) {
             this.updatePlaybackTime();
         }
@@ -62,7 +55,6 @@ class MusicPlayer extends React.Component {
     }
 
     songFinish() {
-        console.log('song finished');
         clearInterval(this.currentTimeInterval);
         this.props.activeAudio.currentTime = 0;
         //
@@ -103,8 +95,6 @@ class MusicPlayer extends React.Component {
             playButton = (<span className="play-button">
                             <FontAwesomeIcon icon={faPlay} />
                         </span>)
-
-        console.log(this.state.audioDuration)        
 
         if (this.state.audioDuration || this.state.activeAudio.duration) {
             if (activeTrack) {
@@ -174,8 +164,7 @@ class MusicPlayer extends React.Component {
                 </div>
             )
         } else {
-            console.log('nothing loading')
-            return <div></div>
+            return <div>Music Player Loading</div>
         }
     }
 }
