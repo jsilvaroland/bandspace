@@ -333,7 +333,7 @@ demo_single_2.photo.attach(io: demo_single_2_art, filename: 'image-86.png')
 demo_single_2_song = open('https://bandspace-seeds.s3-us-west-1.amazonaws.com/Nebula.mp3')
 demo_single_2.song.attach(io: demo_single_2_song, filename: 'Nebula.mp3')
 
-Track.create!({
+detection = Track.create!({
     title: 'Detection',
     artist_id: decis.artist.id,
     album_id: decis.id,
@@ -342,7 +342,10 @@ Track.create!({
     credits: ''
 })
 
-Track.create!({
+detection_song = open('https://bandspace-seeds.s3-us-west-1.amazonaws.com/Detection.mp3')
+detection.song.attach(io: detection_song, filename: 'Detection.mp3')
+
+act_quick = Track.create!({
     title: 'Act Quick',
     artist_id: decis.artist.id,
     album_id: decis.id,
@@ -351,7 +354,10 @@ Track.create!({
     credits: ''
 })
 
-Track.create!({
+act_quick_song = open('https://bandspace-seeds.s3-us-west-1.amazonaws.com/ActQuick.mp3')
+act_quick.song.attach(io: act_quick_song, filename: 'ActQuick.mp3')
+
+need_2_lead = Track.create!({
     title: 'Need2Lead',
     artist_id: decis.artist.id,
     album_id: decis.id,
@@ -360,7 +366,10 @@ Track.create!({
     credits: ''
 })
 
-Track.create!({
+need_2_lead_song = open('https://bandspace-seeds.s3-us-west-1.amazonaws.com/Need2Lead.mp3')
+need_2_lead.song.attach(io: need_2_lead_song, filename: 'Need2Lead.mp3')
+
+budding_warmth = Track.create!({
     title: 'Budding Warmth',
     artist_id: decis.artist.id,
     album_id: decis.id,
@@ -369,7 +378,10 @@ Track.create!({
     credits: ''
 })
 
-Track.create!({
+budding_warmth_song = open('https://bandspace-seeds.s3-us-west-1.amazonaws.com/BuddingWarmth.mp3')
+budding_warmth.song.attach(io: budding_warmth_song, filename: 'BuddingWarmth.mp3')
+
+possibility = Track.create!({
     title: 'Possibility',
     artist_id: uc.artist.id,
     album_id: uc.id,
@@ -378,7 +390,10 @@ Track.create!({
     credits: ''
 })
 
-Track.create!({
+possibility_song = open('https://bandspace-seeds.s3-us-west-1.amazonaws.com/Possibility.mp3')
+possibility.song.attach(io: possibility_song, filename: 'Possibility.mp3')
+
+discover_the_universe = Track.create!({
     title: 'Discover the Universe',
     artist_id: uc.artist.id,
     album_id: uc.id,
@@ -387,7 +402,10 @@ Track.create!({
     credits: ''
 })
 
-Track.create!({
+discover_the_universe_song = open('https://bandspace-seeds.s3-us-west-1.amazonaws.com/DiscoverTheUniverse.mp3')
+discover_the_universe.song.attach(io: discover_the_universe_song, filename: 'DiscoverTheUniverse.mp3')
+
+ever_present = Track.create!({
     title: 'Ever Present',
     artist_id: mtfs.artist.id,
     album_id: mtfs.id,
@@ -396,7 +414,10 @@ Track.create!({
     credits: ''
 })
 
-Track.create!({
+ever_present_song = open('https://bandspace-seeds.s3-us-west-1.amazonaws.com/EverPresent.mp3')
+ever_present.song.attach(io: ever_present_song, filename: 'EverPresent.mp3')
+
+bump_this_tune = Track.create!({
     title: 'Bump This Tune',
     artist_id: mtfs.artist.id,
     album_id: mtfs.id,
@@ -405,7 +426,10 @@ Track.create!({
     credits: ''
 })
 
-Track.create!({
+bump_this_tune_song = open('https://bandspace-seeds.s3-us-west-1.amazonaws.com/BumpThisTune.mp3')
+bump_this_tune.song.attach(io: bump_this_tune_song, filename: 'BumpThisTune.mp3')
+
+stable = Track.create!({
     title: 'Stable',
     artist_id: mtfs.artist.id,
     album_id: mtfs.id,
@@ -414,7 +438,10 @@ Track.create!({
     credits: ''
 })
 
-Track.create!({
+stable_song = open('https://bandspace-seeds.s3-us-west-1.amazonaws.com/Stable.mp3')
+stable.song.attach(io: stable_song, filename: 'Stable.mp3')
+
+art_express = Track.create!({
     title: 'art express',
     artist_id: gt.artist.id,
     album_id: gt.id,
@@ -423,7 +450,10 @@ Track.create!({
     credits: ''
 })
 
-Track.create!({
+art_express_song = open('https://bandspace-seeds.s3-us-west-1.amazonaws.com/ArtExpress.mp3')
+art_express.song.attach(io: art_express_song, filename: 'ArtExpress.mp3')
+
+open_up = Track.create!({
     title: 'open up!',
     artist_id: gt.artist.id,
     album_id: gt.id,
@@ -431,6 +461,9 @@ Track.create!({
     description: '',
     credits: ''
 })
+
+open_up_song = open('https://bandspace-seeds.s3-us-west-1.amazonaws.com/OpenUp.mp3')
+open_up.song.attach(io: open_up_song, filename: 'OpenUp.mp3')
 
 indep = Track.create!({
     title: 'Independent',
@@ -442,3 +475,6 @@ indep = Track.create!({
 
 indep_art = open('https://bandspace-seeds.s3-us-west-1.amazonaws.com/image-98.png')
 indep.photo.attach(io: indep_art, filename: 'image-98.png')
+
+indep_song = open('https://bandspace-seeds.s3-us-west-1.amazonaws.com/Independent.mp3')
+indep.song.attach(io: indep_song, filename: 'Independent.mp3')
