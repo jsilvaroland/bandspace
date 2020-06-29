@@ -130,7 +130,15 @@
     width: 59px;
 }
 
-.user-menu-btn:hover {
+.add-menu-btn {
+    color: #000000;
+    padding: 0 15px;
+    font-size: 14px;
+    align-items: center;
+    cursor: pointer;
+}
+
+.user-menu-btn:hover, .add-menu-btn:hover {
     background-color: rgb(243, 243, 243);
 }
 
@@ -149,7 +157,7 @@
     cursor: pointer;
 }
 
-.user-menu-dropdown {
+.user-menu-dropdown, .add-menu-dropdown {
     float: right;
     position: relative;
     z-index: 1000;
@@ -159,22 +167,30 @@
     display: block;
 }
 
-.user-menu-ul {
+.user-menu-ul, .add-menu-ul {
     display: none;
     position: absolute;
     z-index: 1000;
     top: 46px;
-    min-width: 236px;
     padding: 10px 0;
     overflow: auto;
-    right: 0;
     box-shadow: 0px 1px 4px rgba(0,0,0,0.1);
     border: 1px solid rgb(238, 238, 238);
     border-radius: 5px;
     background-color: #ffffff;
 }
 
-.user-menu-ul li {
+.user-menu-ul {
+    width: 236px;
+    right: 0;
+}
+
+.add-menu-ul {
+    width: 110px;
+    left: 0;
+}
+
+.user-menu-ul li, .add-menu-ul li {
     padding: 0 20px;
     line-height: 32px;
 }
@@ -201,8 +217,13 @@
     padding-bottom: 3px;
 }
 
-.user-menu-userpage-item:hover, .user-menu-item:hover {
+.user-menu-userpage-item:hover, .user-menu-item:hover, .add-menu-li:hover {
     background-color: rgb(243, 243, 243);
+    cursor: pointer;
+}
+
+.add-menu-li {
+    font-size: 15px;
 }
 
 #show {

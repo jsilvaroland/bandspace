@@ -4,43 +4,67 @@ import { Link, withRouter } from 'react-router-dom';
 class NavigationBar extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { active: false };
+        this.state = { activeDropDown: null };
 
         this.toggleDropdown = this.toggleDropdown.bind(this);
-
-        this.setWrapperRef = this.setWrapperRef.bind(this);
+        this.setAddWrapperRef = this.setAddWrapperRef.bind(this);
+        this.setUserWrapperRef = this.setUserWrapperRef.bind(this);
         this.handleClickOutside = this.handleClickOutside.bind(this);
-        this.onUserMenuClick = this.onUserMenuClick.bind(this);
+        this.onClick = this.onClick.bind(this);
         this.collapse = this.collapse.bind(this);
     }
 
-    toggleDropdown() {
-        const currentState = this.state.active;
-        this.setState({ active: !currentState });
+    componentDidMount() {
+        this.mousedownCallback = e => this.handleClickOutside(e);
     }
 
-    setWrapperRef(node) {
-        this.wrapperRef = node;
+    componentWillUnmount() {
+        document.removeEventListener('mousedown', this.mousedownCallback);
     }
 
-    handleClickOutside(e) {
-        if (this.wrapperRef && !this.wrapperRef.contains(e.target)) {
-            this.collapse();
-            document.removeEventListener('mousedown', this.handleClickOutside);
+    componentDidUpdate() {
+        if (!this.props.currentUser) {
+            document.removeEventListener('mousedown', this.mousedownCallback);
+        } else if (this.props.currentUser) {
+            document.addEventListener('mousedown', this.mousedownCallback);
         }
     }
 
-    collapse() {
-        this.setState({ active: false });
+    toggleDropdown(field) {
+        this.setState({ activeDropDown: field });
+    }
+
+    setAddWrapperRef(node) {
+        this.addWrapperRef = node;
     }
     
-    onUserMenuClick(e) {
-        this.toggleDropdown();
-        document.addEventListener('mousedown', this.handleClickOutside);
+    setUserWrapperRef(node) {
+        this.userWrapperRef = node;
+    }
+
+    handleClickOutside(e, field) {
+        if (this.state.activeDropDown && this.addWrapperRef) {
+            if (!this.userWrapperRef.contains(e.target) && !this.addWrapperRef.contains(e.target)) {
+                this.collapse(field);
+            }
+        } else if (this.state.activeDropDown && !this.userWrapperRef.contains(e.target)) {
+            this.collapse(field);
+        }
+    }
+    
+    collapse() {
+        this.setState({ activeDropDown: null });
+    }
+
+    onClick(field) {
+        if (this.state.activeDropDown === field) {
+            this.collapse();
+        } else {
+            this.toggleDropdown(field);
+        }
     }
     
     render() {
-        
         const { currentUser, logout, openModal } = this.props;
         const { pathname } = this.props.history.location;
         
@@ -77,7 +101,7 @@ class NavigationBar extends React.Component {
         );       
         
         const userMenuDropdown = () => (
-            <ul className="user-menu-ul" id={this.state.active ? "show" : null}>
+            <ul className="user-menu-ul" id={this.state.activeDropDown === 'userMenuBtn' ? "show" : null}>
                 <li className="user-menu-userpage-item">
                     <Link className="userpage-link" to={`/artists/${currentUser.id}`}>
                         <div className="band-name">{currentUser.username}</div>
@@ -90,16 +114,23 @@ class NavigationBar extends React.Component {
             </ul>
         );
 
+        const addMenuDropdown = () => (
+            <ul className="add-menu-ul" id={this.state.activeDropDown === 'addMenuBtn' ? "show" : null}>
+                <li className="add-menu-li">album</li>
+                <li className="add-menu-li">track</li>
+            </ul>
+        );
+
+        // console.log(pathname.includes(`artist`))
+
         if (!currentUser && pathname == '/') {
             return (
                 <div className={mainNavStatus}>
                     <div className="left-nav-logged-out">
                         <div className="logo-wrapper">
-                            {/*  */}
-                                <div className="logo-placeholder">
-                                    <Link className="logo-link" to="/">bandspace</Link>
-                                </div>
-                            {/*  */}
+                            <div className="logo-placeholder">
+                                <Link className="logo-link" to="/">bandspace</Link>
+                            </div>
                         </div>
                         {currentUser ? null : welcomeMessage()}
                     </div>
@@ -115,6 +146,33 @@ class NavigationBar extends React.Component {
                             </div> */}
                         </div>
                         {currentUser ? logoutLink(currentUser, logout) : sessionLinks()}
+                    </div>
+                </div>
+            )
+        } else if (currentUser && pathname.includes(`artists/${currentUser.id}`) ) {
+            return (
+                <div className={mainNavStatus}>
+                    <div className="left-nav-logged-in">
+                        <div className="logo-wrapper-not-splash">
+                            <div className="logo-placeholder-not-splash">
+                                <Link className="logo-link-not-splash" to="/">bandspace</Link>
+                            </div>
+                        </div>
+                        <div className="add-menu-dropdown" ref={this.setAddWrapperRef}>
+                            <a className="add-menu-btn" onClick={() => this.onClick('addMenuBtn')}>+ add</a>
+                            {addMenuDropdown()}
+                        </div>
+                    </div>
+                    <div className="right-nav-logged-in">
+                        <div className="nav-bar-icons">
+                            <div className="user-menu-dropdown" ref={this.setUserWrapperRef}>
+                                <a className="user-menu-btn"
+                                    onClick={() => this.onClick('userMenuBtn')}>
+                                    <div className="user-pic"></div>
+                                </a>
+                                {userMenuDropdown()}
+                            </div>
+                        </div>
                     </div>
                 </div>
             )
@@ -137,15 +195,8 @@ class NavigationBar extends React.Component {
                     </div>
                     <div className="right-nav-logged-in">
                         <div className="nav-bar-icons">
-
-                            {/* maybe these should be ids instead of classes */}
-
-                            {/* these are only here for fan accounts
-                            <div className="feed-icon">bolt</div> 
-                            <div className="collection-icon">heart</div> */}
-                            
-                            <div className="user-menu-dropdown" ref={this.setWrapperRef}>
-                                <a className="user-menu-btn" onClick={this.onUserMenuClick}>
+                            <div className="user-menu-dropdown" ref={this.setUserWrapperRef}>
+                                <a className="user-menu-btn" onClick={ () => this.onClick('userMenuBtn') }>
                                     <div className="user-pic"></div>
                                 </a>
                                 {userMenuDropdown()}
