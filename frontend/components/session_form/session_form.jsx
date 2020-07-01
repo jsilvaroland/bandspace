@@ -13,7 +13,7 @@ class SessionForm extends React.Component {
                 username: '', 
                 email: '', 
                 password: '', 
-                isArtist: true      // for now, every new account will be an artist account
+                isArtist: true
             };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.demoLogin = this.demoLogin.bind(this);
@@ -118,6 +118,9 @@ class SessionForm extends React.Component {
             <div className={`modal-${formType}`}>
                 <div className={`modal-${formType}-titlebar`}>
                     {formTitleText}
+                    <span className="close" onClick={this.props.closeModal}>
+                        &times;
+                    </span>
                 </div>
                 <div className={`modal-${formType}-content`}>
                     <form className="modal-form" onSubmit={this.handleSubmit}>

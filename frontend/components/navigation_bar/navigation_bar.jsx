@@ -116,8 +116,12 @@ class NavigationBar extends React.Component {
 
         const addMenuDropdown = () => (
             <ul className="add-menu-ul" id={this.state.activeDropDown === 'addMenuBtn' ? "show" : null}>
-                <li className="add-menu-li">album</li>
-                <li className="add-menu-li">track</li>
+                <Link to={`/artists/${currentUser.id}/new_album`}>
+                    <li className="add-menu-li">album</li>
+                </Link>
+                <Link to={`/artists/${currentUser.id}/new_track`}>
+                    <li className="add-menu-li">track</li>
+                </Link>
             </ul>
         );
 
