@@ -7,20 +7,24 @@ class NewAlbumForm extends React.Component {
         super(props);
         this.state = {
             activePanel: 0,
-            albumId: null,
+            albumId: null, // set this at some point
+            albumArtPreview: null,
             album: {
                 title: "",
                 artistId: props.currentUser.id,
                 credits: "",
                 descripton: "",
+                trackIds: [],
+                albumArt: null,
             },
-            albumArt: null, // this is required
             tracks: [],
             //errors                // will have to do some setState({ errors })
         };
         this.anyChanges = false;
+        this.forwardToHiddenInput = this.forwardToHiddenInput.bind(this);
         this.handlePanelChange = this.handlePanelChange.bind(this);
         this.handleAudioUpload = this.handleAudioUpload.bind(this);
+        this.handleImageUpload = this.handleImageUpload.bind(this);
         this.handleCreate = this.handleCreate.bind(this);
         this.change = this.change.bind(this);
     }
@@ -28,10 +32,12 @@ class NewAlbumForm extends React.Component {
     componentDidUpdate() {
         const { album, tracks } = this.props;
 
-        if (album && tracks.length === album.trackIds.length && !this.state.album) {
-            this.setState({ album });
-        } else if (this.state.album && this.state.tracks.length !== this.state.album.trackIds.length) {
-            this.setState({ tracks });
+        if (album && tracks) {
+            if (album && tracks.length === album.trackIds.length && !this.state.album) {
+                this.setState({ album });
+            } else if (this.state.album && this.state.tracks.length !== this.state.album.trackIds.length) {
+                this.setState({ tracks });
+            }
         }
     }
 
@@ -58,30 +64,79 @@ class NewAlbumForm extends React.Component {
         };
     }
 
-    handleAudioUpload() {
-        console.log('inside audio upload');
+    handleAudioUpload(e) {
         // don't forget to add trackId to album's trackIds array after upload
         // basically what you do is add a track to this.state.tracks
-        debugger
+        const uploadedTrackSong = e.currentTarget.files[0];
+        if (uploadedTrackSong && (uploadedTrackSong.type === "audio/wav" || uploadedTrackSong.type === "audio/mpeg")) {
+            let tracksCopy = this.state.tracks;
+            tracksCopy.push({
+                artistId: this.props.currentUser.id,
+                title: "",
+                credits: "",
+                description: "",
+                lyrics: "",
+                trackSong: uploadedTrackSong,
+            });
+            this.setState({ tracks: tracksCopy });
+        } else {
+            console.log('Audio file must be mp3/wav format');
+            //setState errors or something
+        }
+    }
+
+    handleImageUpload(e) {
+        const uploadedAlbumArt = e.currentTarget.files[0];
+        if (uploadedAlbumArt && (uploadedAlbumArt.type === "image/png" || 
+        uploadedAlbumArt.type === "image/jpeg" || uploadedAlbumArt.type === "image/gif")) {
+            const fileReader = new FileReader();
+            fileReader.onloadend = () => {
+                let albumCopy = this.state.album;
+                albumCopy.albumArt = uploadedAlbumArt;
+                this.setState({ album: albumCopy, albumArtPreview: fileReader.result });
+            };
+
+            fileReader.readAsDataURL(uploadedAlbumArt);
+        } else {
+            console.log("Album art must be png/jpg/gif format");
+            // setState to render errors here
+        }
+    }
+
+    forwardToHiddenInput() {
+        document.getElementById('image-file').click();
     }
 
     handleCreate() {
         const { album, tracks } = this.state;
-        this.props.createAlbum(album);
-        tracks.forEach(track => this.props.createTrack(track));
+        // create the album
+        if (album.albumArt && album.title !== "") { // also make sure trackIds are equal to the Ids for each track
+            this.props.createAlbum(album) // make the album
+                .then(this.setState({ albumId: album.id }));
+            debugger
+            // get the album's ID
+            // make sure every track has a trackSong
+            tracks.forEach(track => this.props.createTrack(track)); // create the individual tracks, making sure that each track has this album's albumId
+        }
+
+        // create the tracks
+
+        debugger
         // somehow give album the track IDs
     }
 
     render() {
         const { currentUser } = this.props;
-        const { album, tracks, activePanel } = this.state;
-        // const { album, tracks, activePanel } = this.state;
+        const { album, tracks, activePanel, albumArtPreview } = this.state;
 
         if (currentUser) {
-            let publishBtn, titleText, aboutLabel, aboutField, lyricsLabel,
-                lyricsField, creditsLabel, creditsField;
+            console.log(this.state);
 
-            this.anyChanges ?
+            let publishBtn, titleText, aboutLabel, aboutField, lyricsLabel,
+                lyricsField, creditsLabel, creditsField, albumTitleText, 
+                albumArt;
+
+            this.anyChanges && tracks.length !== 0 ?
                 publishBtn = (<button className='publish' onClick={this.handleCreate}>
                     Publish
                 </button>) :
@@ -89,17 +144,22 @@ class NewAlbumForm extends React.Component {
                     Publish
                 </button>)
 
+            album.title === "" ?
+                albumTitleText = "Untitled Album" :
+                albumTitleText = album.title;
+
             if (activePanel === 0) {
                 titleText = (<input
                     type="text"
-                    value={this.state.album.title}
+                    value={album.title}
+                    placeholder="album name"
                     onChange={this.change('album', 'title')}
                 />);
 
                 aboutLabel = (<label className="album-about-label">about this album:</label>)
                 aboutField = (<input className="about-album-input"
                     type="textarea"
-                    value={this.state.album.description}
+                    value={album.description}
                     placeholder="(optional)"
                     onChange={this.change('album', 'description')}
                 />)
@@ -107,21 +167,31 @@ class NewAlbumForm extends React.Component {
                 creditsLabel = (<label className="album-credits-label">album credits:</label>)
                 creditsField = (<input className="credits-album-input"
                     type="textarea"
-                    value={this.state.album.credits}
+                    value={album.credits}
                     placeholder="(optional)"
                     onChange={this.change('album', 'credits')}
                 />)
+                albumArtPreview ?
+                    albumArt = (<div>
+                        <img className="release-art-212" src={albumArtPreview} />
+                                </div>) :
+                    albumArt = (<div className="release-art-212">
+                                    <span className="add-album-art" onClick={this.forwardToHiddenInput}>
+                                        Upload Album Art
+                                    </span>
+                                    <input id="image-file" type="file" onChange={this.handleImageUpload}></input>
+                                </div>)
             } else {
                 titleText = (<input
                     type="text"
-                    value={this.state.tracks[activePanel - 1].title}
+                    value={tracks[activePanel - 1].title}
                     onChange={this.change('tracks', 'title', activePanel - 1)}
                 />);
 
                 aboutLabel = (<label className="track-about-label">about this track:</label>)
                 aboutField = (<input className="about-track-input"
                     type="textarea"
-                    value={this.state.tracks[activePanel - 1].description}
+                    value={tracks[activePanel - 1].description}
                     placeholder="(optional)"
                     onChange={this.change('tracks', 'description', activePanel - 1)}
                 />)
@@ -129,7 +199,7 @@ class NewAlbumForm extends React.Component {
                 lyricsLabel = (<label className="track-lyrics-label">lyrics:</label>)
                 lyricsField = (<input className="lyrics-track-input"
                     type="textarea"
-                    value={this.state.tracks[activePanel - 1].lyrics}
+                    value={tracks[activePanel - 1].lyrics}
                     placeholder="(optional)"
                     onChange={this.change('tracks', 'lyrics', activePanel - 1)}
                 />)
@@ -137,13 +207,13 @@ class NewAlbumForm extends React.Component {
                 creditsLabel = (<label className="track-credits-label">track credits:</label>)
                 creditsField = (<input className="credits-track-input"
                     type="textarea"
-                    value={this.state.tracks[activePanel - 1].credits}
+                    value={tracks[activePanel - 1].credits}
                     placeholder="(optional)"
                     onChange={this.change('tracks', 'credits', activePanel - 1)}
                 />)
             }
 
-
+            console.log(album.albumArt);
 
             return (
                 <div className="album-edit">
@@ -152,10 +222,10 @@ class NewAlbumForm extends React.Component {
                             <div className="left-panel-album-wrapper">
                                 <div className="left-panel-album" onClick={() => this.handlePanelChange(0)}>
                                     <span>
-                                        <img className="release-art-72" src={album.albumArt} />
+                                        <img className="release-art-72" src={albumArtPreview} />
                                     </span>
                                     <span className="album-title-artist">
-                                        <p>{album.title}</p>
+                                        <p>{albumTitleText}</p>
                                         <p>by <span>{currentUser.username}</span></p>
                                     </span>
                                 </div>
@@ -177,6 +247,7 @@ class NewAlbumForm extends React.Component {
                             {lyricsField}
                             {creditsLabel}
                             {creditsField}
+                            {albumArt}
                         </div>
                     </form>
                 </div>

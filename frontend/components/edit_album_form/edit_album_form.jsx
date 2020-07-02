@@ -90,14 +90,14 @@ class EditAlbumForm extends React.Component {
             if (activePanel === 0) {
                 titleText = (<input
                             type="text"
-                            value={this.state.album.title}
+                            value={album.title}
                             onChange={this.change('album', 'title')}
                             />);
 
                 aboutLabel = (<label className="album-about-label">about this album:</label>)
                 aboutField = (<input className="about-album-input"
                     type="textarea"
-                    value={this.state.album.description}
+                    value={album.description}
                     placeholder="(optional)"
                     onChange={this.change('album', 'description')}
                 />)
@@ -105,21 +105,21 @@ class EditAlbumForm extends React.Component {
                 creditsLabel = (<label className="album-credits-label">album credits:</label>)
                 creditsField = (<input className="credits-album-input"
                     type="textarea"
-                    value={this.state.album.credits}
+                    value={album.credits}
                     placeholder="(optional)"
                     onChange={this.change('album', 'credits')}
                 />)
             } else {
                 titleText = (<input
                             type="text"
-                            value={this.state.tracks[activePanel - 1].title} 
+                            value={tracks[activePanel - 1].title} 
                             onChange={this.change('tracks', 'title', activePanel - 1)}
                             />);
 
                 aboutLabel = (<label className="track-about-label">about this track:</label>)
                 aboutField = (<input className="about-track-input"
                     type="textarea"
-                    value={this.state.tracks[activePanel - 1].description}
+                    value={tracks[activePanel - 1].description}
                     placeholder="(optional)"
                     onChange={this.change('tracks', 'description', activePanel - 1)}
                 />)
@@ -127,7 +127,7 @@ class EditAlbumForm extends React.Component {
                 lyricsLabel = (<label className="track-lyrics-label">lyrics:</label>)
                 lyricsField = (<input className="lyrics-track-input"
                     type="textarea"
-                    value={this.state.tracks[activePanel - 1].lyrics}
+                    value={tracks[activePanel - 1].lyrics}
                     placeholder="(optional)"
                     onChange={this.change('tracks', 'lyrics', activePanel - 1)}
                 />)
@@ -135,13 +135,11 @@ class EditAlbumForm extends React.Component {
                 creditsLabel = (<label className="track-credits-label">track credits:</label>)
                 creditsField = (<input className="credits-track-input"
                     type="textarea"
-                    value={this.state.tracks[activePanel - 1].credits}
+                    value={tracks[activePanel - 1].credits}
                     placeholder="(optional)"
                     onChange={this.change('tracks', 'credits', activePanel - 1)}
                 />)
             }
-
-            
 
             return (
                 <div className="album-edit">

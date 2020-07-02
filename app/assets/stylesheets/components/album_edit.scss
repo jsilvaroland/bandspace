@@ -27,6 +27,11 @@
     margin-right: 10px;
 }
 
+.release-art-212 {
+    height: 212px;
+    width: 212px;
+}
+
 .album-title-artist {
     color: #363636;
 }
@@ -93,7 +98,7 @@ h3.tracks {
     padding: 20px 0 20px 10px;
 }
 
-button.update, button.update-disabled {
+button.update, button.update-disabled, button.publish, button.publish-disabled {
     height: 32px;
     width: 108px;
     font-size: 14px;
@@ -103,20 +108,25 @@ button.update, button.update-disabled {
     border: 1px solid #51924c;
 }
 
-button.update-disabled {
+button.update-disabled, button.publish-disabled {
     opacity: 0.3;
 }
 
-button.update:hover {
+button.update:hover, button.publish:hover {
     text-decoration: underline;
     cursor: pointer;
 }
 
-button.update:focus, button.update-disabled:focus {
+button.update:focus, button.update-disabled:focus, button.publish:focus, 
+button.publish-disabled:focus {
     outline: none;
 }
 
 .right-panel {
     display: flex;
     flex-direction: column;
+}
+
+#audio-file, #image-file {
+    display: none;
 }
