@@ -4,6 +4,8 @@ export const RECEIVE_ALBUMS = 'RECEIVE_ALBUMS';
 export const RECEIVE_ALBUM = 'RECEIVE_ALBUM';
 export const REMOVE_ALBUM = 'REMOVE_ALBUM';
 export const CLEAR_ALBUMS = 'CLEAR_ALBUMS';
+export const RECEIVE_ALBUM_ERRORS = 'RECEIVE_ALBUM_ERRORS';
+export const CLEAR_ALBUM_ERRORS = 'CLEAR_ALBUM_ERRORS';
 
 const receiveAlbums = albums => ({
     type: RECEIVE_ALBUMS,
@@ -18,6 +20,15 @@ const receiveAlbum = album => ({
 const removeAlbum = albumId => ({
     type: REMOVE_ALBUM,
     albumId
+});
+
+const receiveAlbumErrors = errors => ({
+    type: RECEIVE_ALBUM_ERRORS,
+    errors
+});
+
+export const clearAlbumErrors = () => ({ // not being used yet
+    type: CLEAR_ALBUM_ERRORS,
 });
 
 export const clearAlbums = () => ({
@@ -42,11 +53,13 @@ export const fetchAlbum = albumId => dispatch => (
 export const createAlbum = album => dispatch => (
     AlbumsApiUtil.createAlbum(album)
         .then(album => dispatch(receiveAlbum(album)))
+        .fail(errors => dispatch(receiveAlbumErrors(errors.responseJSON)))
 );
 
 export const updateAlbum = album => dispatch => (
     AlbumsApiUtil.updateAlbum(album)
         .then(album => dispatch(receiveAlbum(album)))
+        .fail(errors => dispatch(receiveAlbumErrors(errors.responseJSON)))
 );
 
 export const deleteAlbum = albumId => dispatch => (

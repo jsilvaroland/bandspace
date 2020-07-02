@@ -7,11 +7,9 @@ class NewAlbumForm extends React.Component {
         super(props);
         this.state = {
             activePanel: 0,
-            albumId: null, // set this at some point
             albumArtPreview: null,
             album: {
                 title: "",
-                artistId: props.currentUser.id,
                 credits: "",
                 descripton: "",
                 trackIds: [],
@@ -33,11 +31,16 @@ class NewAlbumForm extends React.Component {
         const { album, tracks } = this.props;
 
         if (album && tracks) {
+            debugger
             if (album && tracks.length === album.trackIds.length && !this.state.album) {
                 this.setState({ album });
             } else if (this.state.album && this.state.tracks.length !== this.state.album.trackIds.length) {
                 this.setState({ tracks });
             }
+        }
+
+        if (tracks && tracks.length !== 0) {
+            debugger
         }
     }
 
@@ -71,7 +74,6 @@ class NewAlbumForm extends React.Component {
         if (uploadedTrackSong && (uploadedTrackSong.type === "audio/wav" || uploadedTrackSong.type === "audio/mpeg")) {
             let tracksCopy = this.state.tracks;
             tracksCopy.push({
-                artistId: this.props.currentUser.id,
                 title: "",
                 credits: "",
                 description: "",
@@ -92,7 +94,7 @@ class NewAlbumForm extends React.Component {
             const fileReader = new FileReader();
             fileReader.onloadend = () => {
                 let albumCopy = this.state.album;
-                albumCopy.albumArt = uploadedAlbumArt;
+                albumCopy.albumArt = uploadedAlbumArt; // might not be able to just do this
                 this.setState({ album: albumCopy, albumArtPreview: fileReader.result });
             };
 
@@ -109,20 +111,36 @@ class NewAlbumForm extends React.Component {
 
     handleCreate() {
         const { album, tracks } = this.state;
+        const hasTitle = track => track.title !== "";
+
         // create the album
-        if (album.albumArt && album.title !== "") { // also make sure trackIds are equal to the Ids for each track
-            this.props.createAlbum(album) // make the album
-                .then(this.setState({ albumId: album.id }));
-            debugger
-            // get the album's ID
-            // make sure every track has a trackSong
-            tracks.forEach(track => this.props.createTrack(track)); // create the individual tracks, making sure that each track has this album's albumId
+        if (album.albumArt && album.title !== "" && tracks.every(hasTitle)) { // also make sure trackIds are equal to the Ids for each track
+            const albumFormData = new FormData();
+            albumFormData.append('album[title]', this.state.album.title);
+            albumFormData.append('album[description]', this.state.album.description);
+            albumFormData.append('album[credits]', this.state.album.credits);
+            albumFormData.append('album[photo]', this.state.album.albumArt);
+            this.props.createAlbum(albumFormData)
+                .then(
+                    response => console.log(response.message),
+                    response => console.log(response.responseJSON)
+                ); 
+
+            // this.setState({ albumId: album.id });
+            // tracks.forEach((track, i) => {
+            //     this.state.tracks[i].albumId = albumId;
+            //     this.props.createTrack(track);
+            // }); // create the individual tracks, making sure that each track has this album's albumId
+        } else if (!album.albumArt) {
+            console.log('album art required');
+        } else if (album.title) {
+
         }
 
         // create the tracks
 
-        debugger
         // somehow give album the track IDs
+        debugger
     }
 
     render() {

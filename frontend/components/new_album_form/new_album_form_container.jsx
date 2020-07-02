@@ -6,14 +6,12 @@ import { createAlbum, clearAlbums } from '../../actions/albums_actions';
 import { createTrack, clearTracks } from '../../actions/tracks_actions';
 import NewAlbumForm from './new_album_form';
 
-const mapStateToProps = (state, ownProps) => {
-    const albumId = parseInt(ownProps.match.params.albumId);
-    const album = state.entities.albums[albumId];
+const mapStateToProps = state => {
+    const album = Object.values(state.entities.albums)[0];
     const tracks = Object.values(state.entities.tracks);
     const currentUser = state.entities.users[state.session.id];
 
     return ({
-        albumId,
         album,
         tracks,
         currentUser,

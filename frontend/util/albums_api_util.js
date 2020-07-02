@@ -24,7 +24,9 @@ export const createAlbum = album => (
     $.ajax({
         method: 'POST',
         url: 'api/albums',          // once an album is created, will i have to add it's id under user slice of state later?
-        data: { album }
+        data: album,
+        contentType: false,
+        processData: false,
     })
 );
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_08_162939) do
+ActiveRecord::Schema.define(version: 2020_07_02_200410) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,8 +38,8 @@ ActiveRecord::Schema.define(version: 2020_05_08_162939) do
 
   create_table "albums", force: :cascade do |t|
     t.string "title", null: false
-    t.text "description"
-    t.text "credits"
+    t.text "description", default: ""
+    t.text "credits", default: ""
     t.integer "artist_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -49,9 +49,9 @@ ActiveRecord::Schema.define(version: 2020_05_08_162939) do
 
   create_table "tracks", force: :cascade do |t|
     t.string "title", null: false
-    t.text "description"
-    t.text "credits"
-    t.text "lyrics"
+    t.text "description", default: ""
+    t.text "credits", default: ""
+    t.text "lyrics", default: ""
     t.integer "artist_id", null: false
     t.integer "album_id"
     t.datetime "created_at", null: false
