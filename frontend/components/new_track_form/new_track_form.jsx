@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 
 class NewTrackForm extends React.Component {
     constructor(props) {
@@ -76,7 +77,8 @@ class NewTrackForm extends React.Component {
             trackFormData.append('track[lyrics]', track.lyrics);
             trackFormData.append('track[photo]', track.trackArt);
             trackFormData.append('track[song]', track.trackSong);
-            this.props.createTrack(trackFormData);
+            this.props.createTrack(trackFormData)
+            .then(this.setState({ published: true }));
         }
 
         if (!track.trackArt) {
@@ -90,7 +92,9 @@ class NewTrackForm extends React.Component {
     render() {
         const { currentUser } = this.props;
         
-        if (currentUser) {
+        if (this.state.published) {
+            return (<Redirect to={`/artists/${currentUser.id}`} />)
+        } else if (currentUser) {
             const { track, trackArtPreview, audioUploaded } = this.state;
             let publishBtn, trackTitleText, titleInput, aboutLabel, aboutField, 
                 lyricsLabel, lyricsField, creditsLabel, creditsField;
