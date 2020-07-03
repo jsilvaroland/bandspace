@@ -47,7 +47,7 @@ class Api::AlbumsController < ApplicationController
         
         if @album.artist_id == current_user.id
             @album.destroy
-            render :index # maybe change this render to something else
+            # render :index # maybe change this render to something else
         else
             render json: ['You are not the owner of this album'], status: 422
         end

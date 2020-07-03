@@ -1,10 +1,11 @@
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import React from 'react';
 
 import AlbumShow from './album_show';
 import { fetchAlbum, clearAlbums } from '../../actions/albums_actions';
 import { fetchAlbumTracks, clearTracks } from '../../actions/tracks_actions';
+import { openModal } from '../../actions/modal_actions';
+
 
 // gotta make sure it renders differently if the album belongs to current user or not
 
@@ -29,6 +30,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     fetchUser: () => dispatch(fetchUser(ownProps.match.params.userId)),
     fetchAlbum: albumId => dispatch(fetchAlbum(albumId)),
     fetchAlbumTracks: albumId => dispatch(fetchAlbumTracks(albumId)),
+    openModal: modal => dispatch(openModal(modal)),
     clearTracks: () => dispatch(clearTracks()),
     clearAlbums: () => dispatch(clearAlbums()),
 });

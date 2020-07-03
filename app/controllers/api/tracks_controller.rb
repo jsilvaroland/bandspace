@@ -42,10 +42,10 @@ class Api::TracksController < ApplicationController
 
     def destroy
         @track = Track.find_by(id: params[:id])
-        
-        if track.artist_id == current_user.id
+
+        if @track.artist_id == current_user.id
             @track.destroy
-            render 'api/albums/index'
+            # render 'api/albums/index'
         else
             render json: ['You are not the owner of this track'], status: 422
         end

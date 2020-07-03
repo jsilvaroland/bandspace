@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 import TrackIndex from './track_index';
 import MusicPlayer from '../music_player/music_player';
@@ -10,6 +10,7 @@ class AlbumShow extends React.Component {
         this.state = {
             playing: false,
             pageId: parseInt(this.props.match.params.albumId),
+            deleted: false,
         };
         this.clickPlay = this.clickPlay.bind(this);
         this.next = this.next.bind(this);
@@ -38,6 +39,7 @@ class AlbumShow extends React.Component {
     }
 
     componentDidUpdate() {
+        debugger
         const { pageAlbumId, pageAlbum, pageTracks } = this.props;
         if (pageAlbumId && pageAlbumId !== this.state.pageId) {
             const { clearAlbums, clearTracks, fetchUser, fetchAlbum, fetchAlbumTracks } = this.props;
@@ -53,6 +55,8 @@ class AlbumShow extends React.Component {
                     activeTrack: pageTracks[0],
                 });
             }
+        } else if (!pageAlbum) {
+            // this.setState({ deleted: true });
         }
     }
 
@@ -135,7 +139,9 @@ class AlbumShow extends React.Component {
     render() {
         const { pageUser, pageTracks, pageAlbum, currentUserId } = this.props;
 
-        if (pageUser && pageAlbum && pageAlbum.trackIds.length === pageTracks.length) {
+        if (this.state.deleted) {
+            return <Redirect to={`/artists/${currentUserId}`} />
+        } else if (pageUser && pageAlbum && pageAlbum.trackIds.length === pageTracks.length) {
             if (!pageUser.createdAlbumIds.includes(pageAlbum.id)) {
                 return <div>Page does not exist</div>
             }
@@ -147,8 +153,10 @@ class AlbumShow extends React.Component {
                         <Link className="edit-delete-buttons" to={`/artists/${pageUser.id}/albums/${pageAlbum.id}/edit`}>Edit</Link>
                     </li>
                     <li>
-                        <button className="edit-delete-buttons">Delete</button>
-                        {/* add this functionality in a bit */}
+                        <button className="edit-delete-buttons" 
+                            onClick={() => this.props.openModal('delete')}>
+                            Delete
+                        </button>
                     </li>
                 </ul>)
             }
