@@ -39,8 +39,8 @@ class AlbumShow extends React.Component {
     }
 
     componentDidUpdate() {
-        debugger
         const { pageAlbumId, pageAlbum, pageTracks } = this.props;
+
         if (pageAlbumId && pageAlbumId !== this.state.pageId) {
             const { clearAlbums, clearTracks, fetchUser, fetchAlbum, fetchAlbumTracks } = this.props;
             clearAlbums();
@@ -55,8 +55,8 @@ class AlbumShow extends React.Component {
                     activeTrack: pageTracks[0],
                 });
             }
-        } else if (!pageAlbum) {
-            // this.setState({ deleted: true });
+        } else if (!pageAlbum && this.featuredAudio) { // some condition
+            this.setState({ deleted: true });
         }
     }
 
