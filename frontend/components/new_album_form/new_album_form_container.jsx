@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { createAlbum, clearAlbums } from '../../actions/albums_actions';
+import { createAlbum, updateAlbum, clearAlbums } from '../../actions/albums_actions';
 import { createTrack, clearTracks } from '../../actions/tracks_actions';
 import NewAlbumForm from './new_album_form';
 
@@ -23,9 +23,10 @@ const mapDispatchToProps = dispatch => {
     // pass update album AND update track? or just update album?
     return ({
         createAlbum: album => dispatch(createAlbum(album)),
+        updateAlbum: album => dispatch(updateAlbum(album)),
         createTrack: track => dispatch(createTrack(track)),
-        // clearAlbums: () => dispatch(clearAlbums()),
-        // clearTracks: () => dispatch(clearTracks()),
+        clearAlbums: () => dispatch(clearAlbums()),
+        clearTracks: () => dispatch(clearTracks()),
     });
 };
 

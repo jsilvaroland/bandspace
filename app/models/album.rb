@@ -13,5 +13,4 @@ class Album < ApplicationRecord
             errors[:photo] <<  "must be attached"
         end
     end
-
 end

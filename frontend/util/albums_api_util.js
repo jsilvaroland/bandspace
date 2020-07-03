@@ -34,7 +34,9 @@ export const updateAlbum = album => (
     $.ajax({
         method: 'PATCH',
         url: `api/albums/${album.id}`,
-        data: { album }
+        data: album,
+        contentType: false,
+        processData: false,
     })
 );
 

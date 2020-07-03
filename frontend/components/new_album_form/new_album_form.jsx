@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 
 import EditAlbumTrackIndex from '../edit_album_form/edit_album_track_index';
 
@@ -8,14 +9,15 @@ class NewAlbumForm extends React.Component {
         this.state = {
             activePanel: 0,
             albumArtPreview: null,
+            tracks: [],
             album: {
                 title: "",
                 credits: "",
-                descripton: "",
-                trackIds: [],
+                description: "",
                 albumArt: null,
+                trackIds: [],
             },
-            tracks: [],
+            published: false,
             //errors                // will have to do some setState({ errors })
         };
         this.anyChanges = false;
@@ -26,21 +28,28 @@ class NewAlbumForm extends React.Component {
         this.handleCreate = this.handleCreate.bind(this);
         this.change = this.change.bind(this);
     }
+    
+    componentDidMount() {
+        this.props.clearAlbums();
+        this.props.clearTracks();
+    }
 
     componentDidUpdate() {
-        const { album, tracks } = this.props;
+        const { album, tracks } = this.state;
 
-        if (album && tracks) {
-            debugger
-            if (album && tracks.length === album.trackIds.length && !this.state.album) {
-                this.setState({ album });
-            } else if (this.state.album && this.state.tracks.length !== this.state.album.trackIds.length) {
-                this.setState({ tracks });
-            }
-        }
+        if (album.id && tracks.length === album.trackIds.length) {
+            const albumFormData = new FormData();
+            albumFormData.append('album[description]', album.description);
+            albumFormData.append('album[title]', album.title);
+            albumFormData.append('album[credits]', album.credits);
+            albumFormData.append('album[photo]', album.albumArt);
+            albumFormData.append('album[track_ids]', album.trackIds);
+            albumFormData.append('album[id]', album.id);
 
-        if (tracks && tracks.length !== 0) {
-            debugger
+            this.props.updateAlbum(albumFormData)
+                .then(this.props.clearAlbums())
+                .then(this.props.clearTracks())
+                .then(this.setState({ published: true }));
         }
     }
 
@@ -68,17 +77,15 @@ class NewAlbumForm extends React.Component {
     }
 
     handleAudioUpload(e) {
-        // don't forget to add trackId to album's trackIds array after upload
-        // basically what you do is add a track to this.state.tracks
-        const uploadedTrackSong = e.currentTarget.files[0];
-        if (uploadedTrackSong && (uploadedTrackSong.type === "audio/wav" || uploadedTrackSong.type === "audio/mpeg")) {
+        const uploadFile = e.currentTarget.files[0];
+        if (uploadFile && (uploadFile.type === "audio/wav" || uploadFile.type === "audio/mpeg")) {
             let tracksCopy = this.state.tracks;
             tracksCopy.push({
                 title: "",
                 credits: "",
                 description: "",
                 lyrics: "",
-                trackSong: uploadedTrackSong,
+                trackSong: uploadFile,
             });
             this.setState({ tracks: tracksCopy });
         } else {
@@ -88,17 +95,16 @@ class NewAlbumForm extends React.Component {
     }
 
     handleImageUpload(e) {
-        const uploadedAlbumArt = e.currentTarget.files[0];
-        if (uploadedAlbumArt && (uploadedAlbumArt.type === "image/png" || 
-        uploadedAlbumArt.type === "image/jpeg" || uploadedAlbumArt.type === "image/gif")) {
+        const uploadFile = e.currentTarget.files[0];
+        if (uploadFile && (uploadFile.type === "image/png" || 
+        uploadFile.type === "image/jpeg" || uploadFile.type === "image/gif")) {
             const fileReader = new FileReader();
             fileReader.onloadend = () => {
                 let albumCopy = this.state.album;
-                albumCopy.albumArt = uploadedAlbumArt; // might not be able to just do this
+                albumCopy.albumArt = uploadFile; // might not be able to just do this
                 this.setState({ album: albumCopy, albumArtPreview: fileReader.result });
             };
-
-            fileReader.readAsDataURL(uploadedAlbumArt);
+            fileReader.readAsDataURL(uploadFile);
         } else {
             console.log("Album art must be png/jpg/gif format");
             // setState to render errors here
@@ -110,46 +116,62 @@ class NewAlbumForm extends React.Component {
     }
 
     handleCreate() {
+        const { createAlbum, createTrack, updateAlbum, currentUser } = this.props;
         const { album, tracks } = this.state;
         const hasTitle = track => track.title !== "";
 
         // create the album
         if (album.albumArt && album.title !== "" && tracks.every(hasTitle)) { // also make sure trackIds are equal to the Ids for each track
+            // maybe leave the albumArt validation for backend
+            
             const albumFormData = new FormData();
-            albumFormData.append('album[title]', this.state.album.title);
-            albumFormData.append('album[description]', this.state.album.description);
-            albumFormData.append('album[credits]', this.state.album.credits);
-            albumFormData.append('album[photo]', this.state.album.albumArt);
-            this.props.createAlbum(albumFormData)
-                .then(
-                    response => console.log(response.message),
-                    response => console.log(response.responseJSON)
-                ); 
+            albumFormData.append('album[description]', album.description);
+            albumFormData.append('album[title]', album.title);
+            albumFormData.append('album[credits]', album.credits);
+            albumFormData.append('album[photo]', album.albumArt);
+            
+            const tracksFormData = []; let trackFormData;
+            tracks.forEach(track => {
+                trackFormData = new FormData();
+                trackFormData.append('track[title]', track.title);
+                trackFormData.append('track[description]', track.description);
+                trackFormData.append('track[credits]', track.credits);
+                trackFormData.append('track[lyrics]', track.lyrics);
+                trackFormData.append('track[song]', track.trackSong);
+                tracksFormData.push(trackFormData);
+            });
 
-            // this.setState({ albumId: album.id });
-            // tracks.forEach((track, i) => {
-            //     this.state.tracks[i].albumId = albumId;
-            //     this.props.createTrack(track);
-            // }); // create the individual tracks, making sure that each track has this album's albumId
+            const trackIds = [];
+            createAlbum(albumFormData)
+                .then(res => 
+                    tracksFormData.forEach(trackFormData => {
+                        album.id = res.album.id;
+                        trackFormData.append('track[album_id]', res.album.id);
+                        createTrack(trackFormData)
+                            .then(res => {
+                                album.trackIds.push(res.track.id);
+                                // console.log(albumCopy.trackIds);
+                                // console.log(trackIdsCopy);
+                                // console.log(albumCopy);
+                                // album.trackIds = trackIds;
+                                this.setState({ album: album });
+                            });
+                    }));
+
         } else if (!album.albumArt) {
             console.log('album art required');
-        } else if (album.title) {
+        } else if (!album.title) {
 
         }
-
-        // create the tracks
-
-        // somehow give album the track IDs
-        debugger
     }
 
     render() {
         const { currentUser } = this.props;
         const { album, tracks, activePanel, albumArtPreview } = this.state;
 
-        if (currentUser) {
-            console.log(this.state);
-
+        if (this.state.published) {
+            return <Redirect to={`/artists/${currentUser.id}`} />
+        } else if (currentUser) {
             let publishBtn, titleText, aboutLabel, aboutField, lyricsLabel,
                 lyricsField, creditsLabel, creditsField, albumTitleText, 
                 albumArt;
@@ -230,8 +252,6 @@ class NewAlbumForm extends React.Component {
                     onChange={this.change('tracks', 'credits', activePanel - 1)}
                 />)
             }
-
-            console.log(album.albumArt);
 
             return (
                 <div className="album-edit">
