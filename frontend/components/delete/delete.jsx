@@ -33,7 +33,7 @@ class Delete extends React.Component {
     }
 
     render() {
-        const { currentUser, releaseType } = this.props;
+        const { releaseType } = this.props;
 
         // if (this.state.deleted) {
         //     return <Redirect to={`/artists/${currentUser.id}`} />

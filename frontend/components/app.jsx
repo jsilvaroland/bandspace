@@ -11,6 +11,7 @@ import Splash from './splash/splash_container';
 import AlbumShowContainer from './album_show/album_show_container';
 import TrackShowContainer from './track_show/track_show_container';
 import NewAlbumFormContainer from './new_album_form/new_album_form_container';
+import NewTrackFormContainer from './new_track_form/new_track_form_container';
 import EditAlbumFormContainer from './edit_album_form/edit_album_form_container';
 
 // make em all protected routes, redirect if artist id doesn't match album or track id?
@@ -24,10 +25,10 @@ const App = () => (
         <div className="main-wrapper">
             <Switch>
                 <Route exact path="/artists/:userId" component={UserShowContainer} />
-                <ProtectedRoute exact path="/artists/:userId/albums/:albumId/edit" component={EditAlbumFormContainer} />
                 <ProtectedRoute exact path="/artists/:userId/new_album" component={NewAlbumFormContainer} />
+                <ProtectedRoute path="/artists/:userId/new_track" component={NewTrackFormContainer} />
+                <ProtectedRoute exact path="/artists/:userId/albums/:albumId/edit" component={EditAlbumFormContainer} />
                 {/* <ProtectedRoute path="/artists/:userId/tracks/:trackId/edit" component={} /> */}
-                {/* <ProtectedRoute path="/artists/:userId/new_track" component={} /> */}
                 <Route exact path="/artists/:userId/albums/:albumId" component={AlbumShowContainer} />
                 <Route exact path="/artists/:userId/tracks/:trackId" component={TrackShowContainer} />
                 <Route exact path="/artist_index" component={ArtistIndexContainer} />

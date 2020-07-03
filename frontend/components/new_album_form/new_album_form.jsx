@@ -112,11 +112,12 @@ class NewAlbumForm extends React.Component {
     }
 
     forwardToHiddenInput() {
+        debugger
         document.getElementById('image-file').click();
     }
 
     handleCreate() {
-        const { createAlbum, createTrack, updateAlbum, currentUser } = this.props;
+        const { createAlbum, createTrack } = this.props;
         const { album, tracks } = this.state;
         const hasTitle = track => track.title !== "";
 
@@ -141,7 +142,6 @@ class NewAlbumForm extends React.Component {
                 tracksFormData.push(trackFormData);
             });
 
-            const trackIds = [];
             createAlbum(albumFormData)
                 .then(res => 
                     tracksFormData.forEach(trackFormData => {
@@ -150,28 +150,27 @@ class NewAlbumForm extends React.Component {
                         createTrack(trackFormData)
                             .then(res => {
                                 album.trackIds.push(res.track.id);
-                                // console.log(albumCopy.trackIds);
-                                // console.log(trackIdsCopy);
-                                // console.log(albumCopy);
-                                // album.trackIds = trackIds;
                                 this.setState({ album: album });
                             });
                     }));
-
-        } else if (!album.albumArt) {
+        } 
+        
+        if (!album.albumArt) {
             console.log('album art required');
-        } else if (!album.title) {
-
+        }
+        
+        if (album.title === "") {
+            console.log('album title required');
         }
     }
 
     render() {
         const { currentUser } = this.props;
-        const { album, tracks, activePanel, albumArtPreview } = this.state;
-
+        
         if (this.state.published) {
             return <Redirect to={`/artists/${currentUser.id}`} />
         } else if (currentUser) {
+            const { album, tracks, activePanel, albumArtPreview } = this.state;
             let publishBtn, titleText, aboutLabel, aboutField, lyricsLabel,
                 lyricsField, creditsLabel, creditsField, albumTitleText, 
                 albumArt;

@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import React from 'react';
 
 import ArtistIndex from './artist_index';
 import { fetchAllUsers, clearAllUsers, fetchUser } from '../../actions/users_actions';

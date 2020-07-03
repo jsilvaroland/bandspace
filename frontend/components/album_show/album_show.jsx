@@ -140,7 +140,7 @@ class AlbumShow extends React.Component {
         const { pageUser, pageTracks, pageAlbum, currentUserId } = this.props;
 
         if (this.state.deleted) {
-            return <Redirect to={`/artists/${currentUserId}`} />
+            return (<Redirect to={`/artists/${currentUserId}`} />)
         } else if (pageUser && pageAlbum && pageAlbum.trackIds.length === pageTracks.length) {
             if (!pageUser.createdAlbumIds.includes(pageAlbum.id)) {
                 return <div>Page does not exist</div>
