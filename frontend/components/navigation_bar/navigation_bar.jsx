@@ -103,12 +103,12 @@ class NavigationBar extends React.Component {
         const userMenuDropdown = () => (
             <ul className="user-menu-ul" id={this.state.activeDropDown === 'userMenuBtn' ? "show" : null}>
                 <li className="user-menu-userpage-item">
-                    <Link className="userpage-link" to={`/artists/${currentUser.id}`}>
+                    <Link className="userpage-link" to={`/artists/${currentUser.id}`} onClick={this.collapse}>
                         <div className="band-name">{currentUser.username}</div>
                         <div className="view-site">view site</div>
                     </Link>
                 </li>
-                <li className="user-menu-item">
+                <li className="user-menu-item" onClick={this.collapse}>
                     {logoutLink(currentUser, logout)}
                 </li>
             </ul>
@@ -116,10 +116,10 @@ class NavigationBar extends React.Component {
 
         const addMenuDropdown = () => (
             <ul className="add-menu-ul" id={this.state.activeDropDown === 'addMenuBtn' ? "show" : null}>
-                <Link to={`/artists/${currentUser.id}/new_album`}>
+                <Link to={`/artists/${currentUser.id}/new_album`} onClick={this.collapse}>
                     <li className="add-menu-li">album</li>
                 </Link>
-                <Link to={`/artists/${currentUser.id}/new_track`}>
+                <Link to={`/artists/${currentUser.id}/new_track`} onClick={this.collapse}>
                     <li className="add-menu-li">track</li>
                 </Link>
             </ul>
@@ -200,7 +200,7 @@ class NavigationBar extends React.Component {
                     <div className="right-nav-logged-in">
                         <div className="nav-bar-icons">
                             <div className="user-menu-dropdown" ref={this.setUserWrapperRef}>
-                                <a className="user-menu-btn" onClick={ () => this.onClick('userMenuBtn') }>
+                                <a className="user-menu-btn" onClick={() => this.onClick('userMenuBtn')}>
                                     <div className="user-pic"></div>
                                 </a>
                                 {userMenuDropdown()}
