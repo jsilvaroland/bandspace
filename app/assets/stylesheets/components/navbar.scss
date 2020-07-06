@@ -190,6 +190,11 @@
     left: 0;
 }
 
+.add-menu-ul a {
+    color: #000000;
+    text-decoration: none;
+}
+
 .user-menu-ul li, .add-menu-ul li {
     padding: 0 20px;
     line-height: 32px;
@@ -217,7 +222,7 @@
     padding-bottom: 3px;
 }
 
-.user-menu-userpage-item:hover, .user-menu-item:hover, .add-menu-li:hover {
+.user-menu-userpage-item:hover, .user-menu-item:hover, .add-menu-ul a:hover {
     background-color: rgb(243, 243, 243);
     cursor: pointer;
 }
