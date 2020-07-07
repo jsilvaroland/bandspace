@@ -44,7 +44,6 @@ class NewAlbumForm extends React.Component {
             albumFormData.append('album[credits]', album.credits);
             albumFormData.append('album[photo]', album.albumArt);
             albumFormData.append('album[track_ids]', album.trackIds);
-            albumFormData.append('album[id]', album.id);
 
             this.props.updateAlbum(albumFormData)
                 .then(this.props.clearAlbums())
@@ -129,7 +128,7 @@ class NewAlbumForm extends React.Component {
             albumFormData.append('album[title]', album.title);
             albumFormData.append('album[credits]', album.credits);
             albumFormData.append('album[photo]', album.albumArt);
-            
+
             const tracksFormData = []; let trackFormData;
             tracks.forEach(track => {
                 trackFormData = new FormData();

@@ -5,6 +5,7 @@ import UserShow from './user_show';
 import { fetchUser, updateUser } from '../../actions/users_actions';
 import { fetchArtistAlbums, clearAlbums } from '../../actions/albums_actions';
 import { clearTracks } from '../../actions/tracks_actions';
+import { openModal } from '../../actions/modal_actions';
 
 const mapStateToProps = (state, ownProps) => {
     const pageUserId = parseInt(ownProps.match.params.userId);
@@ -28,6 +29,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         updateUser: user => dispatch(updateUser(user)),
         clearAlbums: () => dispatch(clearAlbums()),
         clearTracks: () => dispatch(clearTracks()),
+        openModal: modal => dispatch(openModal(modal)),
     });
 };
 

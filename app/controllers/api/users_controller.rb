@@ -23,7 +23,11 @@ class Api::UsersController < ApplicationController
 
     def update
         @user = current_user
-        @user.update(user_params)
+    
+        user_params[:banner] == "null" ? 
+            @user.banner.purge : 
+            @user.update(user_params)
+
         if @user.save # Profile Updated / changes saved message or something?
             render :show
         else

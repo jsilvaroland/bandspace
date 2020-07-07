@@ -52,14 +52,13 @@ class UserShow extends React.Component {
             uploadFile.type === "image/jpeg" || uploadFile.type === "image/gif")) {
             const userFormData = new FormData();
             userFormData.append('user[banner]', uploadFile);
-            updateUser(userFormData)
-                .then(res => this.setState({ user: res.user }));
+            updateUser(userFormData);
+
             // does this mean that props will change? or do I have to manually change state here.
         } else {
             console.log("Banner must be png/jpg/gif format");
             //setState errors or something
         }
-        debugger
     }
 
     render() {  // will first write if you are nOT owner of this page
@@ -71,6 +70,10 @@ class UserShow extends React.Component {
                 pageUser.userBanner ? 
                 bannerArt = <div className="header-placeholder">
                                 <img className="banner-art" src={pageUser.userBanner} />
+                                <button className="remove" 
+                                    onClick={() => this.props.openModal('delete-custom-header')}>
+                                    &times;
+                                </button> 
                             </div> :
                 bannerArt = <div className="header-upload">
                                 <input id="banner-file" type="file" onChange={this.handleBannerUpload} />

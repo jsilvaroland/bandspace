@@ -29,7 +29,7 @@ class Api::AlbumsController < ApplicationController
     end
 
     def update
-        @album = Album.find_by(id: params[:id]) # not sure how to find the album. also shoudl require album's artist_id == currentuser.id
+        @album = Album.find_by(id: params[:album][:id])
 
         if @album.artist_id == current_user.id
             if @album.update(album_params)

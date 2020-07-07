@@ -15,6 +15,7 @@
 
 // placeholder, change to .header l8r
 .header-placeholder {
+    position: relative;
     width: 975px;
     height: 136px; // change once get images from activestorage
     min-height: 40px;
@@ -134,4 +135,18 @@ a.release-link:hover {
 
 #banner-file {
     display: none;
+}
+
+button.remove {
+    position: absolute;
+    font-size: 14px;
+    right: 5px;
+    bottom: 5px;
+    padding: 1px 5px;
+    color: #0687F5;
+    cursor: pointer;
+}
+
+.remove:hover {
+    text-decoration: underline;
 }
