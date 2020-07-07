@@ -114,6 +114,7 @@ class NewTrackForm extends React.Component {
             titleInput = (<input
                 type="text"
                 value={track.title}
+                placeholder="track name"
                 onChange={this.change('title')}
             />);
     

@@ -112,7 +112,6 @@ class NewAlbumForm extends React.Component {
     }
 
     forwardToHiddenInput() {
-        debugger
         document.getElementById('image-file').click();
     }
 

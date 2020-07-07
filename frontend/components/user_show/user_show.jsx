@@ -7,8 +7,9 @@ class UserShow extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            pageId: parseInt(this.props.match.params.userId),
+            pageId: parseInt(props.match.params.userId),
         };
+        this.handleBannerUpload = this.handleBannerUpload.bind(this);
     }
 
     componentDidMount() {
@@ -28,7 +29,7 @@ class UserShow extends React.Component {
     componentDidUpdate() {
         const { pageUserId } = this.props;
 
-        if (pageUserId && pageUserId !== this.state.pageId) {
+        if (pageUserId !== this.state.pageId) {
             const { clearAlbums, clearTracks, fetchUser, fetchArtistAlbums, fetchArtistSingles } = this.props;
             clearAlbums();
             clearTracks();
@@ -40,35 +41,90 @@ class UserShow extends React.Component {
         }
     }
 
-    render() {  // will first write if you are nOT owner of this page
-        const { pageUser, pageUserId, pageAlbums, pageSingles } = this.props;
+    forwardToHiddenInput(inputType) {
+        document.getElementById(`${inputType}-file`).click();
+    }
 
-        // if ( this.props.currentUser && this.props.currentUser.id === this.props.pageUserId) {
-        //     return(
-        //         <div className="my-user-show">
-        //             <h1>My Show Page</h1>
-        //         </div>
-        //     )
-        // } else {
-            if (pageUser && pageUserId) {
+    handleBannerUpload(e) {
+        const { updateUser } = this.props;
+        const uploadFile = e.currentTarget.files[0];
+        if (uploadFile && (uploadFile.type === "image/png" ||
+            uploadFile.type === "image/jpeg" || uploadFile.type === "image/gif")) {
+            const userFormData = new FormData();
+            userFormData.append('user[banner]', uploadFile);
+            updateUser(userFormData)
+                .then(res => this.setState({ user: res.user }));
+            // does this mean that props will change? or do I have to manually change state here.
+        } else {
+            console.log("Banner must be png/jpg/gif format");
+            //setState errors or something
+        }
+        debugger
+    }
+
+    render() {  // will first write if you are nOT owner of this page
+        const { currentUserId, pageUser, albums, singles } = this.props;
+        let bannerArt;
+        if (pageUser) {
+            if (currentUserId === this.state.pageId) {
+                // page is logged-in-user's page
+                pageUser.userBanner ? 
+                bannerArt = <div className="header-placeholder">
+                                <img className="banner-art" src={pageUser.userBanner} />
+                            </div> :
+                bannerArt = <div className="header-upload">
+                                <input id="banner-file" type="file" onChange={this.handleBannerUpload} />
+                                <span className="add-banner" onClick={() => this.forwardToHiddenInput('banner')}>
+                                    Upload Custom Header 
+                                </span>
+                            </div>
+    
                 return (
                     <div className="user-show">
                         <div className="header-wrapper">
-                            <div className="header-placeholder">
-                                <img className="banner-art" src={pageUser.userBanner} />
-                            </div>
+                            {bannerArt}
                             <div className="artist-navbar-wrapper">
                                 <ol className="artist-navbar">
                                     <li>
-                                        <Link id="artist-navbar-active" to={`/artists/${pageUserId}`}>music</Link>
+                                        <Link id="artist-navbar-active" to={`/artists/${this.state.pageId}`}>music</Link>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                        <ReleaseIndex
+                            pageAlbums={albums}
+                            pageSingles={singles}
+                        />
+                        <div className="artist-info-column">
+                            <span className="artist-username-bio">{pageUser.username}</span>
+                        </div>
+    
+                    </div>
+                )
+            } else {
+                // if not your page
+                pageUser.userBanner ?
+                    bannerArt = <div className="header-placeholder">
+                        <img className="banner-art" src={pageUser.userBanner} />
+                    </div> :
+                    bannerArt = null
+                    
+                return (
+                    <div className="user-show">
+                        <div className="header-wrapper">
+                            {bannerArt}
+                            <div className="artist-navbar-wrapper">
+                                <ol className="artist-navbar">
+                                    <li>
+                                        <Link id="artist-navbar-active" to={`/artists/${this.state.pageId}`}>music</Link>
                                     </li> 
                                     {/* add a classname to this when it is active, will have active styling */}
                                 </ol>
                             </div>
                         </div>
                         <ReleaseIndex 
-                            pageAlbums={pageAlbums}
-                            pageSingles={pageSingles}
+                            pageAlbums={albums}
+                            pageSingles={singles}
                         />
                         <div className="artist-info-column">
                             <span className="artist-username-bio">{pageUser.username}</span>
@@ -76,10 +132,10 @@ class UserShow extends React.Component {
                         
                     </div>
                 )
-            } else {
-                return <div></div>
             }
-        // }
+        } else {
+            return <div></div>
+        }
         
         // make classname conditional based on if user is an artist or fan
         // make it also conditional based on if current user is equal to the wildcard userId
