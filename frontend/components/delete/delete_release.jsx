@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter, Redirect } from 'react-router-dom';
 
-class Delete extends React.Component {
+class DeleteRelease extends React.Component {
     constructor(props) {
         super(props);
         this.deleteRelease = this.deleteRelease.bind(this);
@@ -40,8 +40,8 @@ class Delete extends React.Component {
         // } else {
             return (
                 <div>
-                    <div>Delete {releaseType.toLowerCase()}?</div>
-                    <div>Are you user you want to permanently delete this {releaseType.toLowerCase()}</div>
+                    <div>Delete {releaseType}</div>
+                    <div>Are you user you want to permanently delete this {releaseType.toLowerCase()}?</div>
                     <button onClick={this.props.closeModal}>No, keep it</button>
                     <button onClick={this.deleteRelease}>Yes, delete it</button>
                 </div>
@@ -50,4 +50,4 @@ class Delete extends React.Component {
     }
 }
 
-export default withRouter(Delete);
+export default withRouter(DeleteRelease);

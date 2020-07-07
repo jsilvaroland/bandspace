@@ -154,7 +154,7 @@ class AlbumShow extends React.Component {
                     </li>
                     <li>
                         <button className="edit-delete-buttons" 
-                            onClick={() => this.props.openModal('delete')}>
+                            onClick={() => this.props.openModal('delete-release')}>
                             Delete
                         </button>
                     </li>

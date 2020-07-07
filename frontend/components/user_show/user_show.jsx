@@ -129,7 +129,6 @@ class UserShow extends React.Component {
                         <div className="artist-info-column">
                             <span className="artist-username-bio">{pageUser.username}</span>
                         </div>
-                        
                     </div>
                 )
             }

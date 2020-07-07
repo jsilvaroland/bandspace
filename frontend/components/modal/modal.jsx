@@ -3,7 +3,7 @@ import { closeModal } from '../../actions/modal_actions';
 import { connect } from 'react-redux';
 import LoginFormContainer from '../session_form/login_form_container';
 import SignupFormContainer from '../session_form/signup_form_container';
-import DeleteContainer from '../delete/delete_container';
+import DeleteReleaseContainer from '../delete/delete_release_container';
 
 const Modal = ({ modal, closeModal }) => {
     if (!modal) {
@@ -17,8 +17,8 @@ const Modal = ({ modal, closeModal }) => {
         case 'signup':
             component = <SignupFormContainer />;
             break;
-        case 'delete':
-            component = <DeleteContainer />;
+        case 'delete-release':
+            component = <DeleteReleaseContainer />;
             break;
         default:
             return null;
