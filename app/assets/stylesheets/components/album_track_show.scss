@@ -45,5 +45,59 @@
 }
 
 .edit-delete-buttons {
-    margin-right: 6px;
+    margin-right: 8px;
+    padding: 4px;
+    border: 1px solid #cccccc;
+    border-radius: 2px;
+    color: #0687F5;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.edit-delete-buttons:hover {
+    text-decoration: underline;
+}
+
+.track-item, .track-item-bold {
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 8px;
+}
+
+.track-item-bold {
+    font-weight: bold;
+}
+
+.track-item-info {
+    font-size: 12px;
+    padding-bottom: 2px;
+    color: #888888;
+}
+
+
+.mini-play-button {
+    font-size: 8px;
+    padding: 4px 5px;
+    border: 1px solid rgb(217, 217, 217);
+    border-radius: 2px;
+    margin-right: 3px;
+    cursor: pointer;
+}
+
+.track-no {
+    margin: 0 3px;
+}
+
+.play-button-wrapper {
+    cursor: pointer;
+}
+
+.track-link {
+    color: #0687F5;
+    text-decoration: none;
+    padding-right: 6px;
+}
+
+.track-link:hover {
+    text-decoration: underline;
 }

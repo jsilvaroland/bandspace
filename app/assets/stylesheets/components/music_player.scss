@@ -35,6 +35,10 @@
     text-decoration: underline;
 }
 
+.prev-button, .next-button {
+    cursor: pointer;
+}
+
 .next-button, .next-button-disabled {
     margin-left: 5px;
 }

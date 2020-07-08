@@ -238,10 +238,10 @@ class AlbumShow extends React.Component {
                         <Link className="edit-delete-buttons" to={`/artists/${pageUser.id}/albums/${pageAlbum.id}/edit`}>Edit</Link>
                     </li>
                     <li>
-                        <button className="edit-delete-buttons" 
+                        <span className="edit-delete-buttons" 
                             onClick={() => this.props.openModal('delete-release')}>
                             Delete
-                        </button>
+                        </span>
                     </li>
                 </ul>)
             } else {

@@ -20,31 +20,28 @@ class TrackIndexItem extends React.Component {
     }
 
     render() {
-        const { track, clickPlay, activeTrack, playing } = this.props;
-        let playButton, minutes, seconds;
-        
-        (playing && activeTrack === track) ?
-            playButton = (<div className="mini-play-button" onClick={() => clickPlay(track, this.audio)}>
-                <FontAwesomeIcon icon={faPause} />
-            </div>) :
-            playButton = (<div className="mini-play-button" onClick={() => clickPlay(track, this.audio)}>
-                <FontAwesomeIcon icon={faPlay} />
-            </div>)
-
-        // might come back to make sure this works if a track is like X:0Y in duration
-        minutes = Math.floor(this.state.audioDuration / 60);
-        seconds = Math.floor(this.state.audioDuration % 60);
+        const { track, clickPlay, activeTrack, playing, n } = this.props;
+        const activeIcon = playing && activeTrack === track ? faPause : faPlay;
+        const trackItemClass = activeTrack === track ? "track-item-bold" : "track-item";
+        const minutes = Math.floor(this.state.audioDuration / 60);
+        const seconds = Math.floor(this.state.audioDuration % 60);
+        const playButton = (
+            <span className="mini-play-button" onClick={() => clickPlay(track, this.audio)}>
+                <FontAwesomeIcon icon={activeIcon} />
+            </span>
+            )
 
         return (
-            <li>
+            <li className={trackItemClass}>
                 {playButton}
-                <Link
-                    className="track-link"
-                    to={`/artists/${track.artistId}/tracks/${track.id}`}
-                >
-                    <span className="track-item-title">{track.title}</span>
-                </Link>
-                <span className="track-item-duration">{`${minutes}:${seconds}`}</span>
+                <span className="track-item-info">
+                    <span className="track-no">{`${n}.`}</span>
+                    <Link className="track-link"
+                        to={`/artists/${track.artistId}/tracks/${track.id}`}>
+                        <span className="track-item-title">{track.title}</span>
+                    </Link>
+                    <span className="track-item-duration">{`${minutes}:${seconds}`}</span>
+                </span>
             </li>
         )
     }

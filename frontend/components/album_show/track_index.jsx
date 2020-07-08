@@ -13,13 +13,14 @@ class TrackIndex extends React.Component {
             {/* maybe a different class name for this? */}
                 <ol className="tracks-list">
                     {
-                        pageTracks.map(track => (
+                        pageTracks.map((track, i) => (
                             <TrackIndexItem
                                 clickPlay={clickPlay}
                                 activeTrack={activeTrack}
                                 playing={playing}
                                 key={track.id}
                                 track={track}
+                                n={i + 1}
                             />
                         ))
                     }
