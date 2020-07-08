@@ -32,7 +32,11 @@ class EditAlbumTrackIndex extends React.Component {
                     <span className="add-track" onClick={this.forwardToHiddenInput}>
                         add track
                     </span>
-                    <input id="audio-file" type="file" onChange={handleAudioUpload}/>
+                    <input 
+                    id="audio-file" 
+                    accept="audio/mp3, audio/wav"
+                    type="file" 
+                    onChange={handleAudioUpload} />
                 </div>
             </div>
         );

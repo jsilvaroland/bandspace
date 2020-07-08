@@ -146,7 +146,6 @@ class TrackShow extends React.Component {
 
             let editDeleteButtons, bioPic, bannerArt;
             if (pageUser.id === currentUserId) {
-                debugger
                 pageUser.userArt ?
                     bioPic = <div className="bio-pic">
                         <img className="bio-pic-art" src={pageUser.userArt} />
@@ -202,13 +201,16 @@ class TrackShow extends React.Component {
                     </li>
                 </ul>)
             } else {
-                debugger
-                bioPic = <div className="bio-pic">
-                    <img className="bio-pic-art" src={pageUser.userArt} />
-                </div>
-                bannerArt = <div className="header-placeholder">
-                    <img className="banner-art" src={pageUser.userBanner} />
-                </div>
+                pageUser.userArt ?
+                    bioPic = <div className="bio-pic">
+                        <img className="bio-pic-art" src={pageUser.userArt} />
+                    </div> :
+                    bioPic = null;
+                pageUser.userBanner ?
+                    bannerArt = <div className="header-placeholder">
+                        <img className="banner-art" src={pageUser.userBanner} />
+                    </div> :
+                    bannerArt = null;
             }
 
             return (

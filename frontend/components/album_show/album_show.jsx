@@ -23,6 +23,8 @@ class AlbumShow extends React.Component {
     componentDidMount() {
         const { clearTracks, clearAlbums, fetchUser, pageAlbumId, fetchAlbum, fetchAlbumTracks } = this.props;
 
+        this.featuredAudio = null;
+
         clearAlbums();
         clearTracks();
 
@@ -186,18 +188,6 @@ class AlbumShow extends React.Component {
                 return <div>Page does not exist</div>
             }
 
-            if (!this.featuredAudio) {
-                this.setFeaturedAudio();
-            }
-
-            let activeTrack;
-            if (!this.state.activeTrack) {
-                activeTrack = pageTracks[0];
-            } else {
-                activeTrack = this.state.activeTrack;
-            }
-
-
             let editDeleteButtons, bioPic, bannerArt;
             if (pageUser.id === currentUserId) {
                 pageUser.userArt ?
@@ -252,112 +242,78 @@ class AlbumShow extends React.Component {
                         </button>
                     </li>
                 </ul>)
-                
-                return (
-                    <div className="user-show">
-                        <div className="header-wrapper">
-                            {bannerArt}
-                            <div className="artist-navbar-wrapper">
-                                <ol className="artist-navbar">
-                                    <li>
-                                        <Link id="artist-navbar-active" to={`/artists/${pageUser.id}`}>music</Link>
-                                    </li>
-                                </ol>
-                            </div>
-                        </div>
-                        <div className="music-column-alb-or-track">
-                            <span>
-                                <div className="album-title">{pageAlbum.title}</div>
-                                <div className="release-by">by&nbsp;
-                                <Link to={`/artists/${pageUser.id}`}>{pageUser.username}</Link>
-                                </div>
-                                {editDeleteButtons}
-                                <MusicPlayer
-                                    playing={this.state.playing}
-                                    clickPlay={this.clickPlay}
-                                    next={this.next}
-                                    prev={this.prev}
-                                    activeAudio={this.audio}
-                                    activeTrack={activeTrack}
-                                    hasNextTrack={this.hasNextTrack()}
-                                    hasPrevTrack={this.hasPrevTrack()}
-                                />
-                                <TrackIndex
-                                    playing={this.state.playing}
-                                    clickPlay={this.clickPlay}
-                                    pageTracks={pageTracks}
-                                    activeTrack={activeTrack}
-                                />
-                            </span>
-                            <span>
-                                <img className="release-art-350" src={pageAlbum.albumArt} />
-                            </span>
-                        </div>
-                        <div className="artist-info-column">
-                            {bioPic}
-                            <span className="artist-username-bio">{pageUser.username}</span>
-                        </div>
-                    </div>
-                );
             } else {
                 pageUser.userArt ?
                     bioPic = <div className="bio-pic">
-                            <img className="bio-pic-art" src={pageUser.userArt} />
-                        </div> :
+                        <img className="bio-pic-art" src={pageUser.userArt} />
+                    </div> :
                     bioPic = null;
                 pageUser.userBanner ?
-                bannerArt = <div className="header-placeholder">
-                                <img className="banner-art" src={pageUser.userBanner} />
-                            </div> :
-                bannerArt = null;
+                    bannerArt = <div className="header-placeholder">
+                        <img className="banner-art" src={pageUser.userBanner} />
+                    </div> :
+                    bannerArt = null;
+            }
 
-                return (
-                    <div className="user-show">
-                        <div className="header-wrapper">
-                            {bannerArt}
-                            <div className="artist-navbar-wrapper">
-                                <ol className="artist-navbar">
-                                    <li>
-                                        <Link id="artist-navbar-active" to={`/artists/${pageUser.id}`}>music</Link>
-                                    </li>
-                                </ol>
-                            </div>
-                        </div>
-                        <div className="music-column-alb-or-track">
-                            <span>
-                                <div className="album-title">{pageAlbum.title}</div>
-                                <div className="release-by">by&nbsp;
-                                    <Link to={`/artists/${pageUser.id}`}>{pageUser.username}</Link>
-                                </div>
-                                {editDeleteButtons}
-                                <MusicPlayer
-                                    playing={this.state.playing} 
-                                    clickPlay={this.clickPlay} 
-                                    next={this.next}
-                                    prev={this.prev}
-                                    activeAudio={this.audio} 
-                                    activeTrack={activeTrack}
-                                    hasNextTrack={this.hasNextTrack()}
-                                    hasPrevTrack={this.hasPrevTrack()}
-                                />
-                                <TrackIndex
-                                    playing={this.state.playing} 
-                                    clickPlay={this.clickPlay} 
-                                    pageTracks={pageTracks} 
-                                    activeTrack={activeTrack} 
-                                />
-                            </span>
-                            <span>
-                                <img className="release-art-350" src={pageAlbum.albumArt} />
-                            </span>
-                        </div>
-                        <div className="artist-info-column">
-                            {bioPic}
-                            <span className="artist-username-bio">{pageUser.username}</span>
+            if (!this.featuredAudio && pageTracks[0]) {
+                this.setFeaturedAudio();
+            }
+
+            let activeTrack;
+            if (!this.state.activeTrack) {
+                activeTrack = pageTracks[0]; 
+            } else {
+                activeTrack = this.state.activeTrack;
+            }
+
+            return (
+                <div className="user-show">
+                    <div className="header-wrapper">
+                        {bannerArt}
+                        <div className="artist-navbar-wrapper">
+                            <ol className="artist-navbar">
+                                <li>
+                                    <Link id="artist-navbar-active" to={`/artists/${pageUser.id}`}>music</Link>
+                                </li>
+                                {/* add a classname to this when it is active, will have active styling */}
+                            </ol>
                         </div>
                     </div>
-                );
-            }
+                    <div className="music-column-alb-or-track">
+                        <span>
+                            <div className="album-title">{pageAlbum.title}</div>
+                            <div className="release-by">by&nbsp;
+                                <Link to={`/artists/${pageUser.id}`}>{pageUser.username}</Link>
+                            </div>
+                            {editDeleteButtons}
+                            {/* {this.loadMusicPlayer(this.state.playing, this.clickPlay, activeAudio, activeTrack)} */}
+                            <MusicPlayer
+                                playing={this.state.playing} 
+                                clickPlay={this.clickPlay} 
+                                next={this.next}
+                                prev={this.prev}
+                                activeAudio={this.audio} 
+                                activeTrack={activeTrack}
+                                hasNextTrack={this.hasNextTrack()}
+                                hasPrevTrack={this.hasPrevTrack()}
+                            />
+                            <TrackIndex
+                                playing={this.state.playing} 
+                                clickPlay={this.clickPlay} 
+                                pageTracks={pageTracks} 
+                                activeTrack={activeTrack} 
+                            />
+                        </span>
+                        <span>
+                            <img className="release-art-350" src={pageAlbum.albumArt} />
+                        </span>
+                    </div>
+                    <div className="artist-info-column">
+                        {bioPic}
+                        <span className="artist-username-bio">{pageUser.username}</span>
+                    </div>
+                </div>
+            );
         } else {
             return <div></div>
         }

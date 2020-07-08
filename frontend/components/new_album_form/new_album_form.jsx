@@ -77,7 +77,7 @@ class NewAlbumForm extends React.Component {
 
     handleAudioUpload(e) {
         const uploadFile = e.currentTarget.files[0];
-        if (uploadFile && (uploadFile.type === "audio/wav" || uploadFile.type === "audio/mpeg")) {
+        if (uploadFile) {
             let tracksCopy = this.state.tracks;
             tracksCopy.push({
                 title: "",
@@ -87,16 +87,12 @@ class NewAlbumForm extends React.Component {
                 trackSong: uploadFile,
             });
             this.setState({ tracks: tracksCopy });
-        } else {
-            console.log('Audio file must be mp3/wav format');
-            //setState errors or something
         }
     }
 
     handleImageUpload(e) {
         const uploadFile = e.currentTarget.files[0];
-        if (uploadFile && (uploadFile.type === "image/png" || 
-        uploadFile.type === "image/jpeg" || uploadFile.type === "image/gif")) {
+        if (uploadFile) {
             const fileReader = new FileReader();
             fileReader.onloadend = () => {
                 let albumCopy = this.state.album;
@@ -104,9 +100,6 @@ class NewAlbumForm extends React.Component {
                 this.setState({ album: albumCopy, albumArtPreview: fileReader.result });
             };
             fileReader.readAsDataURL(uploadFile);
-        } else {
-            console.log("Album art must be png/jpg/gif format");
-            // setState to render errors here
         }
     }
 
@@ -216,7 +209,12 @@ class NewAlbumForm extends React.Component {
                                     <span className="add-album-art" onClick={this.forwardToHiddenInput}>
                                         Upload Album Art
                                     </span>
-                                    <input id="image-file" type="file" onChange={this.handleImageUpload}></input>
+                                    <input 
+                                    id="image-file" 
+                                    accept="image/png, image/jpeg, image/gif"
+                                    type="file" 
+                                    onChange={this.handleImageUpload} 
+                                    />
                                 </div>)
             } else {
                 titleText = (<input
