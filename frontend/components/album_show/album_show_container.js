@@ -33,6 +33,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     openModal: modal => dispatch(openModal(modal)),
     clearTracks: () => dispatch(clearTracks()),
     clearAlbums: () => dispatch(clearAlbums()),
+    updateUser: user => dispatch(updateUser(user)),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AlbumShow));

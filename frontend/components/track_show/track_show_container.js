@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import TrackShow from './track_show';
 import { fetchAlbum, clearAlbums } from '../../actions/albums_actions';
 import { fetchTrack, clearTracks } from '../../actions/tracks_actions';
+import { openModal } from '../../actions/modal_actions';
 
 // gotta make sure it renders differently if the Track belongs to current user or not
 
@@ -21,6 +22,7 @@ const mapStateToProps = (state, ownProps) => {
         pageTrackId,
         pageAlbumId,
         pageAlbum,
+        currentUserId: state.session.id,
     });
 };
 
@@ -30,6 +32,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     fetchAlbum: albumId => dispatch(fetchAlbum(albumId)),
     clearTracks: () => dispatch(clearTracks()),
     clearAlbums: () => dispatch(clearAlbums()),
+    openModal: modal => dispatch(openModal(modal)),
+    updateUser: user => dispatch(updateUser(user)),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TrackShow));

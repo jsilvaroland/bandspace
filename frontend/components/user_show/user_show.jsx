@@ -156,7 +156,13 @@ class UserShow extends React.Component {
                     bannerArt = <div className="header-placeholder">
                         <img className="banner-art" src={pageUser.userBanner} />
                     </div> :
-                    bannerArt = null
+                    bannerArt = null;
+
+                pageUser.userArt ?
+                    bioPic = <div className="bio-pic">
+                        <img className="bio-pic-art" src={pageUser.userArt} />
+                    </div> :
+                    bioPic = null;
                     
                 return (
                     <div className="user-show">
@@ -176,6 +182,7 @@ class UserShow extends React.Component {
                             pageSingles={singles}
                         />
                         <div className="artist-info-column">
+                            {bioPic}
                             <span className="artist-username-bio">{pageUser.username}</span>
                         </div>
                     </div>
