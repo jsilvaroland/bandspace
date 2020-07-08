@@ -25,11 +25,17 @@ class DeleteArt extends React.Component {
     render() {
         const { artType } = this.props;
         return (
-            <div>
-                <div>Delete {artType}</div>
-                <div>Are you user you want to delete your {artType.toLowerCase()}?</div>
-                <button onClick={this.deleteArt}>OK</button>
-                <button onClick={this.props.closeModal}>Cancel</button>
+            <div className="delete">
+                <div className="delete-title">Delete {artType}</div>
+                <div className="delete-body">
+                    Are you sure you want to delete your {artType.toLowerCase()}?
+                </div>
+                <div>
+                    <button className="OK" onClick={this.deleteArt}>OK</button>
+                    <button className="cancel" onClick={this.props.closeModal}>
+                        Cancel
+                    </button>
+                </div>
             </div>
         )
     }

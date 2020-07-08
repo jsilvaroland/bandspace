@@ -41,7 +41,9 @@ class DeleteRelease extends React.Component {
             return (
                 <div>
                     <div>Delete {releaseType}</div>
-                    <div>Are you user you want to permanently delete this {releaseType.toLowerCase()}?</div>
+                    <div>
+                        Are you user you want to permanently delete this {releaseType.toLowerCase()}?
+                    </div>
                     <button onClick={this.props.closeModal}>No, keep it</button>
                     <button onClick={this.deleteRelease}>Yes, delete it</button>
                 </div>

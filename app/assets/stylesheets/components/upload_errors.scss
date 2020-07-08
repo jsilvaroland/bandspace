@@ -1,9 +1,9 @@
-.upload-error div:last-child {
+.upload-error div:last-child, .delete div:last-child {
     display: flex;
     justify-content: center;
 }
 
-.upload-error-title {
+.upload-error-title, .delete-title {
     border-radius: 4px;
     font-size: 18px;
     color: #2e3332;
@@ -11,13 +11,13 @@
     background-color: #F5F5F5;
 }
 
-.upload-error-body {
+.upload-error-body, .delete-body {
     font-size: 14px;
     padding: 25px 20px;
     color: #333333;
 }
 
-.OK {
+.OK, .cancel {
     font-size: 18px;
     min-height: 36px;
     min-width: 200px;
@@ -27,4 +27,8 @@
     color: #FFFFFF;
     background-color: #0687F5;
     text-align: center;
+}
+
+.cancel {
+    margin-left: 40px;
 }
