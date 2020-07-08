@@ -10,6 +10,8 @@ class UserShow extends React.Component {
             pageId: parseInt(props.match.params.userId),
         };
         this.handleBannerUpload = this.handleBannerUpload.bind(this);
+        this.handleBioPicUpload = this.handleBioPicUpload.bind(this);
+        this.deleteBioPic = this.deleteBioPic.bind(this);
     }
 
     componentDidMount() {
@@ -59,12 +61,50 @@ class UserShow extends React.Component {
         }
     }
 
+    handleBioPicUpload(e) {
+        const { updateUser } = this.props;
+        const uploadFile = e.currentTarget.files[0];
+
+        if (uploadFile) {
+            const userFormData = new FormData();
+            userFormData.append('user[photo]', uploadFile);
+            updateUser(userFormData);
+        }
+    }
+    
+    deleteBioPic() {
+        const { updateUser } = this.props;
+
+        const nullFormData = new FormData();
+        nullFormData.append('user[photo]', null);
+        updateUser(nullFormData);
+    }
+
     render() {  // will first write if you are nOT owner of this page
         const { currentUserId, pageUser, albums, singles, openModal } = this.props;
-        let bannerArt;
+        let bannerArt, bioPic;
         if (pageUser) {
             if (currentUserId === this.state.pageId) {
                 // page is logged-in-user's page
+                pageUser.userArt ? 
+                    bioPic = <div className="bio-pic">
+                                <img className="bio-pic-art" src={pageUser.userArt} />
+                                <button className="remove"
+                                    onClick={this.deleteBioPic}>
+                                    &times;
+                                </button>
+                            </div> :
+                    bioPic = <div className="bio-pic-upload">
+                                <input
+                                    id="bio-pic-file"
+                                    accept="image/png, image/jpeg, image/gif"
+                                    type="file"
+                                    onChange={this.handleBioPicUpload} />
+                                <div className="add-bio-pic" onClick={() => this.forwardToHiddenInput('bio-pic')}>
+                                    add artist photo
+                                </div>
+                            </div>
+
                 pageUser.userBanner ? 
                 bannerArt = <div className="header-placeholder">
                                 <img className="banner-art" src={pageUser.userBanner} />
@@ -104,6 +144,7 @@ class UserShow extends React.Component {
                             pageSingles={singles}
                         />
                         <div className="artist-info-column">
+                            {bioPic}
                             <span className="artist-username-bio">{pageUser.username}</span>
                         </div>
     
