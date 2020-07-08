@@ -211,7 +211,9 @@ class AlbumShow extends React.Component {
 
                 pageUser.userBanner ?
                     bannerArt = <div className="header-placeholder">
-                                    <img className="banner-art" src={pageUser.userBanner} />
+                                    <Link to={`/artists/${pageUser.id}`}>
+                                        <img className="banner-art" src={pageUser.userBanner} />
+                                    </Link>
                                     <button className="remove"
                                         onClick={() => openModal('delete-custom-header')}>
                                         &times;
@@ -250,8 +252,10 @@ class AlbumShow extends React.Component {
                     bioPic = null;
                 pageUser.userBanner ?
                     bannerArt = <div className="header-placeholder">
-                        <img className="banner-art" src={pageUser.userBanner} />
-                    </div> :
+                                    <Link to={`/artists/${pageUser.id}`}>
+                                        <img className="banner-art" src={pageUser.userBanner} />
+                                    </Link>
+                                </div> :
                     bannerArt = null;
             }
 

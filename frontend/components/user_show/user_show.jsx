@@ -107,7 +107,9 @@ class UserShow extends React.Component {
 
                 pageUser.userBanner ? 
                 bannerArt = <div className="header-placeholder">
-                                <img className="banner-art" src={pageUser.userBanner} />
+                                <Link to={`/artists/${pageUser.id}`}>
+                                    <img className="banner-art" src={pageUser.userBanner} />
+                                </Link>
                                 <button className="remove" 
                                     onClick={() => openModal('delete-custom-header')}>
                                     &times;
@@ -154,7 +156,9 @@ class UserShow extends React.Component {
                 // if not your page
                 pageUser.userBanner ?
                     bannerArt = <div className="header-placeholder">
-                        <img className="banner-art" src={pageUser.userBanner} />
+                        <Link to={`/artists/${pageUser.id}`}>
+                            <img className="banner-art" src={pageUser.userBanner} />
+                        </Link>
                     </div> :
                     bannerArt = null;
 
