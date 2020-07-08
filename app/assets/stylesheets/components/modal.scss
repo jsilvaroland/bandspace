@@ -94,15 +94,15 @@
     font-size: 16px;
     color: #333;
     background-color: #fff;
-    border-width: 1px solid #cccccc;
+    border: 1px solid #cccccc;
     padding: 8px 4px 7px 10px;
     margin-bottom: 20px; // was 25
 }
 
-// .modal-input:focus {
-//     outline: none;
-//     border-color: rgb(84, 162, 227);
-// }
+.modal-input:focus {
+    outline: none;
+    border-color: rgb(84, 162, 227);
+}
 
 .terms-text {
     font-size: 14px;
