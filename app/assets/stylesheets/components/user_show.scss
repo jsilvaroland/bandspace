@@ -23,6 +23,10 @@
 }
 
 .header-upload {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     width: 973px;
     height: 118px;
     border: 1px dashed rgb(192, 192, 192);
@@ -149,4 +153,21 @@ button.remove {
 
 .remove:hover {
     text-decoration: underline;
+}
+
+.add-banner {
+    font-size: 18px;
+    color: #0687F5;
+    border: 1px solid rgb(192, 192, 192);
+    padding: 4px;
+    cursor: pointer;
+}
+
+.add-banner:hover {
+    text-decoration: underline;
+}
+
+.add-banner-hint {
+    font-size: 12px;
+    color: #808080;
 }

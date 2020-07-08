@@ -18,6 +18,7 @@ const mapStateToProps = (state, ownProps) => {
         pageUser,
         albums,
         singles,
+        modal: state.ui.modal
     });
 };
 

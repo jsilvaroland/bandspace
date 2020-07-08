@@ -5,6 +5,7 @@ import LoginFormContainer from '../session_form/login_form_container';
 import SignupFormContainer from '../session_form/signup_form_container';
 import DeleteReleaseContainer from '../delete/delete_release_container';
 import DeleteArtContainer from '../delete/delete_art_container';
+import UploadErrorContainer from '../upload_error/upload_error_container';
 
 const Modal = ({ modal, closeModal }) => {
     if (!modal) {
@@ -23,6 +24,9 @@ const Modal = ({ modal, closeModal }) => {
             break;
         case 'delete-custom-header':
             component = <DeleteArtContainer artType="Custom Header" />;
+            break;
+        case 'custom-header-size-error':
+            component = <UploadErrorContainer artType="Custom Header" />;
             break;
         default:
             return null;

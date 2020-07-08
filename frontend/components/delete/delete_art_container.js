@@ -8,7 +8,7 @@ import DeleteArt from './delete_art';
 const mapStateToProps = (state, ownProps) => {
     return ({
         artType: ownProps.artType,
-        currentUser: state.entities.users[state.session.id],
+        currentUser: state.entities.users[state.session.id], // current user needed?
     });
 };
 

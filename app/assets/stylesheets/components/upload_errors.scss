@@ -1,0 +1,30 @@
+.upload-error div:last-child {
+    display: flex;
+    justify-content: center;
+}
+
+.upload-error-title {
+    border-radius: 4px;
+    font-size: 18px;
+    color: #2e3332;
+    padding: 15px 20px 12px;
+    background-color: #F5F5F5;
+}
+
+.upload-error-body {
+    font-size: 14px;
+    padding: 25px 20px;
+    color: #333333;
+}
+
+.OK {
+    font-size: 18px;
+    min-height: 36px;
+    min-width: 200px;
+    border: 1px solid #0687f5;
+    border-radius: 4px;
+    margin: 9px 0 27px;
+    color: #FFFFFF;
+    background-color: #0687F5;
+    text-align: center;
+}

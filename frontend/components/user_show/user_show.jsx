@@ -46,23 +46,21 @@ class UserShow extends React.Component {
     }
 
     handleBannerUpload(e) {
-        const { updateUser } = this.props;
+        const { updateUser, openModal } = this.props;
         const uploadFile = e.currentTarget.files[0];
-        if (uploadFile && (uploadFile.type === "image/png" ||
-            uploadFile.type === "image/jpeg" || uploadFile.type === "image/gif")) {
+
+        if (uploadFile && uploadFile.size < 2000000) {
             const userFormData = new FormData();
             userFormData.append('user[banner]', uploadFile);
             updateUser(userFormData);
-
-            // does this mean that props will change? or do I have to manually change state here.
         } else {
-            console.log("Banner must be png/jpg/gif format");
-            //setState errors or something
+            openModal("custom-header-size-error");
+            document.getElementById('banner-file').value = "";
         }
     }
 
     render() {  // will first write if you are nOT owner of this page
-        const { currentUserId, pageUser, albums, singles } = this.props;
+        const { currentUserId, pageUser, albums, singles, openModal } = this.props;
         let bannerArt;
         if (pageUser) {
             if (currentUserId === this.state.pageId) {
@@ -71,15 +69,22 @@ class UserShow extends React.Component {
                 bannerArt = <div className="header-placeholder">
                                 <img className="banner-art" src={pageUser.userBanner} />
                                 <button className="remove" 
-                                    onClick={() => this.props.openModal('delete-custom-header')}>
+                                    onClick={() => openModal('delete-custom-header')}>
                                     &times;
                                 </button> 
                             </div> :
                 bannerArt = <div className="header-upload">
-                                <input id="banner-file" type="file" onChange={this.handleBannerUpload} />
-                                <span className="add-banner" onClick={() => this.forwardToHiddenInput('banner')}>
+                                <input 
+                                    id="banner-file" 
+                                    accept="image/png, image/jpeg, image/gif"
+                                    type="file" 
+                                    onChange={this.handleBannerUpload} />
+                                <div className="add-banner" onClick={() => this.forwardToHiddenInput('banner')}>
                                     Upload Custom Header 
-                                </span>
+                                </div>
+                                <div className="add-banner-hint">
+                                    975 pixels wide, 40-180 pixels tall, .jpg, .gif or .png, 2mb max
+                                </div>
                             </div>
     
                 return (
