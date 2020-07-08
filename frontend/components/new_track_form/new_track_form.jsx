@@ -39,20 +39,16 @@ class NewTrackForm extends React.Component {
 
     handleAudioUpload(e) {
         const uploadFile = e.currentTarget.files[0];
-        if (uploadFile && (uploadFile.type === "audio/wav" || uploadFile.type === "audio/mpeg")) {
+        if (uploadFile) {
             let trackCopy = this.state.track;
             trackCopy.trackSong = uploadFile;
             this.setState({ track: trackCopy, audioUploaded: true });
-        } else {
-            console.log('Audio file must be mp3/wav format');
-            //setState errors or something
         }
     }
 
     handleImageUpload(e) {
         const uploadFile = e.currentTarget.files[0];
-        if (uploadFile && (uploadFile.type === "image/png" ||
-            uploadFile.type === "image/jpeg" || uploadFile.type === "image/gif")) {
+        if (uploadFile) {
             const fileReader = new FileReader();
             fileReader.onloadend = () => {
                 let trackCopy = this.state.track;
@@ -60,9 +56,6 @@ class NewTrackForm extends React.Component {
                 this.setState({ track: trackCopy, trackArtPreview: fileReader.result });
             };
             fileReader.readAsDataURL(uploadFile);
-        } else {
-            console.log("Track art must be png/jpg/gif format");
-            // setState to render errors here
         }
     }
 
@@ -78,7 +71,7 @@ class NewTrackForm extends React.Component {
             trackFormData.append('track[photo]', track.trackArt);
             trackFormData.append('track[song]', track.trackSong);
             this.props.createTrack(trackFormData)
-            .then(this.setState({ published: true }));
+                .then(this.setState({ published: true }));
         }
 
         if (!track.trackArt) {
@@ -149,7 +142,11 @@ class NewTrackForm extends React.Component {
                     {/* add replace functionality later */}
                 </div> :
                 <div className="left-panel-audio-upload">
-                    <input id="audio-file" type="file" onChange={this.handleAudioUpload} />
+                    <input 
+                    id="audio-file" 
+                    accept="audio/mp3, audio/wav"
+                    type="file" 
+                    onChange={this.handleAudioUpload} />
                     <span className="add-track" onClick={() => this.forwardToHiddenInput('audio')}>
                         add audio
                     </span>
@@ -160,7 +157,12 @@ class NewTrackForm extends React.Component {
                     <img className="release-art-212" src={trackArtPreview} />
                 </div>) :
                 (<div className="release-art-212">
-                    <input id="image-file" type="file" onChange={this.handleImageUpload}></input>
+                    <input 
+                    id="image-file" 
+                    accept="image/png, image/jpeg, image/gif"
+                    type="file" 
+                    onChange={this.handleImageUpload} 
+                    />
                     <span className="add-album-art" onClick={() => this.forwardToHiddenInput('image')}>
                         Upload Track Art
                     </span>

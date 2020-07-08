@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import MusicPlayer from '../music_player/music_player';
 
 class TrackShow extends React.Component {
@@ -8,6 +8,7 @@ class TrackShow extends React.Component {
         this.state = {
             playing: false,
             pageId: parseInt(this.props.match.params.trackId),
+            deleted: false,
         };
         this.clickPlay = this.clickPlay.bind(this);
         this.next = this.next.bind(this);
@@ -48,6 +49,10 @@ class TrackShow extends React.Component {
             fetchUser()
                 .then(fetchTrack(pageTrackId));
             this.setState({ pageId: parseInt(this.props.match.params.trackId) });
+        }
+
+        if (!pageTrack && this.audio) {
+            this.setState({ deleted: true });
         }
     }
 
@@ -129,7 +134,9 @@ class TrackShow extends React.Component {
     render() {
         const { pageUser, pageTrack, pageAlbum, currentUserId, openModal } = this.props;
 
-        if (((pageUser && pageTrack && !pageTrack.albumId) || (pageUser && pageTrack && pageAlbum)) && this.audio) {
+        if (this.state.deleted) {
+            return (<Redirect to={`/artists/${currentUserId}`} />)
+        } else if (((pageUser && pageTrack && !pageTrack.albumId) || (pageUser && pageTrack && pageAlbum)) && this.audio) {
             let fromAlbum, trackArt;
 
             if (pageTrack.albumId) {
@@ -232,6 +239,7 @@ class TrackShow extends React.Component {
                             <div className="release-by">{fromAlbum} by&nbsp;
                                 <Link to={`/artists/${pageUser.id}`}>{pageUser.username}</Link>
                             </div>
+                            {editDeleteButtons}
                             <MusicPlayer 
                                 playing={this.state.playing}
                                 clickPlay={this.clickPlay}

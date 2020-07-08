@@ -28,7 +28,13 @@ class DeleteRelease extends React.Component {
                 break;
             case 'Track':
                 // if track has an albumId vs if no albumId
-                debugger
+                const track = this.props.tracks[0];
+                track.albumId ?
+                    // for if track is part of an album
+                    console.log('track is part of an album') :
+                    // if track is a single
+                    this.props.deleteTrack(track.id);
+                    break;
         }
     }
 
