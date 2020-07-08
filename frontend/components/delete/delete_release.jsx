@@ -39,13 +39,15 @@ class DeleteRelease extends React.Component {
         //     return <Redirect to={`/artists/${currentUser.id}`} />
         // } else {
             return (
-                <div>
-                    <div>Delete {releaseType}</div>
-                    <div>
+                <div className="delete">
+                    <div className="delete-title">Delete {releaseType}</div>
+                    <div className="delete-body">
                         Are you user you want to permanently delete this {releaseType.toLowerCase()}?
                     </div>
-                    <button onClick={this.props.closeModal}>No, keep it</button>
-                    <button onClick={this.deleteRelease}>Yes, delete it</button>
+                    <div>
+                        <button className="OK" onClick={this.deleteRelease}>Yes, delete it</button>
+                        <button className="cancel" onClick={this.props.closeModal}>No, keep it</button>
+                    </div>
                 </div>
             )
         // }
