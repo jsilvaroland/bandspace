@@ -9,18 +9,23 @@ class EditAlbumTrackItem extends React.Component {
     }
 
     render() {
-        const { i, handlePanelChange } = this.props;
+        const { n, handlePanelChange, activePanel } = this.props;
         const { track } = this.state;
-        let trackTitleText;
+        const trackTitleText = track.title === "" ? "Untitled Track" : track.title;
+        let trackItemClass;
 
-        track.title === "" ?
-            trackTitleText = "Untitled Track" :
-            trackTitleText = track.title;
+        if (activePanel === n) {
+            trackItemClass = "edit-album-track-item-active";
+        } else if (activePanel === n - 1 && activePanel !== 0) {
+            trackItemClass = "edit-album-track-item-next";
+        } else {
+            trackItemClass = "edit-album-track-item";
+        }
 
         return (
-            <div className="edit-album-track-item" onClick={() => handlePanelChange(i + 1)}>
-                <span>{i + 1}</span>
-                <span>{trackTitleText}</span>
+            <div className={trackItemClass} onClick={() => handlePanelChange(n)}>
+                <span className="track-num">{n}</span>
+                <span className="left-panel-track-title">{trackTitleText}</span>
                 <div>{track.trackSong.name}</div>
             </div>
         )

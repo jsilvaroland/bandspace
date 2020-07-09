@@ -144,14 +144,16 @@ class NewAlbumForm extends React.Component {
                                 this.setState({ album: album });
                             });
                     }));
-        } 
-        
-        if (!album.albumArt) {
-            console.log('album art required');
-        }
-        
-        if (album.title === "") {
+        } else if (album.title === "") {
+            this.setState({ activePanel: 0 });
+            // make input box red
             console.log('album title required');
+        } else if (!tracks.every(hasTitle)) {
+            // switch active panel to first track without a title
+            console.log('every track needs a title');
+        } else if (!album.albumArt) {
+            this.setState({ activePanel: 0 });
+            console.log('album art required');
         }
     }
 
@@ -164,7 +166,13 @@ class NewAlbumForm extends React.Component {
             const { album, tracks, activePanel, albumArtPreview } = this.state;
             let publishBtn, titleText, aboutLabel, aboutField, lyricsLabel,
                 lyricsField, creditsLabel, creditsField, albumTitleText, 
-                albumArt;
+                albumArt, leftPanelAlbumClass;
+
+            const releaseArt72 = albumArtPreview ?
+                <span>
+                    <img className="release-art-72" src={albumArtPreview} />
+                </span> : 
+                <span className="release-art-72-absent" />;
 
             this.anyChanges && tracks.length !== 0 ?
                 publishBtn = (<button className='publish' onClick={this.handleCreate}>
@@ -179,6 +187,8 @@ class NewAlbumForm extends React.Component {
                 albumTitleText = album.title;
 
             if (activePanel === 0) {
+                leftPanelAlbumClass = "left-panel-album-active";
+
                 titleText = (<input
                     type="text"
                     value={album.title}
@@ -217,8 +227,11 @@ class NewAlbumForm extends React.Component {
                                     />
                                 </div>)
             } else {
+                leftPanelAlbumClass = "left-panel-album";
+
                 titleText = (<input
                     type="text"
+                    placeholder="track name"
                     value={tracks[activePanel - 1].title}
                     onChange={this.change('tracks', 'title', activePanel - 1)}
                 />);
@@ -253,10 +266,9 @@ class NewAlbumForm extends React.Component {
                     <form className="edit-album-form">
                         <div className="left-panel">
                             <div className="left-panel-album-wrapper">
-                                <div className="left-panel-album" onClick={() => this.handlePanelChange(0)}>
-                                    <span>
-                                        <img className="release-art-72" src={albumArtPreview} />
-                                    </span>
+                                <div className={leftPanelAlbumClass} onClick={() => this.handlePanelChange(0)}>
+                                    {releaseArt72}
+                                        {/* <img className={releaseArt72} src={albumArtPreview} /> */}
                                     <span className="album-title-artist">
                                         <p>{albumTitleText}</p>
                                         <p>by <span>{currentUser.username}</span></p>
@@ -266,6 +278,7 @@ class NewAlbumForm extends React.Component {
                             <EditAlbumTrackIndex
                                 handlePanelChange={this.handlePanelChange}
                                 handleAudioUpload={this.handleAudioUpload}
+                                activePanel={activePanel}
                                 tracks={tracks}
                             />
                             <div className="save">

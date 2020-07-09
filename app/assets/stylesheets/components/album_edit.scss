@@ -7,13 +7,22 @@
     display: flex;
 }
 
-.left-panel-album {
+.left-panel-album, .left-panel-album-active {
     display: flex;
     height: 73px;
     width: 455px;
-    padding: 10px 1px 10px 10px;
     border-top: 1px solid #FFFFFF;
     border-bottom: 1px solid #FFFFFF;
+}
+
+
+.left-panel-album {
+    border-left: 1px solid rgb(248, 248, 248);
+    padding: 10px 0 10px 10px;
+}
+
+.left-panel-album-active {
+    padding: 10px 1px 10px 10px;
 }
 
 .left-panel-album-wrapper {
@@ -21,10 +30,18 @@
     border-bottom: 1px solid rgb(219, 219, 219);
 }
 
-.release-art-72 {
-    height: 72px;
-    width: 72px;
+.release-art-72, .release-art-72-absent {
+    height: 70px;
+    width: 70px;
     margin-right: 10px;
+}
+
+.release-art-72 {
+    border: 1px solid rgb(204, 204, 204);
+}
+
+.release-art-72-absent {
+    border: 1px dashed rgb(204, 204, 204);
 }
 
 .release-art-212 {
@@ -59,29 +76,58 @@ h3.tracks {
     padding: 20px 0 20px 10px;
 }
 
-.edit-album-track-item {
-    padding: 11px 0 11px 10px;
+.track-num {
+    padding: 0 17px 0 55px;
+    font-size: 15px;
+    color: #999999;
+}
+
+.left-panel-track-title {
+    font-size: 15px;
+    color: #363636;
+}
+
+.edit-album-track-item, .edit-album-track-item-active, .edit-album-track-item-next {
     height: 52px; // temporary
+    width: 100% - padding;
+}
+
+.edit-album-track-item {
     background-image: linear-gradient(to right, rgb(198, 198, 198) 20%, rgba(255,255,255,0) 0%);
     background-position: top;
     background-size: 4px 1px;
     background-repeat: repeat-x;
 }
 
-.edit-album-track-item > span:first-child {
-    padding: 0 17px 0 55px;
-    font-size: 15px;
-    color: #999999;
+.edit-album-track-item, .edit-album-track-item-next {
+    padding: 11px 0 11px 10px;
+    border-left: 1px solid rgb(248, 248, 248);
 }
 
-.edit-album-track-item > span:nth-child(2) {
-    font-size: 15px;
-    color: #363636;
+.edit-album-track-item:hover, .edit-album-track-item-next:hover, .left-panel-album:hover {
+    border-left: 1px solid #fcfcfc;
 }
 
-.left-panel-album:hover, .edit-album-track-item:hover {
+.left-panel-album:hover, .edit-album-track-item:hover, .edit-album-track-item-active:hover, .edit-album-track-item-next:hover {
     background-color: rgb(252, 252, 252);
     cursor: pointer;
+}
+
+.left-panel-album-active, .left-panel-album-active:hover {
+    background-color: #ffffff;
+    cursor: pointer;
+}
+
+.edit-album-track-item-active, .edit-album-track-item-active:hover {
+    padding: 10px 1px 10px 10px;
+    background-color: #ffffff;
+    border-style: solid;
+    border-color: rgb(219, 219, 219);
+    border-width: 1px 0 1px 1px;
+}
+
+.left-panel-album-active, .edit-album-track-item-active {
+    border-left: 1px solid rgb(25, 138, 242);
 }
 
 .add-track {
