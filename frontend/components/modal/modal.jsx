@@ -1,6 +1,6 @@
 import React from 'react';
-import { closeModal } from '../../actions/modal_actions';
 import { connect } from 'react-redux';
+import { closeModal } from '../../actions/modal_actions';
 import LoginFormContainer from '../session_form/login_form_container';
 import SignupFormContainer from '../session_form/signup_form_container';
 import DeleteReleaseContainer from '../delete/delete_release_container';
@@ -8,9 +8,8 @@ import DeleteArtContainer from '../delete/delete_art_container';
 import UploadErrorContainer from '../upload_error/upload_error_container';
 
 const Modal = ({ modal, closeModal }) => {
-    if (!modal) {
-        return null;
-    }
+    if (!modal) return null;
+    
     let component;
     switch (modal) {
         case 'login':

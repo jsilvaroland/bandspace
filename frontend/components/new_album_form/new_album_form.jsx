@@ -37,6 +37,10 @@ class NewAlbumForm extends React.Component {
         this.props.clearTracks();
     }
 
+    componentWillUnmount() {
+        this.props.stopLoading();
+    }
+
     componentDidUpdate() {
         const { album, tracks, albumTitleError, activePanel, albumArtError, 
             albumArtPreview } = this.state;
@@ -106,7 +110,7 @@ class NewAlbumForm extends React.Component {
                 lyrics: "",
                 trackSong: uploadFile,
             });
-            this.setState({ tracks: tracksCopy });
+            this.setState({ tracks: tracksCopy, activePanel: tracksCopy.length });
         }
     }
 
@@ -171,7 +175,8 @@ class NewAlbumForm extends React.Component {
                             .then(res => {
                                 album.trackIds.push(res.track.id);
                                 this.setState({ album: album });
-                            });
+                            })
+                            .then(this.props.displayLoading(true));
                     }));
         } else if (album.title === "") {
             this.setState({ activePanel: 0, albumTitleError: true });
@@ -186,7 +191,6 @@ class NewAlbumForm extends React.Component {
             this.setState({ tracks: tracksCopy, activePanel: firstTrackWithoutTitle });
         } else if (!album.albumArt) {
             this.setState({ activePanel: 0, albumArtError: true });
-            console.log('album art required');
         }
     }
 

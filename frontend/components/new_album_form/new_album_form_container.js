@@ -4,12 +4,12 @@ import { connect } from 'react-redux';
 import { createAlbum, updateAlbum, clearAlbums } from '../../actions/albums_actions';
 import { createTrack, clearTracks } from '../../actions/tracks_actions';
 import { openModal } from '../../actions/modal_actions';
+import { displayLoading, stopLoading } from '../../actions/loading_actions';
 import NewAlbumForm from './new_album_form';
 
 const mapStateToProps = state => {
     return ({
         currentUser: state.entities.users[state.session.id]
-        // errors: state.entities.albums[0],
     });
 };
 
@@ -21,6 +21,8 @@ const mapDispatchToProps = dispatch => {
         clearAlbums: () => dispatch(clearAlbums()),
         clearTracks: () => dispatch(clearTracks()),
         openModal: modal => dispatch(openModal(modal)),
+        displayLoading: loading => dispatch(displayLoading(loading)),
+        stopLoading: () => dispatch(stopLoading()),
     });
 };
 

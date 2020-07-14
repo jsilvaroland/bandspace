@@ -1,9 +1,9 @@
 import React from 'react';
-import { Nav, Navbar } from 'react-bootstrap';
 import { Route, Switch } from "react-router-dom";
 
 import { ProtectedRoute } from '../util/route_util';
 import Modal from './modal/modal';
+import Loading from './loading/loading';
 import NavigationBarContainer from './navigation_bar/navigation_bar_container';
 import UserShowContainer from './user_show/user_show_container';
 import ArtistIndexContainer from './artist_index/artist_index_container';
@@ -19,6 +19,7 @@ import EditAlbumFormContainer from './edit_album_form/edit_album_form_container'
 const App = () => (
     <div className='bandspace'>
         <Modal />
+        <Loading />
         <div className="navbar-wrapper">
             <NavigationBarContainer  />
         </div>
