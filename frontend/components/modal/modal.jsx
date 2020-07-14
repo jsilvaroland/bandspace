@@ -26,7 +26,10 @@ const Modal = ({ modal, closeModal }) => {
             component = <DeleteArtContainer artType="Custom Header" />;
             break;
         case 'custom-header-size-error':
-            component = <UploadErrorContainer artType="Custom Header" />;
+            component = <UploadErrorContainer artType="Custom Header" maxSize="2MB" />;
+            break;
+        case 'image-size-error':
+            component = <UploadErrorContainer artType="Image" maxSize="10MB" />;
             break;
         default:
             return null;

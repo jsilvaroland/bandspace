@@ -25,6 +25,7 @@ class NewAlbumForm extends React.Component {
         this.handlePanelChange = this.handlePanelChange.bind(this);
         this.handleAudioUpload = this.handleAudioUpload.bind(this);
         this.handleImageUpload = this.handleImageUpload.bind(this);
+        this.deleteAlbumArt = this.deleteAlbumArt.bind(this);
         this.handleCreate = this.handleCreate.bind(this);
         this.change = this.change.bind(this);
     }
@@ -51,11 +52,6 @@ class NewAlbumForm extends React.Component {
                 .then(this.setState({ published: true }));
         }
     }
-
-    // componentWillUnmount() {
-    //     this.props.clearAlbums();
-    //     this.props.clearTracks();
-    // }
 
     handlePanelChange(panel) {
         this.setState({ activePanel: panel });
@@ -92,7 +88,7 @@ class NewAlbumForm extends React.Component {
 
     handleImageUpload(e) {
         const uploadFile = e.currentTarget.files[0];
-        if (uploadFile) {
+        if (uploadFile && uploadFile.size < 10000000) {
             const fileReader = new FileReader();
             fileReader.onloadend = () => {
                 let albumCopy = this.state.album;
@@ -100,7 +96,16 @@ class NewAlbumForm extends React.Component {
                 this.setState({ album: albumCopy, albumArtPreview: fileReader.result });
             };
             fileReader.readAsDataURL(uploadFile);
+        } else {
+            this.props.openModal("image-size-error");
+            document.getElementById('image-file').value = "";
         }
+    }
+
+    deleteAlbumArt() {
+        let albumCopy = this.state.album;
+        albumCopy.albumArt = null; // might not be able to just do this
+        this.setState({ album: albumCopy, albumArtPreview: null });
     }
 
     forwardToHiddenInput() {
@@ -190,6 +195,7 @@ class NewAlbumForm extends React.Component {
                 leftPanelAlbumClass = "left-panel-album-active";
 
                 titleText = (<input
+                    className="title-text"
                     type="text"
                     value={album.title}
                     placeholder="album name"
@@ -197,39 +203,54 @@ class NewAlbumForm extends React.Component {
                 />);
 
                 aboutLabel = (<label className="album-about-label">about this album:</label>)
-                aboutField = (<input className="about-album-input"
-                    type="textarea"
+                aboutField = (<textarea className="about-album-input"
                     value={album.description}
                     placeholder="(optional)"
                     onChange={this.change('album', 'description')}
                 />)
 
                 creditsLabel = (<label className="album-credits-label">album credits:</label>)
-                creditsField = (<input className="credits-album-input"
-                    type="textarea"
+                creditsField = (<textarea className="credits-album-input"
                     value={album.credits}
                     placeholder="(optional)"
                     onChange={this.change('album', 'credits')}
                 />)
                 albumArtPreview ?
-                    albumArt = (<div>
-                        <img className="release-art-212" src={albumArtPreview} />
-                                </div>) :
-                    albumArt = (<div className="release-art-212">
-                                    <span className="add-album-art" onClick={this.forwardToHiddenInput}>
-                                        Upload Album Art
-                                    </span>
-                                    <input 
-                                    id="image-file" 
-                                    accept="image/png, image/jpeg, image/gif"
-                                    type="file" 
-                                    onChange={this.handleImageUpload} 
-                                    />
-                                </div>)
+                    albumArt = (
+                        <div className="album-art-wrapper">
+                            <div className="release-art-wrapper">
+                                <img className="release-art-212" src={albumArtPreview} />
+                                <button className="remove"
+                                    onClick={this.deleteAlbumArt}>
+                                    &times;
+                                </button>
+                            </div>
+                        </div>) :
+                    albumArt = (
+                        <div className="album-art-wrapper">
+                            <div className="release-art-212-absent">
+                                <div className="add-album-art" onClick={this.forwardToHiddenInput}>
+                                    Upload Album Art
+                                </div>
+                                <div className="album-art-hint">
+                                    <div>350 x 350 pixels minimum</div>
+                                    <div>(bigger is better)</div>
+                                    <br />
+                                    .jpg, .gif or .png, 10MB max
+                                </div>
+                                <input 
+                                id="image-file" 
+                                accept="image/png, image/jpeg, image/gif"
+                                type="file" 
+                                onChange={this.handleImageUpload} 
+                                />
+                            </div>
+                        </div>)
             } else {
                 leftPanelAlbumClass = "left-panel-album";
 
                 titleText = (<input
+                    className="title-text"
                     type="text"
                     placeholder="track name"
                     value={tracks[activePanel - 1].title}
@@ -237,24 +258,21 @@ class NewAlbumForm extends React.Component {
                 />);
 
                 aboutLabel = (<label className="track-about-label">about this track:</label>)
-                aboutField = (<input className="about-track-input"
-                    type="textarea"
+                aboutField = (<textarea className="about-track-input"
                     value={tracks[activePanel - 1].description}
                     placeholder="(optional)"
                     onChange={this.change('tracks', 'description', activePanel - 1)}
                 />)
 
                 lyricsLabel = (<label className="track-lyrics-label">lyrics:</label>)
-                lyricsField = (<input className="lyrics-track-input"
-                    type="textarea"
+                lyricsField = (<textarea className="lyrics-track-input"
                     value={tracks[activePanel - 1].lyrics}
                     placeholder="(optional)"
                     onChange={this.change('tracks', 'lyrics', activePanel - 1)}
                 />)
 
                 creditsLabel = (<label className="track-credits-label">track credits:</label>)
-                creditsField = (<input className="credits-track-input"
-                    type="textarea"
+                creditsField = (<textarea className="credits-track-input"
                     value={tracks[activePanel - 1].credits}
                     placeholder="(optional)"
                     onChange={this.change('tracks', 'credits', activePanel - 1)}
@@ -287,13 +305,13 @@ class NewAlbumForm extends React.Component {
                         </div>
                         <div className="right-panel">
                             {titleText}
+                            {albumArt}
                             {aboutLabel}
                             {aboutField}
                             {lyricsLabel}
                             {lyricsField}
                             {creditsLabel}
                             {creditsField}
-                            {albumArt}
                         </div>
                     </form>
                 </div>

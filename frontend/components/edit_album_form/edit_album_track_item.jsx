@@ -12,6 +12,8 @@ class EditAlbumTrackItem extends React.Component {
         const { n, handlePanelChange, activePanel } = this.props;
         const { track } = this.state;
         const trackTitleText = track.title === "" ? "Untitled Track" : track.title;
+        const trackItemStyle = { display: 'flex' };
+        const fileSize = (track.trackSong.size / 1000000).toFixed(1);
         let trackItemClass;
 
         if (activePanel === n) {
@@ -23,10 +25,13 @@ class EditAlbumTrackItem extends React.Component {
         }
 
         return (
-            <div className={trackItemClass} onClick={() => handlePanelChange(n)}>
+            <div style={trackItemStyle} className={trackItemClass} onClick={() => handlePanelChange(n)}>
                 <span className="track-num">{n}</span>
-                <span className="left-panel-track-title">{trackTitleText}</span>
-                <div>{track.trackSong.name}</div>
+                <div>
+                    <div className="left-panel-track-title">{trackTitleText}</div>
+                    <span className="filename">{track.trackSong.name}</span>
+                    <span className="filesize">{fileSize}MB</span>
+                </div>
             </div>
         )
     }

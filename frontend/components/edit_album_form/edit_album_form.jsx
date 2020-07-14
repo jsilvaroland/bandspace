@@ -111,6 +111,7 @@ class EditAlbumForm extends React.Component {
                 />)
             } else {
                 titleText = (<input
+                            // className="title-text"
                             type="text"
                             value={tracks[activePanel - 1].title} 
                             onChange={this.change('tracks', 'title', activePanel - 1)}

@@ -1,6 +1,6 @@
 .album-edit {
     width: 935px;
-    padding: 20px 20px 96px;
+    padding: 0 20px 96px;
 }
 
 .edit-album-form {
@@ -15,6 +15,9 @@
     border-bottom: 1px solid #FFFFFF;
 }
 
+.left-panel {
+    padding-top: 20px;
+}
 
 .left-panel-album {
     border-left: 1px solid rgb(248, 248, 248);
@@ -22,7 +25,7 @@
 }
 
 .left-panel-album-active {
-    padding: 10px 1px 10px 10px;
+    padding: 10px 0 10px 10px;
 }
 
 .left-panel-album-wrapper {
@@ -44,9 +47,24 @@
     border: 1px dashed rgb(204, 204, 204);
 }
 
-.release-art-212 {
-    height: 212px;
+.release-art-wrapper {
+    position: relative;
     width: 212px;
+    height: 212px;
+}
+
+.release-art-212-absent {
+    height: 210px;
+    width: 210px;
+    text-align: center;
+    vertical-align: center;
+    border: 1px dashed silver;
+}
+
+.release-art-212 {
+    border: 1px solid #eee;
+    height: 210px;
+    width: 210px;
 }
 
 .album-title-artist {
@@ -73,6 +91,7 @@ h3.tracks {
 }
 
 .tracks-edit {
+    border-bottom: 1px solid rgb(233, 233, 233);
     padding: 20px 0 20px 10px;
 }
 
@@ -87,8 +106,8 @@ h3.tracks {
     color: #363636;
 }
 
-.edit-album-track-item, .edit-album-track-item-active, .edit-album-track-item-next {
-    height: 52px; // temporary
+.edit-album-track-item, .edit-album-track-item-active, 
+.edit-album-track-item-next {
     width: 100% - padding;
 }
 
@@ -104,11 +123,13 @@ h3.tracks {
     border-left: 1px solid rgb(248, 248, 248);
 }
 
-.edit-album-track-item:hover, .edit-album-track-item-next:hover, .left-panel-album:hover {
+.edit-album-track-item:hover, .edit-album-track-item-next:hover, 
+.left-panel-album:hover {
     border-left: 1px solid #fcfcfc;
 }
 
-.left-panel-album:hover, .edit-album-track-item:hover, .edit-album-track-item-active:hover, .edit-album-track-item-next:hover {
+.left-panel-album:hover, .edit-album-track-item:hover, 
+.edit-album-track-item-active:hover, .edit-album-track-item-next:hover {
     background-color: rgb(252, 252, 252);
     cursor: pointer;
 }
@@ -126,8 +147,13 @@ h3.tracks {
     border-width: 1px 0 1px 1px;
 }
 
-.left-panel-album-active, .edit-album-track-item-active {
+.left-panel-album-active, .edit-album-track-item-active, 
+.edit-album-track-item-active:hover {
     border-left: 1px solid rgb(25, 138, 242);
+}
+
+.left-panel-audio-upload {
+    padding-top: 15px;
 }
 
 .add-track {
@@ -141,6 +167,7 @@ h3.tracks {
 }
 
 .save {
+    border-top: 1px solid rgb(254, 254, 254);
     padding: 20px 0 20px 10px;
 }
 
@@ -171,8 +198,84 @@ button.publish-disabled:focus {
 .right-panel {
     display: flex;
     flex-direction: column;
+    background-color: #FFFFFF;
+    padding: 20px;
+    border-left: 1px solid #dbdbdb;
+    border-bottom: 1px solid #dbdbdb;
+    border-right: 1px solid #dbdbdb;
 }
 
 #audio-file, #image-file {
     display: none;
+}
+
+.title-text {
+    border: 1px solid #9c9c9c;
+    padding: 5px 10px;
+    margin-bottom: 19px;
+    font-size: 22px;
+    width: 405px;
+    border-radius: 0;
+}
+
+.title-text:focus, .credits-album-input:focus, .about-album-input:focus, 
+.about-track-input:focus, .credits-track-input:focus, .lyrics-track-input:focus {
+    outline: none;
+    border-color: rgb(84, 162, 227);
+}
+
+.album-about-label, .track-about-label, .album-art-wrapper {
+    background-image: linear-gradient(to right, rgb(198, 198, 198) 20%, rgba(255,255,255,0) 0%);
+    background-position: top;
+    background-size: 4px 1px;
+    background-repeat: repeat-x;
+}
+
+.album-credits-label, .album-about-label, .track-about-label, 
+.track-credits-label, .track-lyrics-label {
+    margin-bottom: 6px;
+    font-size: 12px;
+    color: #333333;
+    padding-top: 21px;
+}
+
+.credits-album-input, .about-album-input, .about-track-input, 
+.credits-track-input, .lyrics-track-input {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    width: 400px;
+    font-size: 12px;
+    line-height: 12px;
+    min-height: 48px;
+    border: 1px solid #9c9c9c;
+    padding: 3px;
+}
+
+.album-art-wrapper {
+    padding: 20px 0
+}
+
+.add-album-art {
+    font-size: 18px;
+    color: #0687f5;
+    text-decoration: none;
+    margin-top: 60px;
+    cursor: pointer;
+}
+
+.add-album-art:hover {
+    text-decoration: underline;
+}
+
+.album-art-hint {
+    margin-top: 12px;
+    color: #999999;
+}
+
+.filename {
+    margin-right: 5px;
+}
+
+.filename, .filesize {
+    font-size: 11px;
+    color: #999999;
 }
