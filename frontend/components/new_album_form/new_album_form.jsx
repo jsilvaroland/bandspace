@@ -8,7 +8,8 @@ class NewAlbumForm extends React.Component {
         super(props);
         this.state = {
             activePanel: 0,
-            albumTitleError: false, 
+            albumTitleError: false,
+            albumArtError: false,
             albumArtPreview: null,
             tracks: [],
             album: {
@@ -19,7 +20,6 @@ class NewAlbumForm extends React.Component {
                 trackIds: [],
             },
             published: false,
-            //errors                // will have to do some setState({ errors })
         };
         this.anyChanges = false;
         this.forwardToHiddenInput = this.forwardToHiddenInput.bind(this);
@@ -38,7 +38,8 @@ class NewAlbumForm extends React.Component {
     }
 
     componentDidUpdate() {
-        const { album, tracks, albumTitleError } = this.state;
+        const { album, tracks, albumTitleError, activePanel, albumArtError, 
+            albumArtPreview } = this.state;
 
         if (album.id && tracks.length === album.trackIds.length) {
             const albumFormData = new FormData();
@@ -56,6 +57,17 @@ class NewAlbumForm extends React.Component {
 
         if (album.title !== "" && albumTitleError) {
             this.setState({ albumTitleError: false });
+        }
+
+        if (activePanel > 0 && tracks[activePanel - 1].title !== "" && 
+        tracks[activePanel - 1].trackTitleError) {
+            let tracksCopy = tracks;
+            tracksCopy[activePanel - 1].trackTitleError = false;
+            this.setState({ tracks: tracksCopy });
+        }
+
+        if (albumArtError && albumArtPreview) {
+            this.setState({ albumArtError: false });
         }
     }
 
@@ -163,13 +175,17 @@ class NewAlbumForm extends React.Component {
                     }));
         } else if (album.title === "") {
             this.setState({ activePanel: 0, albumTitleError: true });
-            // make input box red
-            console.log('album title required');
         } else if (!tracks.every(hasTitle)) {
-            // switch active panel to first track without a title
-            console.log('every track needs a title');
+            let tracksCopy = tracks, firstTrackWithoutTitle;
+            tracksCopy.forEach((track, i) => {
+                if (track.title === "") {
+                    tracksCopy[i].trackTitleError = true;
+                    if (!firstTrackWithoutTitle) firstTrackWithoutTitle = i + 1;
+                }
+            });
+            this.setState({ tracks: tracksCopy, activePanel: firstTrackWithoutTitle });
         } else if (!album.albumArt) {
-            this.setState({ activePanel: 0 });
+            this.setState({ activePanel: 0, albumArtError: true });
             console.log('album art required');
         }
     }
@@ -180,11 +196,13 @@ class NewAlbumForm extends React.Component {
         if (this.state.published) {
             return <Redirect to={`/artists/${currentUser.id}`} />
         } else if (currentUser) {
-            const { album, tracks, activePanel, albumArtPreview } = this.state;
+            const { album, tracks, activePanel, albumArtPreview,
+                 albumTitleError, albumArtError } = this.state;
             let publishBtn, titleText, aboutLabel, aboutField, lyricsLabel,
                 lyricsField, creditsLabel, creditsField, albumTitleText, 
-                albumArt, leftPanelAlbumClass, albumTitleClassName, 
-                albumTitleAlert, titleError;
+                albumArt, leftPanelAlbumClass, albumTitleClassName, titleError,
+                trackTitleClassName, albumTitleAlert, trackTitleAlert, 
+                albumArtAlert, albumArtClassName;
 
             const releaseArt72 = albumArtPreview ?
                 <span>
@@ -207,7 +225,16 @@ class NewAlbumForm extends React.Component {
             if (activePanel === 0) {
                 leftPanelAlbumClass = "left-panel-album-active";
 
-                if (this.state.albumTitleError) {
+                if (albumArtError) {
+                    albumArtClassName = "release-art-212-absent-error"
+                    albumArtAlert = (<div className="album-art-alert">
+                        Please add cover art for this album.
+                    </div>)
+                } else {
+                    albumArtClassName = "release-art-212-absent"
+                }
+
+                if (albumTitleError) {
                     albumTitleClassName = "album-title-text-error";
                     albumTitleAlert = (<div className="album-title-alert">
                         Please enter an album name.
@@ -239,6 +266,9 @@ class NewAlbumForm extends React.Component {
                     placeholder="(optional)"
                     onChange={this.change('album', 'credits')}
                 />)
+
+
+
                 albumArtPreview ?
                     albumArt = (
                         <div className="album-art-wrapper">
@@ -252,7 +282,7 @@ class NewAlbumForm extends React.Component {
                         </div>) :
                     albumArt = (
                         <div className="album-art-wrapper">
-                            <div className="release-art-212-absent">
+                            <div className={albumArtClassName}>
                                 <div className="add-album-art" onClick={this.forwardToHiddenInput}>
                                     Upload Album Art
                                 </div>
@@ -273,13 +303,24 @@ class NewAlbumForm extends React.Component {
             } else {
                 leftPanelAlbumClass = "left-panel-album";
 
+                if (tracks[activePanel - 1].trackTitleError) {
+                    trackTitleClassName = "title-text-error";
+                    trackTitleAlert = (<div className="track-title-alert">
+                        Please enter a track name.
+                    </div>)
+                } else {
+                    trackTitleClassName = "title-text"
+                }
+
                 titleText = (<input
-                    className="title-text"
+                    className={trackTitleClassName}
                     type="text"
                     placeholder="track name"
                     value={tracks[activePanel - 1].title}
                     onChange={this.change('tracks', 'title', activePanel - 1)}
                 />);
+
+                titleError = trackTitleAlert;
 
                 aboutLabel = (<label className="track-about-label">about this track:</label>)
                 aboutField = (<textarea className="about-track-input"
@@ -332,6 +373,7 @@ class NewAlbumForm extends React.Component {
                             {titleText}
                             {titleError}
                             {albumArt}
+                            {albumArtAlert}
                             {aboutLabel}
                             {aboutField}
                             {lyricsLabel}

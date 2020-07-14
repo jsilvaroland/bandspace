@@ -53,12 +53,19 @@
     height: 212px;
 }
 
-.release-art-212-absent {
+.release-art-212-absent, .release-art-212-absent-error {
     height: 210px;
     width: 210px;
     text-align: center;
     vertical-align: center;
+}
+
+.release-art-212-absent {
     border: 1px dashed silver;
+}
+
+.release-art-212-absent-error {
+    border: 1px dashed red;
 }
 
 .release-art-212 {
@@ -213,7 +220,7 @@ button.publish-disabled:focus {
     border: 1px solid #9c9c9c;
 }
 
-.title-text, .album-title-text, .album-title-text-error {
+.title-text, .album-title-text, .album-title-text-error, .title-text-error {
     padding: 5px 10px;
     margin-bottom: 5px;
     font-size: 22px;
@@ -221,11 +228,11 @@ button.publish-disabled:focus {
     border-radius: 0;
 }
 
-.album-title-text-error {
+.album-title-text-error, .title-text-error {
     border: 1px solid rgb(235, 10, 24);
 }
 
-.album-title-text-error:focus {
+.album-title-text-error:focus, .title-text-error:focus {
     outline: none;
 }
 
@@ -250,6 +257,10 @@ button.publish-disabled:focus {
     padding-top: 21px;
 }
 
+.album-about-label {
+    margin-top: 20px;
+}
+
 .credits-album-input, .about-album-input, .about-track-input, 
 .credits-track-input, .lyrics-track-input {
     font-family: "Helvetica Neue", Arial, sans-serif;
@@ -262,7 +273,7 @@ button.publish-disabled:focus {
 }
 
 .album-art-wrapper {
-    padding: 20px 0;
+    padding-top: 20px;
     margin-top: 20px;
 }
 
@@ -318,8 +329,12 @@ button.publish-disabled:focus {
     position: relative;
 }
 
-.album-title-alert {
+.album-title-alert, .track-title-alert, .album-art-alert {
     margin-top: 5px;
     color: #EE0000;
     font-size: 12px;
+}
+
+.album-art-alert {
+    padding-top: 5px;
 }
