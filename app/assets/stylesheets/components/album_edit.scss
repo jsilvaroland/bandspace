@@ -279,3 +279,25 @@ button.publish-disabled:focus {
     font-size: 11px;
     color: #999999;
 }
+
+.delete-track {
+    position: absolute;
+    text-align: center;
+    right: 12px;
+    top: 8px;
+    padding-bottom: 3px;
+    height: 17px;
+    width: 20px;
+    font-size: 16px;
+    color: rgb(174, 174, 174);
+    border-radius: 3px;
+}
+
+.delete-track:hover {
+    background-color: rgb(238, 238, 238);
+    cursor: pointer;
+}
+
+.edit-album-track-item-wrapper {
+    position: relative;
+}

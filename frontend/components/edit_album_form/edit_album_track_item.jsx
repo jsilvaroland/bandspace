@@ -9,7 +9,7 @@ class EditAlbumTrackItem extends React.Component {
     }
 
     render() {
-        const { n, handlePanelChange, activePanel } = this.props;
+        const { n, handlePanelChange, activePanel, deleteTrack } = this.props;
         const { track } = this.state;
         const trackTitleText = track.title === "" ? "Untitled Track" : track.title;
         const trackItemStyle = { display: 'flex' };
@@ -25,12 +25,15 @@ class EditAlbumTrackItem extends React.Component {
         }
 
         return (
-            <div style={trackItemStyle} className={trackItemClass} onClick={() => handlePanelChange(n)}>
-                <span className="track-num">{n}</span>
-                <div>
-                    <div className="left-panel-track-title">{trackTitleText}</div>
-                    <span className="filename">{track.trackSong.name}</span>
-                    <span className="filesize">{fileSize}MB</span>
+            <div className="edit-album-track-item-wrapper">
+                <div className="delete-track" onClick={() => deleteTrack(n - 1)}>&times;</div>
+                <div style={trackItemStyle} className={trackItemClass} onClick={() => handlePanelChange(n)}>
+                    <span className="track-num">{n}</span>
+                    <div>
+                        <div className="left-panel-track-title">{trackTitleText}</div>
+                        <span className="filename">{track.trackSong.name}</span>
+                        <span className="filesize">{fileSize}MB</span>
+                    </div>
                 </div>
             </div>
         )

@@ -13,7 +13,8 @@ class EditAlbumTrackIndex extends React.Component {
     }
 
     render() {
-        const { tracks, handlePanelChange, handleAudioUpload, activePanel } = this.props;
+        const { tracks, handlePanelChange, handleAudioUpload, activePanel,
+            deleteTrack } = this.props;
 
         return (
             <div className="tracks-edit">
@@ -25,7 +26,8 @@ class EditAlbumTrackIndex extends React.Component {
                         key={track.id || parseInt(`${i.toString()}${new Date().getTime()}`)} 
                         track={track} 
                         handlePanelChange={handlePanelChange}
-                        activePanel= {activePanel}
+                        activePanel={activePanel}
+                        deleteTrack={deleteTrack}
                         />
                     ))
                 }

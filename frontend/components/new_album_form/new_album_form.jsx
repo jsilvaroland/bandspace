@@ -28,6 +28,7 @@ class NewAlbumForm extends React.Component {
         this.deleteAlbumArt = this.deleteAlbumArt.bind(this);
         this.handleCreate = this.handleCreate.bind(this);
         this.change = this.change.bind(this);
+        this.deleteTrack = this.deleteTrack.bind(this);
     }
     
     componentDidMount() {
@@ -55,6 +56,12 @@ class NewAlbumForm extends React.Component {
 
     handlePanelChange(panel) {
         this.setState({ activePanel: panel });
+    }
+
+    deleteTrack(i) {
+        let tracksCopy = this.state.tracks;
+        tracksCopy.splice(i, 1);
+        this.setState({ activePanel: 0, tracks: tracksCopy });
     }
 
     change(field, subfield, i) {
@@ -168,6 +175,7 @@ class NewAlbumForm extends React.Component {
         if (this.state.published) {
             return <Redirect to={`/artists/${currentUser.id}`} />
         } else if (currentUser) {
+            console.log(this.state);
             const { album, tracks, activePanel, albumArtPreview } = this.state;
             let publishBtn, titleText, aboutLabel, aboutField, lyricsLabel,
                 lyricsField, creditsLabel, creditsField, albumTitleText, 
@@ -298,6 +306,7 @@ class NewAlbumForm extends React.Component {
                                 handleAudioUpload={this.handleAudioUpload}
                                 activePanel={activePanel}
                                 tracks={tracks}
+                                deleteTrack={this.deleteTrack}
                             />
                             <div className="save">
                                 {publishBtn}
