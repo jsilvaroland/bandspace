@@ -209,16 +209,27 @@ button.publish-disabled:focus {
     display: none;
 }
 
-.title-text {
+.title-text, .album-title-text {
     border: 1px solid #9c9c9c;
+}
+
+.title-text, .album-title-text, .album-title-text-error {
     padding: 5px 10px;
-    margin-bottom: 19px;
+    margin-bottom: 5px;
     font-size: 22px;
     width: 405px;
     border-radius: 0;
 }
 
-.title-text:focus, .credits-album-input:focus, .about-album-input:focus, 
+.album-title-text-error {
+    border: 1px solid rgb(235, 10, 24);
+}
+
+.album-title-text-error:focus {
+    outline: none;
+}
+
+.title-text:focus, .album-title-text:focus, .credits-album-input:focus, .about-album-input:focus, 
 .about-track-input:focus, .credits-track-input:focus, .lyrics-track-input:focus {
     outline: none;
     border-color: rgb(84, 162, 227);
@@ -251,7 +262,12 @@ button.publish-disabled:focus {
 }
 
 .album-art-wrapper {
-    padding: 20px 0
+    padding: 20px 0;
+    margin-top: 20px;
+}
+
+.track-about-label {
+    margin-top: 20px;
 }
 
 .add-album-art {
@@ -300,4 +316,10 @@ button.publish-disabled:focus {
 
 .edit-album-track-item-wrapper {
     position: relative;
+}
+
+.album-title-alert {
+    margin-top: 5px;
+    color: #EE0000;
+    font-size: 12px;
 }

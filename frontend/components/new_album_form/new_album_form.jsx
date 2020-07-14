@@ -8,6 +8,7 @@ class NewAlbumForm extends React.Component {
         super(props);
         this.state = {
             activePanel: 0,
+            albumTitleError: false, 
             albumArtPreview: null,
             tracks: [],
             album: {
@@ -37,7 +38,7 @@ class NewAlbumForm extends React.Component {
     }
 
     componentDidUpdate() {
-        const { album, tracks } = this.state;
+        const { album, tracks, albumTitleError } = this.state;
 
         if (album.id && tracks.length === album.trackIds.length) {
             const albumFormData = new FormData();
@@ -51,6 +52,10 @@ class NewAlbumForm extends React.Component {
                 .then(this.props.clearAlbums())
                 .then(this.props.clearTracks())
                 .then(this.setState({ published: true }));
+        }
+
+        if (album.title !== "" && albumTitleError) {
+            this.setState({ albumTitleError: false });
         }
     }
 
@@ -157,7 +162,7 @@ class NewAlbumForm extends React.Component {
                             });
                     }));
         } else if (album.title === "") {
-            this.setState({ activePanel: 0 });
+            this.setState({ activePanel: 0, albumTitleError: true });
             // make input box red
             console.log('album title required');
         } else if (!tracks.every(hasTitle)) {
@@ -175,11 +180,11 @@ class NewAlbumForm extends React.Component {
         if (this.state.published) {
             return <Redirect to={`/artists/${currentUser.id}`} />
         } else if (currentUser) {
-            console.log(this.state);
             const { album, tracks, activePanel, albumArtPreview } = this.state;
             let publishBtn, titleText, aboutLabel, aboutField, lyricsLabel,
                 lyricsField, creditsLabel, creditsField, albumTitleText, 
-                albumArt, leftPanelAlbumClass;
+                albumArt, leftPanelAlbumClass, albumTitleClassName, 
+                albumTitleAlert, titleError;
 
             const releaseArt72 = albumArtPreview ?
                 <span>
@@ -202,13 +207,24 @@ class NewAlbumForm extends React.Component {
             if (activePanel === 0) {
                 leftPanelAlbumClass = "left-panel-album-active";
 
+                if (this.state.albumTitleError) {
+                    albumTitleClassName = "album-title-text-error";
+                    albumTitleAlert = (<div className="album-title-alert">
+                        Please enter an album name.
+                    </div>)
+                } else {
+                    albumTitleClassName = "album-title-text"
+                }
+
                 titleText = (<input
-                    className="title-text"
+                    className={albumTitleClassName}
                     type="text"
                     value={album.title}
                     placeholder="album name"
                     onChange={this.change('album', 'title')}
                 />);
+
+                titleError = albumTitleAlert;
 
                 aboutLabel = (<label className="album-about-label">about this album:</label>)
                 aboutField = (<textarea className="about-album-input"
@@ -314,6 +330,7 @@ class NewAlbumForm extends React.Component {
                         </div>
                         <div className="right-panel">
                             {titleText}
+                            {titleError}
                             {albumArt}
                             {aboutLabel}
                             {aboutField}
