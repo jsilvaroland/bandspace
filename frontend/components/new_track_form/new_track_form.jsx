@@ -22,6 +22,19 @@ class NewTrackForm extends React.Component {
         this.handleImageUpload = this.handleImageUpload.bind(this);
         this.forwardToHiddenInput = this.forwardToHiddenInput.bind(this);
         this.handleCreate = this.handleCreate.bind(this);
+        this.deleteTrackArt = this.deleteTrackArt.bind(this);
+    }
+
+    componentDidUpdate() {
+        const { track, trackTitleError, trackArtError } = this.state;
+
+        if (track.title !== "" && trackTitleError) {
+          this.setState({ trackTitleError: false });
+        }
+
+        if (track.trackArt && trackArtError) {
+            this.setState({ trackArtError: false });
+        }
     }
 
     change(subfield) {
@@ -31,6 +44,12 @@ class NewTrackForm extends React.Component {
             trackCopy[subfield] = e.target.value;
             this.setState({ track: trackCopy });
         };
+    }
+
+    deleteTrackArt() {
+        let trackCopy = this.state.track;
+        trackCopy.trackArt = null;
+        this.setState({ track: trackCopy, trackArtPreview: null });
     }
 
     forwardToHiddenInput(inputType) {
@@ -48,7 +67,7 @@ class NewTrackForm extends React.Component {
 
     handleImageUpload(e) {
         const uploadFile = e.currentTarget.files[0];
-        if (uploadFile) {
+        if (uploadFile && uploadFile.size < 10000000) {
             const fileReader = new FileReader();
             fileReader.onloadend = () => {
                 let trackCopy = this.state.track;
@@ -56,6 +75,9 @@ class NewTrackForm extends React.Component {
                 this.setState({ track: trackCopy, trackArtPreview: fileReader.result });
             };
             fileReader.readAsDataURL(uploadFile);
+        } else {
+            this.props.openModal("image-size-error");
+            document.getElementById('image-file').value = "";
         }
     }
 
@@ -72,13 +94,10 @@ class NewTrackForm extends React.Component {
             trackFormData.append('track[song]', track.trackSong);
             this.props.createTrack(trackFormData)
                 .then(this.setState({ published: true }));
-        }
-
-        if (!track.trackArt) {
-            console.log('track art required');
-        } 
-        if (track.title === "") {
-            console.log('track title required');
+        } else if (track.title === "") {
+            this.setState({ trackTitleError: true });
+        } else if (!track.trackArt) {
+            this.setState({ trackArtError: true });
         }
     }
 
@@ -88,9 +107,12 @@ class NewTrackForm extends React.Component {
         if (this.state.published) {
             return (<Redirect to={`/artists/${currentUser.id}`} />)
         } else if (currentUser) {
-            const { track, trackArtPreview, audioUploaded } = this.state;
+            const { track, trackArtPreview, audioUploaded, trackArtError, 
+                trackTitleError } = this.state;
             let publishBtn, trackTitleText, titleInput, aboutLabel, aboutField, 
-                lyricsLabel, lyricsField, creditsLabel, creditsField;
+                lyricsLabel, lyricsField, creditsLabel, creditsField, 
+                trackArtClassName, trackTitleClassName, trackArtAlert,
+                trackTitleAlert;
     
             audioUploaded ?
                 publishBtn = (<button className='publish' onClick={this.handleCreate}>
@@ -100,36 +122,47 @@ class NewTrackForm extends React.Component {
                     Publish
                 </button>)
     
+            if (trackTitleError) {
+                trackTitleClassName = "title-text-error";
+                trackTitleAlert = (
+                <div className="track-title-alert">
+                    Please enter a track name.
+                </div>
+                );
+            } else {
+                trackTitleClassName = "title-text";
+            }
+
             track.title === "" ?
                 trackTitleText = "Untitled Track" :
                 trackTitleText = track.title;
     
-            titleInput = (<input
+            titleInput = (
+              <input
+                className={trackTitleClassName}
                 type="text"
                 value={track.title}
                 placeholder="track name"
-                onChange={this.change('title')}
-            />);
+                onChange={this.change("title")}
+              />
+            );
     
             aboutLabel = (<label className="track-about-label">about this track:</label>)
-            aboutField = (<input className="about-track-input"
-                type="textarea"
+            aboutField = (<textarea className="about-track-input"
                 value={track.description}
                 placeholder="(optional)"
                 onChange={this.change('description')}
             />)
     
             lyricsLabel = (<label className="track-lyrics-label">lyrics:</label>)
-            lyricsField = (<input className="lyrics-track-input"
-                type="textarea"
+            lyricsField = (<textarea className="lyrics-track-input"
                 value={track.lyrics}
                 placeholder="(optional)"
                 onChange={this.change('lyrics')}
             />)
     
             creditsLabel = (<label className="track-credits-label">track credits:</label>)
-            creditsField = (<input className="credits-track-input"
-                type="textarea"
+            creditsField = (<textarea className="credits-track-input"
                 value={track.credits}
                 placeholder="(optional)"
                 onChange={this.change('credits')}
@@ -152,51 +185,90 @@ class NewTrackForm extends React.Component {
                     </span>
                 </div>
 
+            if (trackArtError) {
+                trackArtClassName = "release-art-212-absent-error";
+                trackArtAlert = (
+                <div className="album-art-alert">
+                    Please add cover art for this track.
+                </div>
+                );
+            } else {
+                trackArtClassName = "release-art-212-absent";
+            }
+
+
             const trackArt = trackArtPreview ?
-                (<div>
-                    <img className="release-art-212" src={trackArtPreview} />
-                </div>) :
-                (<div className="release-art-212">
-                    <input 
-                    id="image-file" 
-                    accept="image/png, image/jpeg, image/gif"
-                    type="file" 
-                    onChange={this.handleImageUpload} 
-                    />
-                    <span className="add-album-art" onClick={() => this.forwardToHiddenInput('image')}>
-                        Upload Track Art
-                    </span>
-                </div>)
+            (
+                <div className="album-art-wrapper">
+                    <div className="release-art-wrapper">
+                        <img className="release-art-212" src={trackArtPreview} />
+                        <button className="remove" onClick={this.deleteTrackArt}>
+                        &times;
+                        </button>
+                    </div>
+                </div>
+            ) : (
+                <div className="album-art-wrapper">
+                    <div className={trackArtClassName}>
+                        <div
+                            className="add-album-art"
+                            onClick={() => this.forwardToHiddenInput('image')}
+                        >
+                            Upload Track Art
+                        </div>
+                        <div className="album-art-hint">
+                            <div>350 x 350 pixels minimum</div>
+                            <div>(bigger is better)</div>
+                            <br />
+                            .jpg, .gif or .png, 10MB max
+                        </div>
+                        <input
+                            id="image-file"
+                            accept="image/png, image/jpeg, image/gif"
+                            type="file"
+                            onChange={this.handleImageUpload}
+                        />
+                    </div>
+                </div>
+            );
+
+            const releaseArt72 = trackArtPreview ? 
+                (<span>
+                    <img className="release-art-72" src={trackArtPreview} />
+                </span>) : 
+                (<span className="release-art-72-absent" />);
     
             return (
                 <div className="album-edit">
                     <form className="edit-album-form">
                         <div className="left-panel">
                             <div className="left-panel-album-wrapper">
-                                <div className="left-panel-album">
-                                    <span>
-                                        <img className="release-art-72" src={trackArtPreview} />
-                                    </span>
+                                <div className="left-panel-album-active">
+                                    {releaseArt72}
                                     <span className="album-title-artist">
                                         <p>{trackTitleText}</p>
                                         <p>by <span>{currentUser.username}</span></p>
                                     </span>
                                 </div>
                             </div>
-                            {audioUpload}
+                            <div className="track-edit">
+                                {audioUpload}
+                            </div>
                             <div className="save">
                                 {publishBtn}
                             </div>
                         </div>
                         <div className="right-panel">
                             {titleInput}
+                            {trackTitleAlert}
+                            {trackArt}
+                            {trackArtAlert}
                             {aboutLabel}
                             {aboutField}
                             {lyricsLabel}
                             {lyricsField}
                             {creditsLabel}
                             {creditsField}
-                            {trackArt}
                         </div>
                     </form>
                 </div>
