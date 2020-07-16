@@ -168,22 +168,31 @@ class NewTrackForm extends React.Component {
                 onChange={this.change('credits')}
             />)
 
-            const audioUpload = audioUploaded ? 
-                <div className="left-panel-audio-upload">
-                    <div>AUDIO</div>
-                    <div>{track.trackSong.name}</div>
-                    {/* add replace functionality later */}
-                </div> :
-                <div className="left-panel-audio-upload">
-                    <input 
-                    id="audio-file" 
-                    accept="audio/mp3, audio/wav"
-                    type="file" 
-                    onChange={this.handleAudioUpload} />
-                    <span className="add-track" onClick={() => this.forwardToHiddenInput('audio')}>
-                        add audio
-                    </span>
-                </div>
+            const audioUpload = audioUploaded ? (
+              <div className="left-panel-audio-upload">
+                <div className="audio">AUDIO</div>
+                <span className="filename">{track.trackSong.name}</span>
+                <span className="filesize">
+                    {(track.trackSong.size / 1000000).toFixed(1)}MB
+                </span>
+                {/* add replace functionality later */}
+              </div>
+            ) : (
+              <div className="left-panel-audio-upload">
+                <input
+                  id="audio-file"
+                  accept="audio/mp3, audio/wav"
+                  type="file"
+                  onChange={this.handleAudioUpload}
+                />
+                <span
+                  className="add-track"
+                  onClick={() => this.forwardToHiddenInput("audio")}
+                >
+                  add audio
+                </span>
+              </div>
+            );
 
             if (trackArtError) {
                 trackArtClassName = "release-art-212-absent-error";
