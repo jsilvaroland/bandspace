@@ -13,8 +13,20 @@ class EditAlbumTrackItem extends React.Component {
         const { track } = this.state;
         const trackTitleText = track.title === "" ? "Untitled Track" : track.title;
         const trackItemStyle = { display: 'flex' };
-        const fileSize = (track.trackSong.size / 1000000).toFixed(1);
-        let trackItemClass;
+        let fileName, fileSize, trackItemClass;
+
+        if (track.trackSong.size) {
+            fileName = track.trackSong.name;
+            fileSize = (track.trackSong.size / 1000000).toFixed(1);
+        } else {
+            for (let i = track.trackSong.length - 1; i >= 0; i--) {
+                if (track.trackSong[i] === '/') {
+                    fileName = track.trackSong.slice(i + 1);
+                    break;
+                }
+            }
+            fileSize = (track.trackSize / 1000000).toFixed(1);
+        }
 
         if (activePanel === n) {
             trackItemClass = "edit-album-track-item-active";
@@ -31,7 +43,7 @@ class EditAlbumTrackItem extends React.Component {
                     <span className="track-num">{n}</span>
                     <div>
                         <div className="left-panel-track-title">{trackTitleText}</div>
-                        <span className="filename">{track.trackSong.name}</span>
+                        <span className="filename">{fileName}</span>
                         <span className="filesize">{fileSize}MB</span>
                     </div>
                 </div>

@@ -4,4 +4,5 @@ if track.photo.attached?
 end
 if track.song.attached?
     json.trackSong url_for(track.song)
+    json.trackSize track.song.byte_size
 end

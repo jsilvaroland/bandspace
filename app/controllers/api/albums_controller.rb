@@ -29,7 +29,7 @@ class Api::AlbumsController < ApplicationController
     end
 
     def update
-        @album = Album.find_by(id: params[:album][:id])
+        @album = Album.find_by(id: params[:album][:id].to_i)
 
         if @album.artist_id == current_user.id
             if @album.update(album_params)
@@ -55,6 +55,6 @@ class Api::AlbumsController < ApplicationController
 
     private
     def album_params
-        params.require(:album).permit(:title, :description, :credits, :photo, :track_ids)
+        params.require(:album).permit(:title, :description, :credits, :photo, :track_ids, :id)
     end
 end

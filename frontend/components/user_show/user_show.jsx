@@ -9,6 +9,7 @@ class UserShow extends React.Component {
         this.state = {
             pageId: parseInt(props.match.params.userId),
         };
+
         this.handleBannerUpload = this.handleBannerUpload.bind(this);
         this.handleBioPicUpload = this.handleBioPicUpload.bind(this);
         this.deleteBioPic = this.deleteBioPic.bind(this);
@@ -80,9 +81,11 @@ class UserShow extends React.Component {
         updateUser(nullFormData);
     }
 
-    render() {  // will first write if you are nOT owner of this page
-        const { currentUserId, pageUser, albums, singles, openModal } = this.props;
+    render() {
+        const { currentUserId, pageUser, albums, openModal } = this.props;
         let bannerArt, bioPic;
+        const singles = this.props.singles.filter(single => !single.albumId);
+
         if (pageUser) {
             if (currentUserId === this.state.pageId) {
                 // page is logged-in-user's page
@@ -128,7 +131,7 @@ class UserShow extends React.Component {
                                     975 pixels wide, 40-180 pixels tall, .jpg, .gif or .png, 2mb max
                                 </div>
                             </div>
-    
+
                 return (
                     <div className="user-show">
                         <div className="header-wrapper">
@@ -195,9 +198,6 @@ class UserShow extends React.Component {
         } else {
             return <div></div>
         }
-        
-        // make classname conditional based on if user is an artist or fan
-        // make it also conditional based on if current user is equal to the wildcard userId
     }
 }
 

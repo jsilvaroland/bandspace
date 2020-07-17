@@ -2,7 +2,8 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { fetchAlbum, updateAlbum, clearAlbums } from '../../actions/albums_actions';
-import { fetchAlbumTracks, updateTrack, clearTracks } from '../../actions/tracks_actions';
+import { fetchAlbumTracks, updateTrack, clearTracks, createTrack } from '../../actions/tracks_actions';
+import { displayLoading, stopLoading } from "../../actions/loading_actions";
 import EditAlbumForm from './edit_album_form';
 
 const mapStateToProps = (state, ownProps) => {
@@ -16,7 +17,6 @@ const mapStateToProps = (state, ownProps) => {
         album,
         tracks,
         currentUser,
-        // errors: state.entities.albums[0],
     });
 };
 
@@ -27,8 +27,11 @@ const mapDispatchToProps = dispatch => {
         fetchAlbumTracks: albumId => dispatch(fetchAlbumTracks(albumId)),
         updateAlbum: album => dispatch(updateAlbum(album)),
         updateTrack: track => dispatch(updateTrack(track)),
+        createTrack: track => dispatch(createTrack(track)),
         clearAlbums: () => dispatch(clearAlbums()),
         clearTracks: () => dispatch(clearTracks()),
+        displayLoading: loading => dispatch(displayLoading(loading)),
+        stopLoading: () => dispatch(stopLoading()),
     });
 };
 

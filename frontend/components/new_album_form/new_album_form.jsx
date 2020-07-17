@@ -38,6 +38,8 @@ class NewAlbumForm extends React.Component {
     }
 
     componentWillUnmount() {
+        this.props.clearAlbums();
+        this.props.clearTracks();
         this.props.stopLoading();
     }
 
@@ -46,17 +48,7 @@ class NewAlbumForm extends React.Component {
             albumArtPreview } = this.state;
 
         if (album.id && tracks.length === album.trackIds.length) {
-            const albumFormData = new FormData();
-            albumFormData.append('album[description]', album.description);
-            albumFormData.append('album[title]', album.title);
-            albumFormData.append('album[credits]', album.credits);
-            albumFormData.append('album[photo]', album.albumArt);
-            albumFormData.append('album[track_ids]', album.trackIds);
-
-            this.props.updateAlbum(albumFormData)
-                .then(this.props.clearAlbums())
-                .then(this.props.clearTracks())
-                .then(this.setState({ published: true }));
+            this.setState({ published: true });
         }
 
         if (album.title !== "" && albumTitleError) {
@@ -147,7 +139,6 @@ class NewAlbumForm extends React.Component {
 
         // create the album
         if (album.albumArt && album.title !== "" && tracks.every(hasTitle)) { // also make sure trackIds are equal to the Ids for each track
-            // maybe leave the albumArt validation for backend
             
             const albumFormData = new FormData();
             albumFormData.append('album[description]', album.description);

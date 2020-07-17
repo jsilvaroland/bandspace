@@ -27,7 +27,7 @@ class Api::TracksController < ApplicationController
     end
 
     def update
-        @track = Track.find_by(id: params[:id])
+        @track = Track.find_by(id: params[:track][:id].to_i)
 
         if @track.artist_id == current_user.id
             if @track.update(track_params)
@@ -53,6 +53,6 @@ class Api::TracksController < ApplicationController
 
     private
     def track_params
-        params.require(:track).permit(:title, :description, :credits, :lyrics, :album_id, :song, :photo)
+        params.require(:track).permit(:title, :description, :credits, :lyrics, :album_id, :song, :photo, :id)
     end
 end

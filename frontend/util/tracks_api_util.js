@@ -1,5 +1,3 @@
-// get all singles from an artist
-// get all tracks from a 
 
 export const fetchArtistSingles = artistId => (
     $.ajax({
@@ -22,9 +20,6 @@ export const fetchTrack = trackId => (
     })
 );
 
-// 2 diff ajax calls for creating a single vs creating an album track?
-// how to differential creating a single vs creating a track for an album? if it has an album ID or not.
-
 export const createTrack = track => (
     $.ajax({
         method: 'POST',
@@ -35,13 +30,13 @@ export const createTrack = track => (
     })
 );
 
-// same for updating.
-
 export const updateTrack = track => (
     $.ajax({
         method: 'PATCH',
         url: `api/tracks/${track.id}`,
-        data: { track }
+        data: track,
+        contentType: false,
+        processData: false,
     })
 );
 
