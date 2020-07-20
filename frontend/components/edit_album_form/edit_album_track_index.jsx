@@ -3,8 +3,8 @@ import React from 'react';
 import EditAlbumTrackItem from './edit_album_track_item';
 
 class EditAlbumTrackIndex extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.forwardToHiddenInput = this.forwardToHiddenInput.bind(this);
     }
 
@@ -14,7 +14,7 @@ class EditAlbumTrackIndex extends React.Component {
 
     render() {
         const { tracks, handlePanelChange, handleAudioUpload, activePanel,
-            deleteTrack } = this.props;
+            discardTrack, deleteTrack, openModal, album } = this.props;
 
         return (
             <div className="tracks-edit">
@@ -27,7 +27,10 @@ class EditAlbumTrackIndex extends React.Component {
                         track={track} 
                         handlePanelChange={handlePanelChange}
                         activePanel={activePanel}
+                        discardTrack={discardTrack}
                         deleteTrack={deleteTrack}
+                        openModal={openModal}
+                        album={album}
                         />
                     ))
                 }

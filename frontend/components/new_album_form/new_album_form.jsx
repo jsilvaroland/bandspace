@@ -29,7 +29,7 @@ class NewAlbumForm extends React.Component {
         this.deleteAlbumArt = this.deleteAlbumArt.bind(this);
         this.handleCreate = this.handleCreate.bind(this);
         this.change = this.change.bind(this);
-        this.deleteTrack = this.deleteTrack.bind(this);
+        this.discardTrack = this.discardTrack.bind(this);
     }
     
     componentDidMount() {
@@ -70,8 +70,8 @@ class NewAlbumForm extends React.Component {
     handlePanelChange(panel) {
         this.setState({ activePanel: panel });
     }
-
-    deleteTrack(i) {
+    
+    discardTrack(i) {
         let tracksCopy = this.state.tracks;
         tracksCopy.splice(i, 1);
         this.setState({ activePanel: 0, tracks: tracksCopy });
@@ -117,7 +117,7 @@ class NewAlbumForm extends React.Component {
             };
             fileReader.readAsDataURL(uploadFile);
         } else {
-            this.props.openModal("image-size-error");
+            this.props.openModal({ "image-size-error": "image-size-error" });
             document.getElementById('image-file').value = "";
         }
     }
@@ -358,7 +358,7 @@ class NewAlbumForm extends React.Component {
                                 handleAudioUpload={this.handleAudioUpload}
                                 activePanel={activePanel}
                                 tracks={tracks}
-                                deleteTrack={this.deleteTrack}
+                                discardTrack={this.discardTrack}
                             />
                             <div className="save">
                                 {publishBtn}

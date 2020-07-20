@@ -2,8 +2,9 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { fetchAlbum, updateAlbum, clearAlbums } from '../../actions/albums_actions';
-import { fetchAlbumTracks, updateTrack, clearTracks, createTrack } from '../../actions/tracks_actions';
+import { fetchAlbumTracks, updateTrack, clearTracks, createTrack, deleteTrack } from '../../actions/tracks_actions';
 import { displayLoading, stopLoading } from "../../actions/loading_actions";
+import { openModal } from "../../actions/modal_actions";
 import EditAlbumForm from './edit_album_form';
 
 const mapStateToProps = (state, ownProps) => {
@@ -28,10 +29,12 @@ const mapDispatchToProps = dispatch => {
         updateAlbum: album => dispatch(updateAlbum(album)),
         updateTrack: track => dispatch(updateTrack(track)),
         createTrack: track => dispatch(createTrack(track)),
+        deleteTrack: trackId => dispatch(deleteTrack(trackId)),
         clearAlbums: () => dispatch(clearAlbums()),
         clearTracks: () => dispatch(clearTracks()),
         displayLoading: loading => dispatch(displayLoading(loading)),
         stopLoading: () => dispatch(stopLoading()),
+        openModal: modal => dispatch(openModal(modal)),
     });
 };
 

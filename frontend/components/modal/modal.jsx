@@ -4,14 +4,16 @@ import { closeModal } from '../../actions/modal_actions';
 import LoginFormContainer from '../session_form/login_form_container';
 import SignupFormContainer from '../session_form/signup_form_container';
 import DeleteReleaseContainer from '../delete/delete_release_container';
+import DeleteAlbumTrackContainer from '../delete/delete_album_track_container';
 import DeleteArtContainer from '../delete/delete_art_container';
 import UploadErrorContainer from '../upload_error/upload_error_container';
 
-const Modal = ({ modal, closeModal }) => {
+const Modal = props => {
+    const { modal, closeModal } = props;
     if (!modal) return null;
-    
+
     let component;
-    switch (modal) {
+    switch (Object.keys(modal)[0]) {
         case 'login':
             component = <LoginFormContainer />;
             break;
@@ -20,6 +22,9 @@ const Modal = ({ modal, closeModal }) => {
             break;
         case 'delete-release':
             component = <DeleteReleaseContainer />;
+            break;
+        case 'delete-album-track':
+            component = <DeleteAlbumTrackContainer trackId={Object.values(modal)[0]} album={modal.album} />;
             break;
         case 'delete-custom-header':
             component = <DeleteArtContainer artType="Custom Header" />;

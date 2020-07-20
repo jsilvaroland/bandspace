@@ -9,11 +9,12 @@ class EditAlbumTrackItem extends React.Component {
     }
 
     render() {
-        const { n, handlePanelChange, activePanel, deleteTrack } = this.props;
+        const { n, handlePanelChange, activePanel, discardTrack, 
+            openModal, album } = this.props;
         const { track } = this.state;
         const trackTitleText = track.title === "" ? "Untitled Track" : track.title;
         const trackItemStyle = { display: 'flex' };
-        let fileName, fileSize, trackItemClass;
+        let fileName, fileSize, trackItemClass, onClickX;
 
         if (track.trackSong.size) {
             fileName = track.trackSong.name;
@@ -36,9 +37,15 @@ class EditAlbumTrackItem extends React.Component {
             trackItemClass = "edit-album-track-item";
         }
 
+        if (track.id) {
+            onClickX = () => openModal({ "delete-album-track": track.id, album });
+        } else {
+            onClickX = () => discardTrack(n - 1);
+        }
+
         return (
             <div className="edit-album-track-item-wrapper">
-                <div className="delete-track" onClick={() => deleteTrack(n - 1)}>&times;</div>
+                <div className="delete-track" onClick={onClickX}>&times;</div>
                 <div style={trackItemStyle} className={trackItemClass} onClick={() => handlePanelChange(n)}>
                     <span className="track-num">{n}</span>
                     <div>

@@ -81,10 +81,10 @@ class NavigationBar extends React.Component {
         
         const sessionLinks = () => (
             <nav className={sessionLinksClass}>
-                <a className="signup" onClick={() => openModal('signup')}>
+                <a className="signup" onClick={() => openModal({ signup })}>
                     sign up
                 </a>
-                <a className="login" onClick={() => openModal('login')}>
+                <a className="login" onClick={() => openModal({ login })}>
                     log in
                 </a>
             </nav>
@@ -124,8 +124,6 @@ class NavigationBar extends React.Component {
                 </Link>
             </ul>
         );
-
-        // console.log(pathname.includes(`artist`))
 
         if (!currentUser && pathname == '/') {
             return (

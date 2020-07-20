@@ -115,7 +115,7 @@ class TrackShow extends React.Component {
             userFormData.append('user[banner]', uploadFile);
             updateUser(userFormData);
         } else {
-            openModal("custom-header-size-error");
+            openModal({ "custom-header-size-error": "custom-header-size-error" });
             document.getElementById('banner-file').value = "";
         }
     }
@@ -179,7 +179,7 @@ class TrackShow extends React.Component {
                             <img className="banner-art" src={pageUser.userBanner} />
                         </Link>
                         <button className="remove"
-                            onClick={() => openModal('delete-custom-header')}>
+                            onClick={() => openModal({ 'delete-custom-header': 'delete-custom-header' })}>
                             &times;
                                     </button>
                     </div> :

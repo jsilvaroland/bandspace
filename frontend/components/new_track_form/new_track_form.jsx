@@ -76,7 +76,7 @@ class NewTrackForm extends React.Component {
             };
             fileReader.readAsDataURL(uploadFile);
         } else {
-            this.props.openModal("image-size-error");
+            this.props.openModal({ "image-size-error": "image-size-error" });
             document.getElementById('image-file').value = "";
         }
     }
