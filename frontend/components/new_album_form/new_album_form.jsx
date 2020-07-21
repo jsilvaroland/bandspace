@@ -346,7 +346,6 @@ class NewAlbumForm extends React.Component {
                             <div className="left-panel-album-wrapper">
                                 <div className={leftPanelAlbumClass} onClick={() => this.handlePanelChange(0)}>
                                     {releaseArt72}
-                                        {/* <img className={releaseArt72} src={albumArtPreview} /> */}
                                     <span className="album-title-artist">
                                         <p>{albumTitleText}</p>
                                         <p>by <span>{currentUser.username}</span></p>
