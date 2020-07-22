@@ -60,7 +60,7 @@ class AlbumShow extends React.Component {
                     activeTrack: pageTracks[0],
                 });
             }
-        } else if (!pageAlbum && this.featuredAudio) { // some condition
+        } else if (!pageAlbum && this.featuredAudio) {
             this.setState({ deleted: true });
         }
     }
