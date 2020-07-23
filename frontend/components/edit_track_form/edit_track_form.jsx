@@ -1,124 +1,131 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 
-class NewTrackForm extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            trackArtPreview: null,
-            track: {
-                title: "",
-                credits: "",
-                description: "",
-                lyrics: "",
-                trackArt: null,
-                trackSong: null
-            },
-            audioUploaded: false,
-            published: false,
-        };
-        this.handleAudioUpload = this.handleAudioUpload.bind(this);
-        this.handleImageUpload = this.handleImageUpload.bind(this);
-        this.forwardToHiddenInput = this.forwardToHiddenInput.bind(this);
-        this.handleCreate = this.handleCreate.bind(this);
-        this.deleteTrackArt = this.deleteTrackArt.bind(this);
+class EditTrackForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      trackTitleError: false,
+      trackArtError: false,
+      trackArtPreview: null,
+      track: undefined,
+      updated: false,
+    };
+    this.anyChanges = false;
+    this.handleImageUpload = this.handleImageUpload.bind(this);
+    this.forwardToHiddenInput = this.forwardToHiddenInput.bind(this);
+    this.handleUpdate = this.handleUpdate.bind(this);
+    this.deleteTrackArt = this.deleteTrackArt.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.fetchTrack(this.props.trackId)
+      .then((res) => this.setState({ trackArtPreview: res.track.trackArt }));
+  }
+
+  componentDidUpdate() {
+    const { track } = this.props;
+    const { trackArtError, trackArtPreview, trackTitleError } = this.state;
+
+    if (track && !this.state.track) {
+      this.setState({ track: track });
     }
 
-    componentDidUpdate() {
-        const { track, trackTitleError, trackArtError } = this.state;
-
-        if (track.title !== "" && trackTitleError) {
-          this.setState({ trackTitleError: false });
-        }
-
-        if (track.trackArt && trackArtError) {
-            this.setState({ trackArtError: false });
-        }
+    if (trackTitleError && this.state.track.title !== "") {
+        this.setState({ trackTitleError: false });
     }
 
-    change(subfield) {
-        return e => {
-            let trackCopy = this.state.track;
-
-            trackCopy[subfield] = e.target.value;
-            this.setState({ track: trackCopy });
-        };
+    if (trackArtError && trackArtPreview) {
+      this.setState({ trackArtError: false });
     }
+  }
 
-    deleteTrackArt() {
+  componentWillUnmount() {
+    this.props.clearTracks();
+    this.props.stopLoading();
+  }
+
+  change(subfield) {
+    return e => {
+      let trackCopy = this.state.track;
+
+      trackCopy[subfield] = e.target.value;
+      this.setState({ track: trackCopy });
+      this.anyChanges = true;
+    };
+  }
+
+  handleImageUpload(e) {
+    const uploadFile = e.currentTarget.files[0];
+    if (uploadFile && uploadFile.size < 10000000) {
+      const fileReader = new FileReader();
+      fileReader.onloadend = () => {
         let trackCopy = this.state.track;
-        trackCopy.trackArt = null;
-        this.setState({ track: trackCopy, trackArtPreview: null });
+        trackCopy.trackArt = uploadFile;
+        this.setState({ track: trackCopy, trackArtPreview: fileReader.result });
+      };
+      fileReader.readAsDataURL(uploadFile);
+    } else {
+      this.props.openModal({ "image-size-error": "image-size-error" });
+      document.getElementById("image-file").value = "";
     }
+  }
 
-    forwardToHiddenInput(inputType) {
-        document.getElementById(`${inputType}-file`).click();
-    }
+  forwardToHiddenInput() {
+    document.getElementById("image-file").click();
+  }
 
-    handleAudioUpload(e) {
-        const uploadFile = e.currentTarget.files[0];
-        if (uploadFile) {
-            let trackCopy = this.state.track;
-            trackCopy.trackSong = uploadFile;
-            this.setState({ track: trackCopy, audioUploaded: true });
+  handleUpdate() {
+    const { track } = this.state;
+    const { updateTrack, displayLoading, trackId } = this.props;
+
+    if (track.trackArt && track.title !== "") {
+        displayLoading(true);
+        const trackFormData = new FormData();
+        trackFormData.append("track[id]", trackId);
+        trackFormData.append("track[title]", track.title);
+        trackFormData.append("track[description]", track.description);
+        trackFormData.append("track[credits]", track.credits);
+        trackFormData.append("track[lyrics]", track.lyrics);
+        if (track.trackArt.size) {
+          trackFormData.append("track[photo]", track.trackArt);
         }
+        updateTrack(trackFormData)
+            .then(this.setState({ updated: true }));
+    } else if (track.title === "") {
+        this.setState({ trackTitleError: true });
+    } else if (!track.trackArt) {
+        this.setState({ trackArtError: true });
     }
+  }
 
-    handleImageUpload(e) {
-        const uploadFile = e.currentTarget.files[0];
-        if (uploadFile && uploadFile.size < 10000000) {
-            const fileReader = new FileReader();
-            fileReader.onloadend = () => {
-                let trackCopy = this.state.track;
-                trackCopy.trackArt = uploadFile; // might not be able to just do this
-                this.setState({ track: trackCopy, trackArtPreview: fileReader.result });
-            };
-            fileReader.readAsDataURL(uploadFile);
-        } else {
-            this.props.openModal({ "image-size-error": "image-size-error" });
-            document.getElementById('image-file').value = "";
-        }
-    }
+  deleteTrackArt() {
+    let trackCopy = this.state.track;
+    trackCopy.trackArt = null;
+    this.setState({ track: trackCopy, trackArtPreview: null });
+    this.anyChanges = true;
+  }
 
-    handleCreate() {
-        const { track } = this.state;
-
-        if (track.trackArt && track.title !== "") {
-            const trackFormData = new FormData();
-            trackFormData.append('track[description]', track.description);
-            trackFormData.append('track[title]', track.title);
-            trackFormData.append('track[credits]', track.credits);
-            trackFormData.append('track[lyrics]', track.lyrics);
-            trackFormData.append('track[photo]', track.trackArt);
-            trackFormData.append('track[song]', track.trackSong);
-            this.props.createTrack(trackFormData)
-                .then(this.setState({ published: true }));
-        } else if (track.title === "") {
-            this.setState({ trackTitleError: true });
-        } else if (!track.trackArt) {
-            this.setState({ trackArtError: true });
-        }
-    }
-
-    render() {
-        const { currentUser } = this.props;
+  render() {
+    const { currentUser } = this.props;
+    const { track } = this.state;
         
-        if (this.state.published) {
+        if (this.state.updated) {
             return (<Redirect to={`/artists/${currentUser.id}`} />)
-        } else if (currentUser) {
-            const { track, trackArtPreview, audioUploaded, trackArtError, 
+        } else if (track && currentUser) {
+            const { track, trackArtPreview, trackArtError, 
                 trackTitleError } = this.state;
-            let publishBtn, trackTitleText, titleInput, aboutLabel, aboutField, 
+            let updateBtn, trackTitleText, titleInput, aboutLabel, aboutField, 
                 lyricsLabel, lyricsField, creditsLabel, creditsField, 
                 trackArtClassName, trackTitleClassName, trackArtAlert,
-                trackTitleAlert;
+                trackTitleAlert, fileName, fileSize;
     
-            audioUploaded ?
-                publishBtn = (<button className='publish' onClick={this.handleCreate}>
-                    Publish
+            this.anyChanges ?
+                updateBtn = (<button className='update' onClick={this.handleUpdate}>
+                    Update
                 </button>) :
-                publishBtn = (<button className='publish-disabled'>
-                    Publish
+                updateBtn = (<button className='update-disabled'>
+                    Update
                 </button>)
     
             if (trackTitleError) {
@@ -167,31 +174,50 @@ class NewTrackForm extends React.Component {
                 onChange={this.change('credits')}
             />)
 
-            const audioUpload = audioUploaded ? (
+            for (let i = track.trackSong.length - 1; i >= 0; i--) {
+                if (track.trackSong[i] === "/") {
+                    fileName = track.trackSong.slice(i + 1);
+                    break;
+                }
+            }
+            fileSize = (track.trackSize / 1000000).toFixed(1);
+
+            const audioUpload = (
               <div className="left-panel-audio-upload">
                 <div className="audio">AUDIO</div>
-                <span className="filename">{track.trackSong.name}</span>
+                <span className="filename">{fileName}</span>
                 <span className="filesize">
-                    {(track.trackSong.size / 1000000).toFixed(1)}MB
+                    {fileSize}MB
                 </span>
                 {/* add replace functionality later */}
               </div>
-            ) : (
-              <div className="left-panel-audio-upload">
-                <input
-                  id="audio-file"
-                  accept="audio/mp3, audio/wav"
-                  type="file"
-                  onChange={this.handleAudioUpload}
-                />
-                <span
-                  className="add-track"
-                  onClick={() => this.forwardToHiddenInput("audio")}
-                >
-                  add audio
-                </span>
-              </div>
-            );
+            )
+
+            // const audioUpload = audioUploaded ? (
+            //   <div className="left-panel-audio-upload">
+            //     <div className="audio">AUDIO</div>
+            //     <span className="filename">{track.trackSong.name}</span>
+            //     <span className="filesize">
+            //         {(track.trackSong.size / 1000000).toFixed(1)}MB
+            //     </span>
+            //     {/* add replace functionality later */}
+            //   </div>
+            // ) : (
+            //   <div className="left-panel-audio-upload">
+            //     <input
+            //       id="audio-file"
+            //       accept="audio/mp3, audio/wav"
+            //       type="file"
+            //       onChange={this.handleAudioUpload}
+            //     />
+            //     <span
+            //       className="add-track"
+            //       onClick={() => this.forwardToHiddenInput("audio")}
+            //     >
+            //       add audio
+            //     </span>
+            //   </div>
+            // );
 
             if (trackArtError) {
                 trackArtClassName = "release-art-212-absent-error";
@@ -263,7 +289,7 @@ class NewTrackForm extends React.Component {
                                 {audioUpload}
                             </div>
                             <div className="save">
-                                {publishBtn}
+                                {updateBtn}
                             </div>
                         </div>
                         <div className="right-panel">
@@ -287,4 +313,4 @@ class NewTrackForm extends React.Component {
     }
 }
 
-export default NewTrackForm;
+export default EditTrackForm;

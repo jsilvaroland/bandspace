@@ -22,7 +22,6 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = dispatch => {
-    // pass update album AND update track? or just update album?
     return ({
         fetchAlbum: albumId => dispatch(fetchAlbum(albumId)),
         fetchAlbumTracks: albumId => dispatch(fetchAlbumTracks(albumId)),

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect } from "react-router-dom";
+import { Redirect } from 'react-router-dom';
 
 import EditAlbumTrackIndex from './edit_album_track_index';
 
@@ -109,7 +109,7 @@ class EditAlbumForm extends React.Component {
       const fileReader = new FileReader();
       fileReader.onloadend = () => {
         let albumCopy = this.state.album;
-        albumCopy.albumArt = uploadFile; // might not be able to just do this
+        albumCopy.albumArt = uploadFile;
         this.setState({ album: albumCopy, albumArtPreview: fileReader.result });
       };
       fileReader.readAsDataURL(uploadFile);
