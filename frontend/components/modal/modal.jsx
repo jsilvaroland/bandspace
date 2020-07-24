@@ -24,7 +24,7 @@ const Modal = props => {
             component = <DeleteReleaseContainer />;
             break;
         case 'delete-album-track':
-            component = <DeleteAlbumTrackContainer trackId={Object.values(modal)[0]} album={modal.album} />;
+            component = <DeleteAlbumTrackContainer trackId={Object.values(modal)[0]} album={modal.album} handlePanelChange={modal.handlePanelChange} />;
             break;
         case 'delete-custom-header':
             component = <DeleteArtContainer artType="Custom Header" />;

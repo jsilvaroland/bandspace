@@ -391,10 +391,12 @@ class EditAlbumForm extends React.Component {
         leftPanelAlbumClass = "left-panel-album";
 
         if (activePanel > tracks.length) {
+          debugger
           i = activePanel - 1 - tracks.length;
           activeTrack = newTracks[i];
           field = "newTracks";
         } else {
+          debugger
           i = activePanel - 1;
           activeTrack = tracks[i];
           field = "tracks";

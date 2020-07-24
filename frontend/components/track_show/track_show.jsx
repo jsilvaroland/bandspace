@@ -137,7 +137,7 @@ class TrackShow extends React.Component {
         if (this.state.deleted) {
             return (<Redirect to={`/artists/${currentUserId}`} />)
         } else if (((pageUser && pageTrack && !pageTrack.albumId) || (pageUser && pageTrack && pageAlbum)) && this.audio) {
-            let fromAlbum, trackArt;
+            let fromAlbum, trackArt, deleteTrack;
 
             if (pageTrack.albumId) {
                 fromAlbum = (<span>from&nbsp;
@@ -147,8 +147,10 @@ class TrackShow extends React.Component {
                 </span>)
 
                 trackArt = pageAlbum.albumArt;
+                deleteTrack = () => openModal({ "delete-album-track": pageTrack.id, pageAlbum })
             } else {
                 trackArt = pageTrack.trackArt
+                deleteTrack = () => openModal({'delete-release': 'delete-release'})
             }
 
             let editDeleteButtons, bioPic, bannerArt;
@@ -181,7 +183,7 @@ class TrackShow extends React.Component {
                         <button className="remove"
                             onClick={() => openModal({ 'delete-custom-header': 'delete-custom-header' })}>
                             &times;
-                                    </button>
+                        </button>
                     </div> :
                     bannerArt = <div className="header-upload">
                         <input
@@ -204,7 +206,7 @@ class TrackShow extends React.Component {
                     </li>
                     <li>
                         <span className="edit-delete-buttons"
-                            onClick={() => this.props.openModal('delete-release')}>
+                            onClick={deleteTrack}>
                             Delete
                         </span>
                     </li>

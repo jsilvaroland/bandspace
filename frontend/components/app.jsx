@@ -15,8 +15,6 @@ import NewTrackFormContainer from './new_track_form/new_track_form_container';
 import EditAlbumFormContainer from './edit_album_form/edit_album_form_container';
 import EditTrackFormContainer from './edit_track_form/edit_track_form_container';
 
-// make em all protected routes, redirect if artist id doesn't match album or track id?
-
 const App = () => (
     <div className='bandspace'>
         <Modal />

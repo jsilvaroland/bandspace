@@ -38,9 +38,9 @@ class EditAlbumTrackItem extends React.Component {
         }
 
         if (track.id) {
-            onClickX = () => openModal({ "delete-album-track": track.id, album });
+            onClickX = () => openModal({ "delete-album-track": track.id, album, handlePanelChange });
         } else {
-            onClickX = () => discardTrack(n - 1);
+            onClickX = () => discardTrack(n - 1); // is panel change fine here?
         }
 
         return (
