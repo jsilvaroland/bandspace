@@ -16,9 +16,6 @@ class DeleteArt extends React.Component {
                 updateUser(nullFormData)
                     .then(closeModal());
                 break;
-            case 'User Pic':
-                // if track has an albumId vs if no albumId
-                debugger
         }
     }
 

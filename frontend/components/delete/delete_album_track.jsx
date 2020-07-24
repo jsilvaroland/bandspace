@@ -14,8 +14,6 @@ class DeleteAlbumTrack extends React.Component {
         this.props.deleteTrack(this.props.trackId)
             .then(this.props.closeModal())
             .then(this.props.handlePanelChange(0));
-            // need to switch activePanel to 0
-                // pass it in through props?
     }
 
 

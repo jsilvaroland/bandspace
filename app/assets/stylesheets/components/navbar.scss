@@ -21,6 +21,10 @@
     align-items: flex-end;
 }
 
+.left-nav-logged-out-not-splash {
+    display: flex;
+}
+
 
 .login-signup, .login-signup-not-splash {
     margin-top: 11px;
@@ -59,25 +63,20 @@
     margin: 23px 0 5px;
 }
 
-.search-bar-wrapper {
-    visibility: hidden; // remove later
-    margin-top: 16px;
-}
 
 
-
-.search-bar-placeholder {
+.search-bar {
     display: flex;
     align-items: center;
-    height: 36px;
-    width: 257px;
     font-size: 14px;
-    color: rgba(51,51,51,70);
-    line-height: 16px;
-    border-radius: 3px;
-    background: #f3f3f3;
-    border: 1px solid #f3f3f3;
-    padding: 0 28px 0 10px;
+    // height: 36px;
+    // width: 257px;
+    // color: rgba(51,51,51,70);
+    // line-height: 16px;
+    // border-radius: 3px;
+    // background-color: #f3f3f3;
+    // border: 1px solid #f3f3f3;
+    // padding: 0 28px 0 10px;
 }
 
 .logo-placeholder {
@@ -86,17 +85,10 @@
     font-size: 24px;
 }
 
-
-
-
-// if logged in
-
-
-
 .main-nav-logged-in, .main-nav-logged-out-not-splash {
     height: 53px;
-    // background-color: green;
 }
+
 .main-nav-logged-in * {
     display: flex;
 }
@@ -108,20 +100,6 @@
 .logo-placeholder-not-splash {
     width: 108px;
     font-size: 18px;
-}
-
-.search-bar-wrapper-logged-in {
-    visibility: hidden; // remove hidden later
-    margin: 8px 0;
-}
-
-.search-bar-placeholder-logged-in {
-    display: flex;
-    align-items: center;
-    width: 282px;
-    font-size: 14px;
-    padding: 10px 30px 10px 10px;
-    background-color: rgb(243, 243, 243);
 }
 
 .user-menu-btn {

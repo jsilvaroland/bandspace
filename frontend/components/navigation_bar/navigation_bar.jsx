@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
+import SearchContainer from '../search/search_container';
 
 class NavigationBar extends React.Component {
     constructor(props) {
@@ -126,6 +127,7 @@ class NavigationBar extends React.Component {
         );
 
         if (!currentUser && pathname == '/') {
+            // search is in right nav above sign up and login
             return (
                 <div className={mainNavStatus}>
                     <div className="left-nav-logged-out">
@@ -137,21 +139,14 @@ class NavigationBar extends React.Component {
                         {currentUser ? null : welcomeMessage()}
                     </div>
                     <div className="right-nav-logged-out">
-                        {/* refactor this search bar into a const on top of render */}
                         {/* change it to input with placeholder text of "Search and discover music" */}
-                        <div className="search-bar-wrapper">
-                            <div className="search-bar-placeholder">
-                                Search and discover music
-                            </div>
-                            {/* <div className="search-icon-placeholder">
-
-                            </div> */}
-                        </div>
+                        <SearchContainer />
                         {currentUser ? logoutLink(currentUser, logout) : sessionLinks()}
                     </div>
                 </div>
             )
         } else if (currentUser && pathname.includes(`artists/${currentUser.id}`) ) {
+            // if your page, search bar can be accessed by clicking search icon in right nav
             return (
                 <div className={mainNavStatus}>
                     <div className="left-nav-logged-in">
@@ -179,6 +174,7 @@ class NavigationBar extends React.Component {
                 </div>
             )
         } else if (currentUser) {
+            // if logged in but not on your own page, search is in left navbar
             return (
                 <div className={mainNavStatus}>
                     <div className="left-nav-logged-in">
@@ -187,13 +183,7 @@ class NavigationBar extends React.Component {
                                 <Link className="logo-link-not-splash" to="/">bandspace</Link>
                             </div>
                         </div>
-                        {/* <div className="search-bar-wrapper-logged-in">
-                            <div className="search-bar-placeholder-logged-in">
-                                Search and discover music 
-                            </div>
-                            <div className="search-icon-placeholder">
-                            </div>
-                        </div> */}
+                        <SearchContainer />
                     </div>
                     <div className="right-nav-logged-in">
                         <div className="nav-bar-icons">
@@ -207,7 +197,7 @@ class NavigationBar extends React.Component {
                     </div>
                 </div>
             )
-        } else { // will have to add another else for if you are an artist on your own page, because nav bar looks diff in that case
+        } else { //search is same as if you were logged in
             return (
                 <div className="main-nav-logged-out-not-splash">
                     <div className="left-nav-logged-out-not-splash">
@@ -216,14 +206,7 @@ class NavigationBar extends React.Component {
                                 <Link className="logo-link-not-splash" to="/">bandspace</Link>
                             </div>
                         </div>
-                        {/* <div className="search-bar-wrapper-logged-in">
-                            <div className="search-bar-placeholder-logged-in">
-                                Search and discover music
-                            </div>
-                            <div className="search-icon-placeholder">
-
-                            </div>
-                        </div> */}
+                        <SearchContainer />
                     </div>
                     <div className="right-nav-logged-out-not-splash">
                        {sessionLinks()}
