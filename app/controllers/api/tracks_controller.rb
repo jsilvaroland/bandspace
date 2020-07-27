@@ -2,7 +2,11 @@ class Api::TracksController < ApplicationController
     before_action :require_logged_in, only: [:create, :update, :destroy]
 
     def index
-        if params[:album_id]
+        if params[:search]
+            # use associations to access artist and album name from here
+            #
+            @tracks = Track.where("lower(title) LIKE :search", { :search => "%#{params[:search].downcase}%" })
+        elsif params[:album_id]
             @tracks = Track.where(album_id: params[:album_id])
         elsif params[:artist_id]
             @tracks = Track.where(album_id: nil).where(artist_id: params[:artist_id])

@@ -4,13 +4,13 @@ class Api::AlbumsController < ApplicationController
     def index
         if params[:artist_id]
             @albums = Album.where(artist_id: params[:artist_id])
+        elsif params[:search]
+            @albums = Album.where("lower(title) LIKE :search", { :search => "%#{params[:search].downcase}%" })
         else
             @albums = Album.all
         end
         render :index
     end
-
-    # maybe have a non-RESTful route to show all albums vs all albums for a particular artist
 
     def show
         @album = Album.find_by(id: params[:id])

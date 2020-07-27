@@ -2,7 +2,11 @@ class Api::UsersController < ApplicationController
     before_action :require_logged_in, only: [:update]
 
     def index
-        @users = User.all
+        if params[:search]
+            @users = User.where("lower(username) LIKE :search", { :search => "%#{params[:search].downcase}%" })
+        else 
+            @users = User.all
+        end
         render :index
     end
 
