@@ -13,11 +13,15 @@ class Search extends React.Component {
             loading: false,
             message: '',
         };
-        this.handleChange = this.handleChange.bind(this);
+        this.change = this.change.bind(this);
     }
 
-    handleChange() {
-        console.log('in handleChange');
+    change(e) {
+        console.log('in change');
+
+        // use fetch all albums, fetch all tracks, fetch all artists.
+
+        this.setState({ query: e.target.value });
     }
     
     render() {
@@ -39,7 +43,7 @@ class Search extends React.Component {
                     type="text"
                     value={this.state.query}
                     placeholder="Search and discover music"
-                    onChange={this.handleChange}
+                    onChange={this.change}
                 />
                 <FontAwesomeIcon icon={faSearch} className="search-bar-icon" />
             </div>
