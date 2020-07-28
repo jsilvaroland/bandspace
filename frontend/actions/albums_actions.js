@@ -45,11 +45,6 @@ export const fetchArtistAlbums = artistId => dispatch => (
         .then(albums => dispatch(receiveAlbums(albums)))
 );
 
-export const fetchSearchedAlbums = query => dispatch => (
-    AlbumsApiUtil.fetchSearchedAlbums(query)
-        .then(albums => dispatch(receiveAlbums(albums)))
-);
-
 export const fetchAlbum = albumId => dispatch => (
     AlbumsApiUtil.fetchAlbum(albumId)
         .then(album => dispatch(receiveAlbum(album)))

@@ -68,6 +68,7 @@ class NavigationBar extends React.Component {
     render() {
         const { currentUser, logout, openModal } = this.props;
         const { pathname } = this.props.history.location;
+        const { activeDropDown } = this.state;
         
         let mainNavStatus;
         let sessionLinksClass;
@@ -102,7 +103,7 @@ class NavigationBar extends React.Component {
         );       
         
         const userMenuDropdown = () => (
-            <ul className="user-menu-ul" id={this.state.activeDropDown === 'userMenuBtn' ? "show" : null}>
+            <ul className="user-menu-ul" id={activeDropDown === 'userMenuBtn' ? "show" : null}>
                 <li className="user-menu-userpage-item">
                     <Link className="userpage-link" to={`/artists/${currentUser.id}`} onClick={this.collapse}>
                         <div className="band-name">{currentUser.username}</div>
@@ -116,7 +117,7 @@ class NavigationBar extends React.Component {
         );
 
         const addMenuDropdown = () => (
-            <ul className="add-menu-ul" id={this.state.activeDropDown === 'addMenuBtn' ? "show" : null}>
+            <ul className="add-menu-ul" id={activeDropDown === 'addMenuBtn' ? "show" : null}>
                 <Link to={`/artists/${currentUser.id}/new_album`} onClick={this.collapse}>
                     <li className="add-menu-li">album</li>
                 </Link>
@@ -140,7 +141,10 @@ class NavigationBar extends React.Component {
                     </div>
                     <div className="right-nav-logged-out">
                         {/* change it to input with placeholder text of "Search and discover music" */}
-                        <SearchContainer />
+                        <SearchContainer 
+                            activeDropDown={activeDropDown}
+                            onClick={this.onClick}
+                        />
                         {currentUser ? logoutLink(currentUser, logout) : sessionLinks()}
                     </div>
                 </div>
@@ -165,7 +169,9 @@ class NavigationBar extends React.Component {
                             <div className="user-menu-dropdown" ref={this.setUserWrapperRef}>
                                 <a className="user-menu-btn"
                                     onClick={() => this.onClick('userMenuBtn')}>
-                                    <div className="user-pic"></div>
+                                    <div className="user-pic">
+                                        <img className="user-pic-29" src={currentUser.userArt} />
+                                    </div>
                                 </a>
                                 {userMenuDropdown()}
                             </div>
@@ -183,13 +189,18 @@ class NavigationBar extends React.Component {
                                 <Link className="logo-link-not-splash" to="/">bandspace</Link>
                             </div>
                         </div>
-                        <SearchContainer />
+                        <SearchContainer  
+                            activeDropDown={activeDropDown}
+                            onClick={this.onClick}
+                        />
                     </div>
                     <div className="right-nav-logged-in">
                         <div className="nav-bar-icons">
                             <div className="user-menu-dropdown" ref={this.setUserWrapperRef}>
                                 <a className="user-menu-btn" onClick={() => this.onClick('userMenuBtn')}>
-                                    <div className="user-pic"></div>
+                                    <div className="user-pic">
+                                        <img src={currentUser.userArt}/>
+                                    </div>
                                 </a>
                                 {userMenuDropdown()}
                             </div>
@@ -206,7 +217,10 @@ class NavigationBar extends React.Component {
                                 <Link className="logo-link-not-splash" to="/">bandspace</Link>
                             </div>
                         </div>
-                        <SearchContainer />
+                        <SearchContainer 
+                            activeDropDown={activeDropDown} 
+                            onClick={this.onClick}
+                        />
                     </div>
                     <div className="right-nav-logged-out-not-splash">
                        {sessionLinks()}
