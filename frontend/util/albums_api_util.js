@@ -12,6 +12,13 @@ export const fetchArtistAlbums = artistId => (
     })
 );
 
+export const fetchSearchedAlbums = query => (
+    $.ajax({
+        method: 'GET',
+        url: `api/albums?search=${query}`,
+    })
+);
+
 export const fetchAlbum = albumId => (
     $.ajax({
         method: 'GET',

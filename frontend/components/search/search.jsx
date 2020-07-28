@@ -9,19 +9,30 @@ class Search extends React.Component {
 		super(props);
 		this.state = {
 			query: '',
-            results: {},
+            results: [],
             loading: false,
             message: '',
         };
         this.change = this.change.bind(this);
     }
 
+    componentDidUpdate() {
+        if (this.state.query === "" && this.state.results.length !== 0) {
+            this.setState({ results: [] });
+        } 
+    }
+
     change(e) {
-        console.log('in change');
+        const { fetchSearchedTracks, fetchSearchedUsers, fetchSearchedAlbums } = this.props;
+        const query = e.target.value;
 
-        // use fetch all albums, fetch all tracks, fetch all artists.
-
-        this.setState({ query: e.target.value });
+        this.setState({ query, results: [] });
+        fetchSearchedUsers(query)
+            .then(res => this.setState({ results: this.state.results.concat(Object.values(res.users)) }));
+        fetchSearchedTracks(query)
+            .then(res => this.setState({ results: this.state.results.concat(Object.values(res.tracks)) }));
+        fetchSearchedAlbums(query)
+            .then(res => this.setState({ results: this.state.results.concat(Object.values(res.albums)) }));
     }
     
     render() {
@@ -36,6 +47,8 @@ class Search extends React.Component {
             wrapperClassName = "search-bar-wrapper-logged-in";
             searchClassName = "search-bar-logged-in";
         }
+
+        console.log(this.state.results);
 
 		return (
             <div className={wrapperClassName}>

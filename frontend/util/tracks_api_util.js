@@ -13,6 +13,13 @@ export const fetchAlbumTracks = albumId => (
     })
 );
 
+export const fetchSearchedTracks = query => (
+    $.ajax({
+        method: 'GET',
+        url: `api/tracks?search=${query}`,
+    })
+);
+
 export const fetchTrack = trackId => (
     $.ajax({
         method: 'GET',

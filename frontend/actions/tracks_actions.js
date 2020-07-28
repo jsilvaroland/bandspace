@@ -35,6 +35,11 @@ export const fetchAlbumTracks = albumId => dispatch => (
         .then(tracks => dispatch(receiveTracks(tracks)))
 );
 
+export const fetchSearchedTracks = query => dispatch => (
+    TracksApiUtil.fetchSearchedTracks(query)
+        .then(tracks => dispatch(receiveTracks(tracks)))
+);
+
 export const fetchTrack = trackId => dispatch => (
     TracksApiUtil.fetchTrack(trackId)
         .then(track => dispatch(receiveTrack(track)))

@@ -5,6 +5,13 @@ export const fetchAllUsers = () => (
     })
 );
 
+export const fetchSearchedUsers = query => (
+    $.ajax({
+        method: 'GET',
+        url: `api/users?search=${query}`,
+    })
+);
+
 export const fetchUser = userId => (
     $.ajax({
         method: 'GET',

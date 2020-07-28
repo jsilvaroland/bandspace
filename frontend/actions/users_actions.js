@@ -23,6 +23,11 @@ export const fetchAllUsers = () => dispatch => {
         .then(users => dispatch(receiveAllUsers(users)));
 };
 
+export const fetchSearchedUsers = query => dispatch => (
+    UsersApiUtil.fetchSearchedUsers(query)
+        .then(users => dispatch(receiveAllUsers(users)))
+);
+
 export const fetchUser = userId => dispatch => {
     return UsersApiUtil.fetchUser(userId)
         .then(user => dispatch(receiveUser(user)));
