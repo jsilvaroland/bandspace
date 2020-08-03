@@ -92,7 +92,7 @@ class MusicPlayer extends React.Component {
                             <FontAwesomeIcon icon={faPlay} />
                         </span>)
 
-        if (this.state.audioDuration || this.state.activeAudio.duration) {
+        // if (this.state.audioDuration || this.state.activeAudio.duration) {
             if (activeTrack) {
                 totalMinutes = Math.floor(this.state.activeAudio.duration / 60);
                 totalSeconds = Math.floor(this.state.activeAudio.duration % 60);
@@ -104,7 +104,7 @@ class MusicPlayer extends React.Component {
                 currentMinutes = Math.floor(this.state.activeAudio.currentTime / 60);
                 currentSeconds = Math.floor(this.state.activeAudio.currentTime % 60);
             }
-    
+
             this.slider = (<input className="slider"
                 type="range"
                 min="0"
@@ -159,9 +159,9 @@ class MusicPlayer extends React.Component {
                     </span>
                 </div>
             )
-        } else {
-            return <div>Music Player Loading</div>
-        }
+        // } else {
+            // return <div>Music Player Loading</div>
+        // }
     }
 }
 
