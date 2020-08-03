@@ -290,7 +290,6 @@ class AlbumShow extends React.Component {
                                 <Link to={`/artists/${pageUser.id}`}>{pageUser.username}</Link>
                             </div>
                             {editDeleteButtons}
-                            {/* {this.loadMusicPlayer(this.state.playing, this.clickPlay, activeAudio, activeTrack)} */}
                             <MusicPlayer
                                 playing={this.state.playing} 
                                 clickPlay={this.clickPlay} 

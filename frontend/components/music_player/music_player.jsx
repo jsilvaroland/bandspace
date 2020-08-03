@@ -16,11 +16,15 @@ class MusicPlayer extends React.Component {
             currentTime: props.activeAudio.currentTime,
         };
         this.changeTime = this.changeTime.bind(this);
+        
+        //set audio duration
+        props.activeAudio.addEventListener("loadeddata", (e) => {
+          this.setState({ audioDuration: e.target.duration });
+        });
     }
 
     componentDidMount() {
         const { activeAudio } = this.state;
-        this.setAudioDuration(activeAudio);
 
         activeAudio.onplay = () => {
             this.currentTimeInterval = setInterval(() => {
@@ -57,16 +61,8 @@ class MusicPlayer extends React.Component {
     songFinish() {
         clearInterval(this.currentTimeInterval);
         this.props.activeAudio.currentTime = 0;
-        //
         this.props.activeAudio.pause();
-        //
         this.props.next();
-    }
-
-    setAudioDuration(audio) {
-        audio.addEventListener('loadeddata', e => {
-            this.setState({ audioDuration: e.target.duration });
-        });
     }
 
     updatePlaybackTime() {
