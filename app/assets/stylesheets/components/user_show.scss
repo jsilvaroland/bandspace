@@ -13,11 +13,9 @@
     margin: -35px -30px 44px -30px;
 }
 
-// placeholder, change to .header l8r
 .header-placeholder {
     position: relative;
     width: 975px;
-    height: 136px; // change once get images from activestorage
     min-height: 40px;
     background-color: rgb(242, 242, 242);
 }
@@ -142,7 +140,7 @@ button.remove {
     position: absolute;
     font-size: 14px;
     right: 5px;
-    bottom: 5px;
+    bottom: 7px;
     padding: 1px 5px;
     color: #0687F5;
     cursor: pointer;
