@@ -1,9 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-// this class isn't a container, delete it later this is just a placeholder
-
-
 class Splash extends React.Component {
     render() {
         return (

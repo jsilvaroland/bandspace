@@ -1,0 +1,37 @@
+.footer {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    bottom: 0;
+    height: 31px;
+    color: white;
+    background-color: #848484;
+}
+
+.footer-inner {
+    display: flex;
+    justify-content: space-between;
+    width: 1040px;
+}
+
+.footer-left {
+    line-height: 31px;
+    font-size: 14px;
+}
+
+.footer-right {
+    display: flex;
+    justify-content: space-between;
+    width: 150px;
+    line-height: 31px;
+}
+
+.footer-right > *:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.footer-left > *, .footer-right > * {
+    text-decoration: none;
+    color: white;
+}

@@ -4,6 +4,7 @@ import { Route, Switch } from "react-router-dom";
 import { ProtectedRoute } from '../util/route_util';
 import Modal from './modal/modal';
 import Loading from './loading/loading';
+import FooterContainer from './footer/footer_container';
 import NavigationBarContainer from './navigation_bar/navigation_bar_container';
 import UserShowContainer from './user_show/user_show_container';
 import ArtistIndexContainer from './artist_index/artist_index_container';
@@ -35,6 +36,7 @@ const App = () => (
                 <Route exact path="/" component={Splash} />
             </Switch>
         </div>
+        <FooterContainer />
     </div>
 );
 
