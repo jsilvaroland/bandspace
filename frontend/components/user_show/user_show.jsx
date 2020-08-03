@@ -184,7 +184,8 @@ class UserShow extends React.Component {
                                 </ol>
                             </div>
                         </div>
-                        <ReleaseIndex 
+                        <ReleaseIndex
+                            pageUser={pageUser}
                             pageAlbums={albums}
                             pageSingles={singles}
                         />
