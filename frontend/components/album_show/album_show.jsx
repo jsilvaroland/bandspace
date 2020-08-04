@@ -18,14 +18,6 @@ class AlbumShow extends React.Component {
     this.handleBannerUpload = this.handleBannerUpload.bind(this);
     this.handleBioPicUpload = this.handleBioPicUpload.bind(this);
     this.deleteBioPic = this.deleteBioPic.bind(this);
-
-    // const { fetchUser, pageAlbumId, fetchAlbum, fetchAlbumTracks } = props;
-
-    // props.clearAlbums();
-    // props.clearTracks();
-    // fetchUser()
-    //   .then(fetchAlbum(pageAlbumId))
-    //   .then(fetchAlbumTracks(pageAlbumId));
   }
 
   componentDidMount() {
@@ -58,13 +50,18 @@ class AlbumShow extends React.Component {
     ) {
         // if no featured audio, set it here
         this.featuredAudio = new Audio(pageTracks[0].trackSong);
-        this.featuredAudio.addEventListener("loadeddata", (e) => {
-          this.setState({
+        this.setState({
             activeTrack: pageTracks[0],
             activeAudio: this.featuredAudio,
-            audioDuration: e.target.duration,
-          });
+            audioDuration: this.featuredAudio.duration,
         });
+        // this.featuredAudio.addEventListener("loadeddata", (e) => {
+        //   this.setState({
+        //     activeTrack: pageTracks[0],
+        //     activeAudio: this.featuredAudio,
+        //     audioDuration: e.target.duration,
+        //   });
+        // });
       }
 
     if (pageAlbumId && pageAlbumId !== this.state.pageId) {
