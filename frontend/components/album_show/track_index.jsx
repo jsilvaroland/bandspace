@@ -10,7 +10,6 @@ class TrackIndex extends React.Component {
         const { pageTracks, clickPlay, activeTrack, playing } = this.props;
         return (
             <div> 
-            {/* maybe a different class name for this? */}
                 <ol className="tracks-list">
                     {
                         pageTracks.map((track, i) => (

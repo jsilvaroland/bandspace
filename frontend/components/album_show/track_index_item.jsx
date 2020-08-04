@@ -8,7 +8,7 @@ class TrackIndexItem extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
-        if (this.props.id !== 0) {
+        if (props.id !== 0) {
             this.audio = new Audio(props.track.trackSong);
         }
     }
