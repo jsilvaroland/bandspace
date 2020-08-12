@@ -43,15 +43,16 @@ class AlbumShow extends React.Component {
   componentDidUpdate() {
     const { pageAlbumId, pageAlbum, pageTracks } = this.props;
 
+    if (pageTracks[0] && !this.state.featuredAudio) {
+        this.setState({ featuredAudio: new Audio(pageTracks[0].trackSong) });
+    }
+
     if (
         pageAlbum &&
         pageAlbum.trackIds.length === pageTracks.length &&
-        !this.state.activeTrack
+        !this.state.activeTrack && this.state.featuredAudio
     ) {
-        this.featuredAudio = new Audio(pageTracks[0].trackSong);
-
         /////
-
 
         // this.setState({
         //     activeTrack: pageTracks[0],
@@ -59,10 +60,10 @@ class AlbumShow extends React.Component {
         //     audioDuration: this.featuredAudio.duration,
         // });
 
-        this.featuredAudio.addEventListener("loadeddata", (e) => {
+        this.state.featuredAudio.addEventListener("loadeddata", (e) => {
           this.setState({
             activeTrack: pageTracks[0],
-            activeAudio: this.featuredAudio,
+            activeAudio: this.state.featuredAudio,
             audioDuration: e.target.duration,
           });
           console.log('data loaded');
@@ -95,8 +96,9 @@ class AlbumShow extends React.Component {
         ) {
             this.setState({ activeTrack: pageTracks[0] });
         }
-    } else if (!pageAlbum && this.featuredAudio) {
+    } else if (!pageAlbum && this.state.featuredAudio) {
       this.setState({ deleted: true });
+      // test deletion redirection
     }
   }
 
@@ -152,7 +154,8 @@ class AlbumShow extends React.Component {
     } else {
       this.state.activeAudio.pause();
       this.setState({ playing: false, activeTrack: this.props.pageTracks[0] });
-      this.state.activeAudio = this.featuredAudio;
+      this.state.activeAudio = this.state.featuredAudio;
+      // test this
     }
   }
 
