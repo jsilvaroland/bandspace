@@ -47,7 +47,8 @@ class AlbumShow extends React.Component {
         const featuredAudio = new Audio(pageTracks[0].trackSong);
         this.setState({ 
             featuredAudio: featuredAudio, 
-            activeAudio: featuredAudio 
+            activeAudio: featuredAudio,
+            activeTrack: pageTracks[0],
         });
     }
 
