@@ -45,6 +45,10 @@ class AlbumShow extends React.Component {
 
     if (pageTracks[0] && !this.state.featuredAudio) {
         const featuredAudio = new Audio(pageTracks[0].trackSong);
+        featuredAudio.addEventListener("loadeddata", e => {
+            this.setState({ audioDuration: e.target.duration });
+        });
+
         this.setState({ 
             featuredAudio: featuredAudio, 
             activeAudio: featuredAudio,
@@ -70,6 +74,7 @@ class AlbumShow extends React.Component {
             activeTrack: pageTracks[0],
             activeAudio: this.state.featuredAudio,
             audioDuration: e.target.duration,
+            data: loaded,
           });
           console.log('data loaded');
         });
@@ -228,7 +233,8 @@ class AlbumShow extends React.Component {
     } else if (
       pageUser &&
       pageAlbum &&
-      pageAlbum.trackIds.length === pageTracks.length
+      pageAlbum.trackIds.length === pageTracks.length &&
+      this.state.audioDuration
     ) {
       if (!pageUser.createdAlbumIds.includes(pageAlbum.id)) {
         return <div>Page does not exist</div>;
