@@ -48,20 +48,28 @@ class AlbumShow extends React.Component {
         pageAlbum.trackIds.length === pageTracks.length &&
         !this.state.activeTrack
     ) {
-        // if no featured audio, set it here
         this.featuredAudio = new Audio(pageTracks[0].trackSong);
-        this.setState({
-            activeTrack: pageTracks[0],
-            activeAudio: this.featuredAudio,
-            audioDuration: this.featuredAudio.duration,
-        });
-        // this.featuredAudio.addEventListener("loadeddata", (e) => {
-        //   this.setState({
+
+        /////
+
+
+        // this.setState({
         //     activeTrack: pageTracks[0],
         //     activeAudio: this.featuredAudio,
-        //     audioDuration: e.target.duration,
-        //   });
+        //     audioDuration: this.featuredAudio.duration,
         // });
+
+        this.featuredAudio.addEventListener("loadeddata", (e) => {
+          this.setState({
+            activeTrack: pageTracks[0],
+            activeAudio: this.featuredAudio,
+            audioDuration: e.target.duration,
+          });
+          console.log('data loaded');
+        });
+
+
+        /////
       }
 
     if (pageAlbumId && pageAlbumId !== this.state.pageId) {
@@ -93,9 +101,6 @@ class AlbumShow extends React.Component {
   }
 
   clickPlay(track, audio, playing) {
-    // if music is currently playing, first stop that music.
-    // if different song is playing, stop that
-
     const isPlaying = playing !== undefined ? playing : this.state.playing;
     const { activeTrack, activeAudio } = this.state;
 
@@ -109,7 +114,6 @@ class AlbumShow extends React.Component {
       activeAudio.play();
     } else if (track.trackSong !== activeTrack.trackSong) {
       // music is playing, but now we want to switch up the music
-      // activeAudio = audio;
       activeAudio.pause();
     //   activeAudio.currentTime = 0;
       this.setState({ activeTrack: track, activeAudio: audio });

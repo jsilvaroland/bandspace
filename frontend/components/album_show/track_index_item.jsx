@@ -31,6 +31,8 @@ class TrackIndexItem extends React.Component {
             </span>
             )
 
+        console.log(this.state.audioDuration)
+
         return (
             <li className={trackItemClass}>
                 {playButton}
