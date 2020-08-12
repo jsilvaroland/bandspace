@@ -44,7 +44,11 @@ class AlbumShow extends React.Component {
     const { pageAlbumId, pageAlbum, pageTracks } = this.props;
 
     if (pageTracks[0] && !this.state.featuredAudio) {
-        this.setState({ featuredAudio: new Audio(pageTracks[0].trackSong) });
+        const featuredAudio = new Audio(pageTracks[0].trackSong);
+        this.setState({ 
+            featuredAudio: featuredAudio, 
+            activeAudio: featuredAudio 
+        });
     }
 
     if (
@@ -340,6 +344,8 @@ class AlbumShow extends React.Component {
       } else {
         activeTrack = this.state.activeTrack;
       }
+
+      // set it to
 
       const musicPlayer = this.state.activeAudio ? 
             <MusicPlayer

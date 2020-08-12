@@ -7,8 +7,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 class TrackIndexItem extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
-        if (props.id !== 0) {
+
+        
+        this.state = {
+        };
+        if (props.track.id !== 0) {
+            console.log(props.track.trackSong);
             this.audio = new Audio(props.track.trackSong);
         }
     }
