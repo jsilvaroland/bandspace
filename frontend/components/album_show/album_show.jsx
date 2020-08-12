@@ -110,6 +110,9 @@ class AlbumShow extends React.Component {
     const isPlaying = playing !== undefined ? playing : this.state.playing;
     const { activeTrack, activeAudio } = this.state;
 
+    console.log(track);
+    console.log(activeTrack);
+
     if (!isPlaying && track.trackSong !== activeTrack.trackSong) {
       // if no music playing...
       activeAudio.currentTime = 0;
