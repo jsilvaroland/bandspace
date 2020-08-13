@@ -339,7 +339,7 @@ class AlbumShow extends React.Component {
     //         /> : <div>Music Player Loading</div>
 
         const musicPlayer =
-          this.state.activeAudio && this.state.activeAudio.duration ? (
+          this.state.activeAudio ? (
             <MusicPlayerContainer
               playing={this.state.playing}
               clickPlay={this.clickPlay}
