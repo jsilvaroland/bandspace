@@ -48,6 +48,7 @@ class AlbumShow extends React.Component {
     const { pageAlbumId, pageAlbum, pageTracks } = this.props;
 
     if (this.state.activeAudio &&!this.state.audioDuration) {
+        console.log('here');
         this.state.activeAudio.addEventListener("loadeddata", (e) => {
             this.setAudioDuration(e);
         });
@@ -329,9 +330,6 @@ class AlbumShow extends React.Component {
       } else {
         activeTrack = this.state.activeTrack;
       }
-
-      // set it to
-      if (this.state.activeAudio) console.log(this.state.audioDuration)
 
       const musicPlayer = this.state.activeAudio && this.state.audioDuration ? 
             <MusicPlayer
