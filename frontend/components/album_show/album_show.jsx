@@ -106,7 +106,6 @@ class AlbumShow extends React.Component {
 
   setAudioDuration(e) {
     console.log(e.target.duration);
-    debugger
     this.setState({ audioDuration: e.target.duration });
   }
 
