@@ -49,11 +49,15 @@ class AlbumShow extends React.Component {
 
     if (this.state.activeAudio && !this.state.activeAudio.duration) {
         const that = this;
-        console.log('no duration yet')
+        console.log('no duration yet');
         this.state.activeAudio.onloadedmetadata = function() {
             console.log('here');
             that.setState({ audioDuration: that.state.activeAudio.duration });
         };
+    } else if (this.state.activeAudio && this.state.activeAudio.duration) {
+        console.log('duration has been set');
+    } else if (!this.state.activeAudio) {
+        console.log('no active audio');
     }
 
     if (this.state.activeAudio && !this.state.featuredAudio) {
