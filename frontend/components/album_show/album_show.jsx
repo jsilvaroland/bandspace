@@ -44,31 +44,33 @@ class AlbumShow extends React.Component {
     clearTracks();
   }
 
-  proceed() {
-    console.log(this.state.audioDuration);
+  setDuration() {
+    const that = this;
+    this.state.activeAudio.onloadedmetadata = function () {
+        console.log(this.duration);
+        that.setState({ audioDuration: this.duration });
+    };
   }
 
   componentDidUpdate() {
     const { pageAlbumId, pageAlbum, pageTracks } = this.props;
 
     if (this.state.activeAudio && !this.state.activeAudio.duration) {
-      const that = this;
-      this.state.activeAudio.onloadedmetadata = function() {
-        console.log(this.duration);
-        that.setState({ audioDuration: this.duration }, that.proceed);
-        // return that.duration;
-      };
+        let f1 = () => {
+          return Promise.resolve(this.setDuration()).then(res => console.log(res));
+        };
+        f1 = f1.bind(this);
 
-
-      // const f1 = async() => {
-      //     try {
-      //         const x = await duration();
-      //         console.log(`this is ${x}`);
-      //     } catch(error) {
-      //         console.log('hi');
-      //     }
-      // };
-      // f1();
+    //   const f1 = async(that) => {
+    //       try {
+    //         debugger
+    //         const x = await setDuration();
+    //         console.log(`this is ${x}`);
+    //       } catch(error) {
+    //         console.log('hi');
+    //       }
+    //   };
+      f1();
 
 
       // console.log(f1());
