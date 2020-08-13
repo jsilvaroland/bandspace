@@ -21,12 +21,18 @@ class AlbumShow extends React.Component {
   }
 
   componentDidMount() {
+    const that = this;
     this.props.clearAlbums();
     this.props.clearTracks();
     this.props.fetchUser();
     this.props.fetchAlbum(this.props.pageAlbumId);
     this.props.fetchAlbumTracks(this.props.pageAlbumId)
-        .then(res => console.log(Object.values(res.tracks)[0]));
+    .then((res) =>
+      that.setState({
+        activeAudio: new Audio(Object.values(res.tracks)[0].trackSong),
+        activeTrack: Object.values(res.tracks)[0],
+      })
+    );
   }
 
   componentWillUnmount() {
@@ -40,40 +46,16 @@ class AlbumShow extends React.Component {
 
   componentDidUpdate() {
     const { pageAlbumId, pageAlbum, pageTracks } = this.props;
-    
-    if (pageTracks[0] && !this.state.featuredAudio) {
-        const featuredAudio = new Audio(pageTracks[0].trackSong);
-        this.featuredAudio = featuredAudio;
-        this.setState({ featuredAudio: featuredAudio });
-        
-        this.featuredAudio.addEventListener("loadeddata", (e) => {
-          this.setAudioDuration(e);
-        });
-        
-        this.setState({ 
-            featuredAudio: this.featuredAudio, 
-            activeAudio: this.featuredAudio,
-            activeTrack: pageTracks[0],
+
+    if (this.state.activeAudio &&!this.state.audioDuration) {
+        this.state.activeAudio.addEventListener("loadeddata", (e) => {
+            this.setAudioDuration(e);
         });
     }
 
-    // if (this.state.featuredAudio && !this.state.audioDuration) {
-    //     /////
-
-    //     // this.setState({
-    //     //     activeTrack: pageTracks[0],
-    //     //     activeAudio: this.featuredAudio,
-    //     //     audioDuration: this.featuredAudio.duration,
-    //     // });
-
-    //     this.state.featuredAudio.addEventListener("loadeddata", (e) => {
-    //       this.setState({
-    //         audioDuration: e.target.duration,
-    //       });
-    //       console.log('data loaded');
-    //     });
-    //     /////
-    //   }
+    if (this.state.activeAudio && !this.state.featuredAudio) {
+        this.setState({ featuredAudio: this.state.activeAudio });
+    }
 
     if (pageAlbumId && pageAlbumId !== this.state.pageId) {
         const {
@@ -105,7 +87,7 @@ class AlbumShow extends React.Component {
   }
 
   setAudioDuration(e) {
-    // console.log(e.target.duration);
+    console.log(e.target.duration);
     this.setState({ audioDuration: e.target.duration });
   }
 
@@ -349,9 +331,9 @@ class AlbumShow extends React.Component {
       }
 
       // set it to
-      if (!this.state.activeAudio) console.log('no audio')
+      if (this.state.activeAudio) console.log(this.state.audioDuration)
 
-      const musicPlayer = this.state.activeAudio ? 
+      const musicPlayer = this.state.activeAudio && this.state.audioDuration ? 
             <MusicPlayer
                 playing={this.state.playing}
                 clickPlay={this.clickPlay}

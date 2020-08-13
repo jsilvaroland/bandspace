@@ -14,13 +14,9 @@ class MusicPlayer extends React.Component {
         this.state = {
             activeAudio: props.activeAudio,
             currentTime: props.activeAudio.currentTime,
+            audioDuration: props.activeAudio.duration
         };
         this.changeTime = this.changeTime.bind(this);
-        
-        //set audio duration
-        props.activeAudio.addEventListener("loadeddata", (e) => {
-          this.setState({ audioDuration: e.target.duration });
-        });
     }
 
     componentDidMount() {
