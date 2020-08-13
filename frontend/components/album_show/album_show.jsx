@@ -45,14 +45,17 @@ class AlbumShow extends React.Component {
 
     if (pageTracks[0] && !this.state.featuredAudio) {
         const featuredAudio = new Audio(pageTracks[0].trackSong);
-        featuredAudio.addEventListener("loadeddata", e => {
-            this.setState({ audioDuration: e.target.duration });
-        });
-
         this.setState({ 
             featuredAudio: featuredAudio, 
             activeAudio: featuredAudio,
             activeTrack: pageTracks[0],
+        });
+    }
+
+    if (!this.state.audioDuration && this.state.featuredAudio) {
+        this.state.featuredAudio.addEventListener("loadeddata", (e) => {
+            this.setState({ audioDuration: e.target.duration });
+            // maybe add counter++
         });
     }
 
