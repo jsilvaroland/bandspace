@@ -47,11 +47,11 @@ class AlbumShow extends React.Component {
   componentDidUpdate() {
     const { pageAlbumId, pageAlbum, pageTracks } = this.props;
 
-    if (this.state.activeAudio &&!this.state.audioDuration) {
-        console.log('here');
-        this.state.activeAudio.addEventListener("loadeddata", (e) => {
-            this.setAudioDuration(e);
-        });
+    if (this.state.activeAudio && !this.state.activeAudio.duration) {
+        const that = this;
+        this.state.activeAudio.onloadedmetadata = function() {
+            that.setState({ audioDuration: that.state.activeAudio.duration });
+        };
     }
 
     if (this.state.activeAudio && !this.state.featuredAudio) {
@@ -85,11 +85,6 @@ class AlbumShow extends React.Component {
       this.setState({ deleted: true });
       // test deletion redirection
     }
-  }
-
-  setAudioDuration(e) {
-    console.log(e.target.duration);
-    this.setState({ audioDuration: e.target.duration });
   }
 
   clickPlay(track, audio, playing) {
@@ -331,7 +326,7 @@ class AlbumShow extends React.Component {
         activeTrack = this.state.activeTrack;
       }
 
-      const musicPlayer = this.state.activeAudio && this.state.audioDuration ? 
+      const musicPlayer = this.state.activeAudio && this.state.activeAudio.duration ? 
             <MusicPlayer
                 playing={this.state.playing}
                 clickPlay={this.clickPlay}
