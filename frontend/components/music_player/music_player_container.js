@@ -2,6 +2,7 @@ import { connect } from "react-redux";
 import MusicPlayer from "./music_player";
 
 const mapSTP = (state, ownProps) => {
+  debugger
   return ({
     playing: ownProps.playing,
     clickPlay: ownProps.clickPlay,

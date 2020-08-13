@@ -27,8 +27,7 @@ class AlbumShow extends React.Component {
     this.props.clearTracks();
     this.props.fetchUser();
     this.props.fetchAlbum(this.props.pageAlbumId);
-    this.props.fetchAlbumTracks(this.props.pageAlbumId)
-    .then((res) =>
+    this.props.fetchAlbumTracks(this.props.pageAlbumId).then((res) =>
       that.setState({
         activeAudio: new Audio(Object.values(res.tracks)[0].trackSong),
         activeTrack: Object.values(res.tracks)[0],
@@ -39,48 +38,74 @@ class AlbumShow extends React.Component {
   componentWillUnmount() {
     const { clearTracks, clearAlbums } = this.props;
     if (this.state.playing) {
-        this.clickPlay(this.state.activeTrack, this.state.activeAudio);
+      this.clickPlay(this.state.activeTrack, this.state.activeAudio);
     }
     clearAlbums();
     clearTracks();
+  }
+
+  proceed() {
+    console.log(this.state.audioDuration);
   }
 
   componentDidUpdate() {
     const { pageAlbumId, pageAlbum, pageTracks } = this.props;
 
     if (this.state.activeAudio && !this.state.activeAudio.duration) {
-        this.state.activeAudio.onloadedmetadata = () => {
-            this.setState({ audioDuration: this.state.activeAudio.duration });
-        };
+      const that = this;
+      this.state.activeAudio.onloadedmetadata = function() {
+        console.log(this.duration);
+        that.setState({ audioDuration: this.duration }, that.proceed);
+        // return that.duration;
+      };
+
+
+      // const f1 = async() => {
+      //     try {
+      //         const x = await duration();
+      //         console.log(`this is ${x}`);
+      //     } catch(error) {
+      //         console.log('hi');
+      //     }
+      // };
+      // f1();
+
+
+      // console.log(f1());
+
+      // console.log(f1());
+      // this.setState({ audioDuration: this.state.activeAudio.duration });
+      // const ret = await fx();
+      // console.log(ret);
     }
 
     if (this.state.activeAudio && !this.state.featuredAudio) {
-        this.setState({ featuredAudio: this.state.activeAudio });
+      this.setState({ featuredAudio: this.state.activeAudio });
     }
 
     if (pageAlbumId && pageAlbumId !== this.state.pageId) {
-        const {
+      const {
         clearAlbums,
         clearTracks,
         fetchUser,
         fetchAlbum,
         fetchAlbumTracks,
-        } = this.props;
-        clearAlbums();
-        clearTracks();
+      } = this.props;
+      clearAlbums();
+      clearTracks();
 
-        fetchUser();
-        fetchAlbum(pageAlbumId);
-        fetchAlbumTracks(pageAlbumId);
-        this.setState({ pageId: parseInt(this.props.match.params.albumId) });
+      fetchUser();
+      fetchAlbum(pageAlbumId);
+      fetchAlbumTracks(pageAlbumId);
+      this.setState({ pageId: parseInt(this.props.match.params.albumId) });
 
-        if (
-          pageAlbum &&
-          pageAlbum.trackIds.length === pageTracks.length &&
-          !this.state.activeTrack
-        ) {
-            this.setState({ activeTrack: pageTracks[0] });
-        }
+      if (
+        pageAlbum &&
+        pageAlbum.trackIds.length === pageTracks.length &&
+        !this.state.activeTrack
+      ) {
+        this.setState({ activeTrack: pageTracks[0] });
+      }
     } else if (!pageAlbum && this.state.featuredAudio) {
       this.setState({ deleted: true });
       // test deletion redirection
@@ -102,7 +127,7 @@ class AlbumShow extends React.Component {
     } else if (track.trackSong !== activeTrack.trackSong) {
       // music is playing, but now we want to switch up the music
       activeAudio.pause();
-    //   activeAudio.currentTime = 0;
+      //   activeAudio.currentTime = 0;
       this.setState({ activeTrack: track, activeAudio: audio });
       this.clickPlay(track, audio, false);
     } else {
@@ -326,34 +351,21 @@ class AlbumShow extends React.Component {
         activeTrack = this.state.activeTrack;
       }
 
-    //   const musicPlayer = this.state.activeAudio && this.state.activeAudio.duration ? 
-    //         <MusicPlayer
-    //             playing={this.state.playing}
-    //             clickPlay={this.clickPlay}
-    //             next={this.next}
-    //             prev={this.prev}
-    //             activeAudio={this.state.activeAudio}
-    //             activeTrack={activeTrack}
-    //             hasNextTrack={this.hasNextTrack()}
-    //             hasPrevTrack={this.hasPrevTrack()}
-    //         /> : <div>Music Player Loading</div>
-
-        const musicPlayer =
-          this.state.activeAudio ? (
-            <MusicPlayerContainer
-              playing={this.state.playing}
-              clickPlay={this.clickPlay}
-              next={this.next}
-              prev={this.prev}
-              activeAudio={this.state.activeAudio}
-              activeTrack={activeTrack}
-              hasNextTrack={this.hasNextTrack()}
-              hasPrevTrack={this.hasPrevTrack()}
-            />
-          ) : (
-            <div>Music Player Loading</div>
-          );
-
+      const musicPlayer =
+        this.state.activeAudio && this.state.activeAudio.duration ? (
+          <MusicPlayer
+            playing={this.state.playing}
+            clickPlay={this.clickPlay}
+            next={this.next}
+            prev={this.prev}
+            activeAudio={this.state.activeAudio}
+            activeTrack={activeTrack}
+            hasNextTrack={this.hasNextTrack()}
+            hasPrevTrack={this.hasPrevTrack()}
+          />
+        ) : (
+          <div>Music Player Loading</div>
+        );
 
       return (
         <div className="user-show">
