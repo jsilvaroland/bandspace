@@ -49,7 +49,9 @@ class AlbumShow extends React.Component {
 
     if (this.state.activeAudio && !this.state.activeAudio.duration) {
         const that = this;
+        console.log('no duration yet')
         this.state.activeAudio.onloadedmetadata = function() {
+            console.log('here');
             that.setState({ audioDuration: that.state.activeAudio.duration });
         };
     }
