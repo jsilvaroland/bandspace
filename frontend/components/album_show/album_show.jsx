@@ -3,6 +3,7 @@ import { Link, Redirect } from 'react-router-dom';
 
 import TrackIndex from './track_index';
 import MusicPlayer from '../music_player/music_player';
+import MusicPlayerContainer from '../music_player/music_player_container';
 
 class AlbumShow extends React.Component {
   constructor(props) {
@@ -48,15 +49,9 @@ class AlbumShow extends React.Component {
     const { pageAlbumId, pageAlbum, pageTracks } = this.props;
 
     if (this.state.activeAudio && !this.state.activeAudio.duration) {
-        console.log('no duration yet');
         this.state.activeAudio.onloadedmetadata = () => {
-            console.log('here');
             this.setState({ audioDuration: this.state.activeAudio.duration });
         };
-    } else if (this.state.activeAudio && this.state.activeAudio.duration) {
-        console.log('duration has been set');
-    } else if (!this.state.activeAudio) {
-        console.log('no active audio');
     }
 
     if (this.state.activeAudio && !this.state.featuredAudio) {
@@ -331,17 +326,33 @@ class AlbumShow extends React.Component {
         activeTrack = this.state.activeTrack;
       }
 
-      const musicPlayer = this.state.activeAudio && this.state.activeAudio.duration ? 
-            <MusicPlayer
-                playing={this.state.playing}
-                clickPlay={this.clickPlay}
-                next={this.next}
-                prev={this.prev}
-                activeAudio={this.state.activeAudio}
-                activeTrack={activeTrack}
-                hasNextTrack={this.hasNextTrack()}
-                hasPrevTrack={this.hasPrevTrack()}
-            /> : <div>Music Player Loading</div>
+    //   const musicPlayer = this.state.activeAudio && this.state.activeAudio.duration ? 
+    //         <MusicPlayer
+    //             playing={this.state.playing}
+    //             clickPlay={this.clickPlay}
+    //             next={this.next}
+    //             prev={this.prev}
+    //             activeAudio={this.state.activeAudio}
+    //             activeTrack={activeTrack}
+    //             hasNextTrack={this.hasNextTrack()}
+    //             hasPrevTrack={this.hasPrevTrack()}
+    //         /> : <div>Music Player Loading</div>
+
+        const musicPlayer =
+          this.state.activeAudio && this.state.activeAudio.duration ? (
+            <MusicPlayerContainer
+              playing={this.state.playing}
+              clickPlay={this.clickPlay}
+              next={this.next}
+              prev={this.prev}
+              activeAudio={this.state.activeAudio}
+              activeTrack={activeTrack}
+              hasNextTrack={this.hasNextTrack()}
+              hasPrevTrack={this.hasPrevTrack()}
+            />
+          ) : (
+            <div>Music Player Loading</div>
+          );
 
 
       return (
