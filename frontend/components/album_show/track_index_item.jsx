@@ -7,12 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 class TrackIndexItem extends React.Component {
     constructor(props) {
         super(props);
-
-        
-        this.state = {
-        };
+        this.state = {};
         if (props.track.id !== 0) {
-            console.log(props.track.trackSong);
             this.audio = new Audio(props.track.trackSong);
         }
     }
@@ -34,8 +30,6 @@ class TrackIndexItem extends React.Component {
                 <FontAwesomeIcon icon={activeIcon} />
             </span>
             )
-
-        console.log(this.state.audioDuration)
 
         return (
             <li className={trackItemClass}>

@@ -9,7 +9,7 @@ class AlbumShow extends React.Component {
     super(props);
     this.state = {
       playing: false,
-      pageId: parseInt(this.props.match.params.albumId),
+      pageId: parseInt(props.match.params.albumId),
       deleted: false,
     };
     this.clickPlay = this.clickPlay.bind(this);
@@ -21,14 +21,12 @@ class AlbumShow extends React.Component {
   }
 
   componentDidMount() {
-    const { clearTracks, clearAlbums, fetchUser, pageAlbumId, fetchAlbum, fetchAlbumTracks } = this.props;
-
-    clearAlbums();
-    clearTracks();
-
-    fetchUser()
-        .then(fetchAlbum(pageAlbumId))
-        .then(fetchAlbumTracks(pageAlbumId));
+    this.props.clearAlbums();
+    this.props.clearTracks();
+    this.props.fetchUser();
+    this.props.fetchAlbum(this.props.pageAlbumId);
+    this.props.fetchAlbumTracks(this.props.pageAlbumId)
+        .then(res => console.log(Object.values(res.tracks)[0]));
   }
 
   componentWillUnmount() {
@@ -44,7 +42,9 @@ class AlbumShow extends React.Component {
     const { pageAlbumId, pageAlbum, pageTracks } = this.props;
     
     if (pageTracks[0] && !this.state.featuredAudio) {
-        this.featuredAudio = new Audio(pageTracks[0].trackSong);
+        const featuredAudio = new Audio(pageTracks[0].trackSong);
+        this.featuredAudio = featuredAudio;
+        this.setState({ featuredAudio: featuredAudio });
         
         this.featuredAudio.addEventListener("loadeddata", (e) => {
           this.setAudioDuration(e);
@@ -86,10 +86,10 @@ class AlbumShow extends React.Component {
         clearAlbums();
         clearTracks();
 
-        fetchUser()
-            .then(fetchAlbum(pageAlbumId))
-            .then(fetchAlbumTracks(pageAlbumId));
-            this.setState({ pageId: parseInt(this.props.match.params.albumId) });
+        fetchUser();
+        fetchAlbum(pageAlbumId);
+        fetchAlbumTracks(pageAlbumId);
+        this.setState({ pageId: parseInt(this.props.match.params.albumId) });
 
         if (
           pageAlbum &&
@@ -105,16 +105,13 @@ class AlbumShow extends React.Component {
   }
 
   setAudioDuration(e) {
-    console.log(e.target.duration);
+    // console.log(e.target.duration);
     this.setState({ audioDuration: e.target.duration });
   }
 
   clickPlay(track, audio, playing) {
     const isPlaying = playing !== undefined ? playing : this.state.playing;
     const { activeTrack, activeAudio } = this.state;
-
-    console.log(track);
-    console.log(activeTrack);
 
     if (!isPlaying && track.trackSong !== activeTrack.trackSong) {
       // if no music playing...
@@ -230,8 +227,7 @@ class AlbumShow extends React.Component {
     } else if (
       pageUser &&
       pageAlbum &&
-      pageAlbum.trackIds.length === pageTracks.length &&
-      this.state.audioDuration
+      pageAlbum.trackIds.length === pageTracks.length
     ) {
       if (!pageUser.createdAlbumIds.includes(pageAlbum.id)) {
         return <div>Page does not exist</div>;
@@ -353,6 +349,7 @@ class AlbumShow extends React.Component {
       }
 
       // set it to
+      if (!this.state.activeAudio) console.log('no audio')
 
       const musicPlayer = this.state.activeAudio ? 
             <MusicPlayer
