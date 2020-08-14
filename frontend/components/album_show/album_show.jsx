@@ -3,7 +3,6 @@ import { Link, Redirect } from 'react-router-dom';
 
 import TrackIndex from './track_index';
 import MusicPlayer from '../music_player/music_player';
-import MusicPlayerContainer from '../music_player/music_player_container';
 
 class AlbumShow extends React.Component {
   constructor(props) {
@@ -48,12 +47,18 @@ class AlbumShow extends React.Component {
     const { pageAlbumId, pageAlbum, pageTracks } = this.props;
 
     if (this.state.activeAudio && !this.state.activeAudio.duration) {
+
+        ////
+
+
         const that = this;
         this.state.activeAudio.onloadedmetadata = function () {
             console.log(this.duration);
             that.audioDuration = this.duration;
             that.setState({ audioDuration: this.duration });
         };
+
+        ///
     }
 
     if (this.state.activeAudio && !this.state.featuredAudio) {
@@ -341,7 +346,7 @@ class AlbumShow extends React.Component {
             hasPrevTrack={this.hasPrevTrack()}
           />
         ) : (
-          <div>Music Player Loading</div>
+          <div />
         );
 
       return (
