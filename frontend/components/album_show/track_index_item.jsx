@@ -33,10 +33,12 @@ class TrackIndexItem extends React.Component {
                     <FontAwesomeIcon icon={activeIcon} />
                 </span>
             ) : (
-                <span className="mini-play-button-diabled">
+                <span className="mini-play-button-disabled">
                     <FontAwesomeIcon icon={activeIcon} />
                 </span>
             )
+
+        if (!this.state.audioDuration) debugger
 
         return (
             <li className={trackItemClass}>
