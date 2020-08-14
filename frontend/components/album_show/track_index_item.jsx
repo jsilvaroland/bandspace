@@ -25,10 +25,17 @@ class TrackIndexItem extends React.Component {
         const trackItemClass = activeTrack === track ? "track-item-bold" : "track-item";
         const minutes = Math.floor(this.state.audioDuration / 60);
         const seconds = Math.floor(this.state.audioDuration % 60);
-        const playButton = (
-            <span className="mini-play-button" onClick={() => clickPlay(track, this.audio)}>
-                <FontAwesomeIcon icon={activeIcon} />
-            </span>
+        const trackDuration = this.state.audioDuration ? `${minutes}:${seconds}` : '0:00';
+        const playButton = this.state.audioDuration ? 
+            (
+                <span className="mini-play-button" 
+                onClick={() => clickPlay(track, this.audio)}>
+                    <FontAwesomeIcon icon={activeIcon} />
+                </span>
+            ) : (
+                <span className="mini-play-button-diabled">
+                    <FontAwesomeIcon icon={activeIcon} />
+                </span>
             )
 
         return (
@@ -40,7 +47,7 @@ class TrackIndexItem extends React.Component {
                         to={`/artists/${track.artistId}/tracks/${track.id}`}>
                         <span className="track-item-title">{track.title}</span>
                     </Link>
-                    <span className="track-item-duration">{`${minutes}:${seconds}`}</span>
+                    <span className="track-item-duration">{trackDuration}</span>
                 </span>
             </li>
         )

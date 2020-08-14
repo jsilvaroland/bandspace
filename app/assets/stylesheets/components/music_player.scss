@@ -1,5 +1,5 @@
 
-.play-button {
+.play-button, .play-button-disabled {
     line-height: 100%;
     font-size: 20px;
     margin-top: 14px;
@@ -43,7 +43,7 @@
     margin-left: 5px;
 }
 
-.next-button-disabled, .prev-button-disabled {
+.next-button-disabled, .prev-button-disabled, .play-button-disabled {
     opacity: 0.25;
 }
 

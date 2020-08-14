@@ -1,5 +1,11 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
+import {
+  faPlay,
+  faFastBackward,
+  faFastForward,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import TrackIndex from './track_index';
 import MusicPlayer from '../music_player/music_player';
@@ -346,7 +352,30 @@ class AlbumShow extends React.Component {
             hasPrevTrack={this.hasPrevTrack()}
           />
         ) : (
-          <div />
+          <div className="inline-player">
+            <span className="play-button-wrapper">
+              <span className="play-button-disabled">
+                <FontAwesomeIcon icon={faPlay} />
+              </span>
+            </span>
+            <span>
+              <div className="track-info">
+                <span className="player-track-title"></span>
+                <span className="time-elapsed-total">{`0:00 / 0:00`}</span>
+              </div>
+              <div>
+                <span>
+                  <input className="slider"></input>
+                </span>
+                <span className="prev-button-disabled">
+                  <FontAwesomeIcon icon={faFastBackward} />
+                </span>
+                <span className="next-button-disabled">
+                  <FontAwesomeIcon icon={faFastForward} />
+                </span>
+              </div>
+            </span>
+          </div>
         );
 
       return (
