@@ -38,8 +38,6 @@ class TrackIndexItem extends React.Component {
                 </span>
             )
 
-        if (!this.state.audioDuration) debugger
-
         return (
             <li className={trackItemClass}>
                 {playButton}

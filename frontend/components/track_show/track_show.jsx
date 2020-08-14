@@ -1,5 +1,8 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
+import { faPlay } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import MusicPlayer from '../music_player/music_player';
 
 class TrackShow extends React.Component {
@@ -226,6 +229,34 @@ class TrackShow extends React.Component {
                     bannerArt = null;
             }
 
+            const musicPlayer = this.state.activeTrack && !this.state.activeTrack.duration ?
+                (
+                    <MusicPlayer 
+                        playing={this.state.playing}
+                        clickPlay={this.clickPlay}
+                        activeTrack={this.state.activeTrack}
+                        activeAudio={this.audio}
+                        next={this.next}
+                    />
+                ) : (
+                    <div className="inline-player">
+                        <span className="play-button-wrapper">
+                        <span className="play-button-disabled">
+                            <FontAwesomeIcon icon={faPlay} />
+                        </span>
+                        </span>
+                        <span>
+                        <div className="track-info">
+                            <span className="player-track-title"></span>
+                            <span className="time-elapsed-total">0:00 / 0:00</span>
+                        </div>
+                        <div>
+                            <span><input className="slider"></input></span>
+                        </div>
+                        </span>
+                    </div>
+                )
+
             return (
                 <div className="user-show">
                     <div className="header-wrapper">
@@ -246,13 +277,7 @@ class TrackShow extends React.Component {
                                 <Link to={`/artists/${pageUser.id}`}>{pageUser.username}</Link>
                             </div>
                             {editDeleteButtons}
-                            <MusicPlayer 
-                                playing={this.state.playing}
-                                clickPlay={this.clickPlay}
-                                activeTrack={this.state.activeTrack}
-                                activeAudio={this.audio}
-                                next={this.next}
-                            />
+                            {musicPlayer}
                         </span>
                         <span>
                             <img className="release-art-350" src={trackArt} />
