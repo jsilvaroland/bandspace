@@ -16,8 +16,9 @@ class Footer extends React.Component {
                     </div>
                     <div className="footer-right">
                         {sessionLink}
-                        <a className="github" href="https://github.com/jsilvaroland/bandspace">github</a>
-                        <a className="linkedin" href="https://www.linkedin.com/in/joshua-silva-roland/">linkedin</a>
+                        <a href="https://joshuasilvaroland.com" target="_blank">portfolio</a>
+                        <a className="github" href="https://github.com/jsilvaroland/bandspace" target="_blank">github</a>
+                        <a className="linkedin" href="https://www.linkedin.com/in/joshua-silva-roland/" >linkedin</a>
                     </div>
                 </div>
             </div>
