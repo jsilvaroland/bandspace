@@ -1,24 +1,25 @@
-# README
+# [Bandspace](https://bandspace-app.herokuapp.com/#/)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+animated gif
 
-Things you may want to cover:
+Bandspace is an online music platform with branding and styling influenced by Bandcamp. On Bandspace artists can upload their music for users to listen to and purchase.
 
-* Ruby version
+# Technologies Involved
+* Ruby on Rails
+* React
+* React Router Dom
+* Redux
+* Redux Thunk
+* AWS S3
+* Webpack
+* Babel
+* PostgreSQL
+* Font Awesome
 
-* System dependencies
+# Features
+* User accounts and profiles
+* Music upload and playback
+* Album and single artwork
+* Music description and track lyrics display
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+code snippet
