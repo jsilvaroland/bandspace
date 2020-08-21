@@ -4,7 +4,7 @@ animated gif
 
 Bandspace is an online music platform with branding and styling influenced by Bandcamp. On Bandspace artists can upload their music for users to listen to and purchase.
 
-# Technologies Involved
+## Technologies Involved
 * Ruby on Rails
 * React
 * React Router Dom
@@ -16,7 +16,7 @@ Bandspace is an online music platform with branding and styling influenced by Ba
 * PostgreSQL
 * Font Awesome
 
-# Features
+## Features
 * User accounts and profiles
 * Music upload and playback
 * Album and single artwork
