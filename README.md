@@ -1,6 +1,7 @@
 # [Bandspace](https://bandspace-app.herokuapp.com/#/)
 
-animated gif
+## Demo
+![demo](demo.gif) 
 
 Bandspace is an online music platform with branding and styling influenced by Bandcamp. On Bandspace artists can upload their music for users to listen to and purchase.
 
