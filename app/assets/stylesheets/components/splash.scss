@@ -22,27 +22,20 @@
     object-fit: cover;
 }
 
-.carousel-side-item {
-    position: relative;
-}
-
 .carousel-side-info, .carousel-side-info-2, .carousel-side-info-3 {
     position: absolute;
     z-index: 1001;
 }
 .carousel-side-info {
-    right: -340px;
-    top: -60px;
+    top: 100px;
 }
 
 .carousel-side-info-2 {
-    right: -340px;
-    top: -85px;
+    top: 265px;
 }
 
 .carousel-side-info-3 {
-    right: -10px;
-    top: -65px;
+    top: 460px;
 }
 
 .carousel-side-info > span, .carousel-side-info-2 > span, .carousel-side-info-3 > span {
@@ -83,6 +76,7 @@
 }
 
 .carousel-contents {
+    position: relative;
     display: flex;
     height: 540px;
     max-width: 1440px;
