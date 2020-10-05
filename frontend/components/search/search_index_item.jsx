@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 const SearchIndexItem = props => {
     const { result, onReset } = props;
     let link, title, type, src;
-
     if (result.trackIds) {
         link = `/artists/${result.artistId}/albums/${result.id}`;
         src = result.albumArt;

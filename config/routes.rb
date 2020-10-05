@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     resource :session, only: [:create, :destroy]
     resources :albums, except: [:new, :edit]
     resources :tracks, except: [:new, :edit]
+    resources :search, only: [:index]
   end
 
   root 'static_pages#root'

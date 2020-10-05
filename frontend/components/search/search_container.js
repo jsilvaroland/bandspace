@@ -1,14 +1,13 @@
 import { connect } from 'react-redux';
 
-import { 
-  fetchSearchedTracks, fetchSearchedUsers, fetchSearchedAlbums 
-} from '../../actions/search_actions';
+import { fetchSearch } from "../../actions/search_actions";
 import { logout } from '../../actions/session_actions';
 import { openModal } from '../../actions/modal_actions';
 import Search from './search';
 
 const mapStateToProps = (state, ownProps) => {
   return {
+    results: Object.values(state.entities.search),
     currentUser: state.entities.users[state.session.id],
     activeDropDown: ownProps.activeDropDown,
     onClick: ownProps.onClick,
@@ -17,11 +16,9 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchSearchedTracks: query => dispatch(fetchSearchedTracks(query)),
-    fetchSearchedAlbums: query => dispatch(fetchSearchedAlbums(query)),
-    fetchSearchedUsers: query => dispatch(fetchSearchedUsers(query)),
+    fetchSearch: () => dispatch(fetchSearch()),
     logout: () => dispatch(logout()),
-    openModal: modal => dispatch(openModal(modal)),
+    openModal: (modal) => dispatch(openModal(modal)),
   };
 };
 

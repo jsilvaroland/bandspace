@@ -10,9 +10,14 @@ class Search extends React.Component {
     constructor(props) {
 		super(props);
 		this.state = {
-			query: '',
-            results: [],
-        };
+      query: "",
+      results: [],
+    };
+        props
+          .fetchSearch()
+          .then((res) =>
+            this.setState({ results: Object.values(res.payload) })
+          );
         this.change = this.change.bind(this);
         this.onReset = this.onReset.bind(this);
     }
@@ -25,24 +30,17 @@ class Search extends React.Component {
     }
 
     change(e) {
-        const { 
-            fetchSearchedTracks, 
-            fetchSearchedUsers, 
-            fetchSearchedAlbums, 
-            onClick, 
-            activeDropDown
-        } = this.props;
+      const { results, onClick, activeDropDown } = this.props;
 
-        if (activeDropDown !== 'search') onClick('search');
-        const query = e.target.value;
+      if (activeDropDown !== "search") onClick("search");
+      const query = e.target.value;
+      const callback = (result) => {
+        const filterBy = result.username ? "username" : "title";
+        return result[filterBy].toLowerCase().includes(query.toLowerCase());
+      };
 
-        this.setState({ query, results: [] });
-        fetchSearchedUsers(query)
-            .then(res => this.setState({ results: this.state.results.concat(Object.values(res.users)), usersFetched: true }));
-        fetchSearchedTracks(query)
-            .then(res => this.setState({ results: this.state.results.concat(Object.values(res.tracks)), tracksFetched: true }));
-        fetchSearchedAlbums(query)
-            .then(res => this.setState({ results: this.state.results.concat(Object.values(res.albums)), albumsFetched: true }));
+      const filtered = results.filter((result) => callback(result));
+      this.setState({ query, results: filtered });
     }
 
     onReset() {
@@ -66,7 +64,7 @@ class Search extends React.Component {
         if (results.length > 0) {
             searchResults = <SearchIndex 
                                 activeDropDown={activeDropDown}
-                                results={results.slice(0, 5)} 
+                                results={results.slice(0, 5)}
                                 onReset={this.onReset} 
                             /> 
         } else if (query !== '' && results.length === 0) {
@@ -77,17 +75,18 @@ class Search extends React.Component {
         }
 
 		return (
-            <div className={wrapperClassName}>
-                <input className={searchClassName}
-                    type="text"
-                    value={this.state.query}
-                    placeholder="Search and discover music"
-                    onChange={this.change}
-                />
-                <FontAwesomeIcon icon={faSearch} className="search-bar-icon" />
-                {searchResults}
-            </div>
-        );
+      <div className={wrapperClassName}>
+        <input
+          className={searchClassName}
+          type="text"
+          value={this.state.query}
+          placeholder="Search and discover music"
+          onChange={this.change}
+        />
+        <FontAwesomeIcon icon={faSearch} className="search-bar-icon" />
+        {searchResults}
+      </div>
+    );
 	}
 }
 
