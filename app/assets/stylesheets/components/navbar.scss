@@ -21,6 +21,10 @@
     align-items: flex-end;
 }
 
+.left-nav-logged-in {
+    width: 550px;
+}
+
 .left-nav-logged-out-not-splash {
     display: flex;
 }
@@ -63,7 +67,7 @@
 }
 
 .logo-wrapper {
-    margin: 23px 0 5px;
+    margin: 15px 0 15px;
 }
 
 .logo-placeholder {
@@ -98,6 +102,7 @@
 .add-menu-btn {
     color: #000000;
     padding: 0 15px;
+    margin-left: 22px;
     font-size: 14px;
     align-items: center;
     cursor: pointer;

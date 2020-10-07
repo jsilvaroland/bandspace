@@ -130,103 +130,135 @@ class NavigationBar extends React.Component {
         if (!currentUser && pathname == '/') {
             // search is in right nav above sign up and login
             return (
-                <div className={mainNavStatus}>
-                    <div className="left-nav-logged-out">
-                        <div className="logo-wrapper">
-                            <div className="logo-placeholder">
-                                <Link className="logo-link" to="/">bandspace</Link>
-                            </div>
-                        </div>
-                        {currentUser ? null : welcomeMessage()}
+              <div className={mainNavStatus}>
+                <div className="left-nav-logged-out">
+                  <div className="logo-wrapper">
+                    <div className="logo-placeholder">
+                      <Link className="logo-link" to="/">
+                        <img src="https://bandspace-seeds.s3-us-west-1.amazonaws.com/bandspace.png" />
+                      </Link>
                     </div>
-                    <div className="right-nav-logged-out">
-                        {/* change it to input with placeholder text of "Search and discover music" */}
-                        <SearchContainer 
-                            activeDropDown={activeDropDown}
-                            onClick={this.onClick}
-                        />
-                        {currentUser ? logoutLink(currentUser, logout) : sessionLinks()}
-                    </div>
+                  </div>
+                  {currentUser ? null : welcomeMessage()}
                 </div>
-            )
+                <div className="right-nav-logged-out">
+                  {/* change it to input with placeholder text of "Search and discover music" */}
+                  <SearchContainer
+                    activeDropDown={activeDropDown}
+                    onClick={this.onClick}
+                  />
+                  {currentUser
+                    ? logoutLink(currentUser, logout)
+                    : sessionLinks()}
+                </div>
+              </div>
+            );
         } else if (currentUser && pathname.includes(`artists/${currentUser.id}`) ) {
             // if your page, search bar can be accessed by clicking search icon in right nav
             return (
-                <div className={mainNavStatus}>
-                    <div className="left-nav-logged-in">
-                        <div className="logo-wrapper-not-splash">
-                            <div className="logo-placeholder-not-splash">
-                                <Link className="logo-link-not-splash" to="/">bandspace</Link>
-                            </div>
-                        </div>
-                        <div className="add-menu-dropdown" ref={this.setAddWrapperRef}>
-                            <a className="add-menu-btn" onClick={() => this.onClick('addMenuBtn')}>+ add</a>
-                            {addMenuDropdown()}
-                        </div>
+              <div className={mainNavStatus}>
+                <div className="left-nav-logged-in">
+                  <div className="logo-wrapper-not-splash">
+                    <div className="logo-placeholder-not-splash">
+                      <Link className="logo-link-not-splash" to="/">
+                        <img src="https://bandspace-seeds.s3-us-west-1.amazonaws.com/bandspace.png" />
+                      </Link>
                     </div>
-                    <div className="right-nav-logged-in">
-                        <div className="nav-bar-icons">
-                            <div className="user-menu-dropdown" ref={this.setUserWrapperRef}>
-                                <a className="user-menu-btn"
-                                    onClick={() => this.onClick('userMenuBtn')}>
-                                    <div className="user-pic">
-                                        <img className="user-pic-29" src={currentUser.userArt} />
-                                    </div>
-                                </a>
-                                {userMenuDropdown()}
-                            </div>
-                        </div>
-                    </div>
+                  </div>
+                  <div
+                    className="add-menu-dropdown"
+                    ref={this.setAddWrapperRef}
+                  >
+                    <a
+                      className="add-menu-btn"
+                      onClick={() => this.onClick("addMenuBtn")}
+                    >
+                      + add
+                    </a>
+                    {addMenuDropdown()}
+                  </div>
                 </div>
-            )
+                <div className="right-nav-logged-in">
+                  <div className="nav-bar-icons">
+                    <div
+                      className="user-menu-dropdown"
+                      ref={this.setUserWrapperRef}
+                    >
+                      <a
+                        className="user-menu-btn"
+                        onClick={() => this.onClick("userMenuBtn")}
+                      >
+                        <div className="user-pic">
+                          <img
+                            className="user-pic-29"
+                            src={currentUser.userArt}
+                          />
+                        </div>
+                      </a>
+                      {userMenuDropdown()}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
         } else if (currentUser) {
             // if logged in but not on your own page, search is in left navbar
             return (
-                <div className={mainNavStatus}>
-                    <div className="left-nav-logged-in">
-                        <div className="logo-wrapper-not-splash">
-                            <div className="logo-placeholder-not-splash">
-                                <Link className="logo-link-not-splash" to="/">bandspace</Link>
-                            </div>
-                        </div>
-                        <SearchContainer  
-                            activeDropDown={activeDropDown}
-                            onClick={this.onClick}
-                        />
+              <div className={mainNavStatus}>
+                <div className="left-nav-logged-in">
+                  <div className="logo-wrapper-not-splash">
+                    <div className="logo-placeholder-not-splash">
+                      <Link className="logo-link-not-splash" to="/">
+                        <img src="https://bandspace-seeds.s3-us-west-1.amazonaws.com/bandspace.png" />
+                      </Link>
                     </div>
-                    <div className="right-nav-logged-in">
-                        <div className="nav-bar-icons">
-                            <div className="user-menu-dropdown" ref={this.setUserWrapperRef}>
-                                <a className="user-menu-btn" onClick={() => this.onClick('userMenuBtn')}>
-                                    <div className="user-pic">
-                                        <img src={currentUser.userArt}/>
-                                    </div>
-                                </a>
-                                {userMenuDropdown()}
-                            </div>
-                        </div>
-                    </div>
+                  </div>
+                  <SearchContainer
+                    activeDropDown={activeDropDown}
+                    onClick={this.onClick}
+                  />
                 </div>
-            )
+                <div className="right-nav-logged-in">
+                  <div className="nav-bar-icons">
+                    <div
+                      className="user-menu-dropdown"
+                      ref={this.setUserWrapperRef}
+                    >
+                      <a
+                        className="user-menu-btn"
+                        onClick={() => this.onClick("userMenuBtn")}
+                      >
+                        <div className="user-pic">
+                          <img src={currentUser.userArt} />
+                        </div>
+                      </a>
+                      {userMenuDropdown()}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
         } else { //search is same as if you were logged in
             return (
-                <div className="main-nav-logged-out-not-splash">
-                    <div className="left-nav-logged-out-not-splash">
-                        <div className="logo-wrapper-not-splash">
-                            <div className="logo-placeholder-not-splash">
-                                <Link className="logo-link-not-splash" to="/">bandspace</Link>
-                            </div>
-                        </div>
-                        <SearchContainer 
-                            activeDropDown={activeDropDown} 
-                            onClick={this.onClick}
-                        />
+              <div className="main-nav-logged-out-not-splash">
+                <div className="left-nav-logged-out-not-splash">
+                  <div className="logo-wrapper-not-splash">
+                    <div className="logo-placeholder-not-splash">
+                      <Link className="logo-link-not-splash" to="/">
+                        <img src="https://bandspace-seeds.s3-us-west-1.amazonaws.com/bandspace.png" />
+                      </Link>
                     </div>
-                    <div className="right-nav-logged-out-not-splash">
-                       {sessionLinks()}
-                    </div>
+                  </div>
+                  <SearchContainer
+                    activeDropDown={activeDropDown}
+                    onClick={this.onClick}
+                  />
                 </div>
-            )
+                <div className="right-nav-logged-out-not-splash">
+                  {sessionLinks()}
+                </div>
+              </div>
+            );
         }
     }
 };

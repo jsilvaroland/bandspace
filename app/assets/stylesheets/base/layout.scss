@@ -32,6 +32,20 @@ body {
     text-decoration: none;
 }
 
+.logo-link > img {
+    height: 40px;
+    width: 185px;
+}
+
+.logo-link-not-splash > img {
+    height: 26px;
+    width: 125px;
+}
+
+.logo-link-not-splash {
+    width: 125px;
+}
+
 .logo-link, .logo-link-not-splash {
     background: -webkit-linear-gradient(left, #6046FE, #1DA0C3);
     -webkit-text-fill-color: transparent;
