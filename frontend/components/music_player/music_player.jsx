@@ -38,13 +38,8 @@ class MusicPlayer extends React.Component {
             this.songFinish();
         }
 
-        if (this.state.activeAudio.currentTime !== this.state.currentTime) {
-            this.updatePlaybackTime();
-        }
-
         if (this.props.activeAudio !== this.state.activeAudio) {
             this.setState({ activeAudio: this.props.activeAudio });
-
             this.props.activeAudio.onplay = () => {
                 clearInterval(this.currentTimeInterval);
                 this.currentTimeInterval = setInterval(() => {

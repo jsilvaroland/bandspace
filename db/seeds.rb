@@ -22,7 +22,7 @@ demo_user = User.create!({
 demo_user_art = open('https://bandspace-seeds.s3-us-west-1.amazonaws.com/image-31.png')
 demo_user.photo.attach(io: demo_user_art, filename: 'image-31.png')
 
-demo_user_banner = open('https://bandspace-seeds.s3-us-west-1.amazonaws.com/banner-48.png')
+demo_user_banner = open('https://bandspace-seeds.s3-us-west-1.amazonaws.com/demo.jpeg')
 demo_user.banner.attach(io: demo_user_banner, filename: 'banner-48.png')
 
 eugene = User.create!({
