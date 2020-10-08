@@ -14,6 +14,7 @@
 .artist-index-body {
     padding-top: 10px;
     border-top: 1px solid #b2b2b2;
+    height: 100%;
 }
 
 .sort-controls {
@@ -27,8 +28,8 @@
 
 .artists-list li {
     display: inline-block;
-    height: 175px;
-    width: 138px;
+    height: 350px;
+    width: 276px;
     margin-right: 30px;
     margin-bottom: 20px;
 }
@@ -43,10 +44,10 @@ a.artist-link:hover {
 }
 
 .artist-art {
-    min-height: 138px;
-    max-height: 138px;
-    min-width: 138px;
-    max-width: 138px;
+    min-height: 276px;
+    max-height: 276px;
+    min-width: 276px;
+    max-width: 276px;
     background: -webkit-linear-gradient(left, #6046FE, #1DA0C3);
 }
 

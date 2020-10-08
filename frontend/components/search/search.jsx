@@ -66,7 +66,7 @@ class Search extends React.Component {
                                 activeDropDown={activeDropDown}
                                 results={results.slice(0, 5)}
                                 onReset={this.onReset} 
-                            /> 
+                            />
         } else if (query !== '' && results.length === 0) {
             searchResults = <div className="no-results"
                             id={activeDropDown === 'search' ? "show" : null}>

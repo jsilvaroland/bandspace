@@ -97,9 +97,9 @@ class NavigationBar extends React.Component {
         );
 
         const welcomeMessage = () => (
-            <div className="welcome-message">
-                Spellbinding songs and sirenic soundscapes from space.
-            </div>
+          <div className="welcome-message">
+            Discover and support your favorite musicians.
+          </div>
         );       
         
         const userMenuDropdown = () => (
