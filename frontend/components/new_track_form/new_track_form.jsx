@@ -1,5 +1,4 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
 
 class NewTrackForm extends React.Component {
     constructor(props) {
@@ -15,7 +14,6 @@ class NewTrackForm extends React.Component {
                 trackSong: null
             },
             audioUploaded: false,
-            published: false,
         };
         this.handleAudioUpload = this.handleAudioUpload.bind(this);
         this.handleImageUpload = this.handleImageUpload.bind(this);
@@ -82,6 +80,7 @@ class NewTrackForm extends React.Component {
 
     handleCreate() {
         const { track } = this.state;
+        const { history, currentUser } = this.props;
 
         if (track.trackArt && track.title !== "") {
             const trackFormData = new FormData();
@@ -92,7 +91,7 @@ class NewTrackForm extends React.Component {
             trackFormData.append('track[photo]', track.trackArt);
             trackFormData.append('track[song]', track.trackSong);
             this.props.createTrack(trackFormData)
-                .then(this.setState({ published: true }));
+                .then(history.push(`/artists/${currentUser.id}`));
         } else if (track.title === "") {
             this.setState({ trackTitleError: true });
         } else if (!track.trackArt) {
@@ -103,9 +102,7 @@ class NewTrackForm extends React.Component {
     render() {
         const { currentUser } = this.props;
         
-        if (this.state.published) {
-            return (<Redirect to={`/artists/${currentUser.id}`} />)
-        } else if (currentUser) {
+        if (currentUser) {
             const { track, trackArtPreview, audioUploaded, trackArtError, 
                 trackTitleError } = this.state;
             let publishBtn, trackTitleText, titleInput, aboutLabel, aboutField, 
