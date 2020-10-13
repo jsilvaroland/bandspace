@@ -16,7 +16,7 @@ class Splash extends React.Component {
               <div>
                 Find the chillest beats and the hottest tracks by visiting our artist index
               </div>
-              <Link className="artist-index-button" to="artist_index">Artist Index</Link>
+              <Link className="artist-index-button" to="artist_index">artist index</Link>
             </div>
           </div>
         );

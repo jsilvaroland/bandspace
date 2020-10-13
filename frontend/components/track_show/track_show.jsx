@@ -22,19 +22,34 @@ class TrackShow extends React.Component {
 
     componentDidMount() {
         const { fetchUser, fetchTrack, pageTrackId } = this.props;
-
-        fetchUser()
-            .then(fetchTrack(pageTrackId));
+        const that = this;
+        fetchUser();
+        fetchTrack(pageTrackId).then(res => 
+            that.setState({ 
+                activeAudio: new Audio(res.track.trackSong)
+            })
+        );
+        // fetchUser()
+        //     .then(fetchTrack(pageTrackId));
     }
 
     componentDidUpdate() {
         const { fetchUser, pageTrack, fetchAlbum, pageAlbum, pageTrackId } = this.props;
         
-        // what if pageAlbum does exist but it's wrong one, gotta refetch album
+        if (this.state.activeAudio && !this.state.activeAudio.duration) {
+            const that = this;
+            this.state.activeAudio.onloadedmetadata = function () {
+                that.audioDuration = this.duration;
+                that.setState({ audioDuration: this.duration });
+            };
+        }
 
-        if (pageTrack && !this.audio) {
+        if (pageTrack && !this.activeAudio) {
             if (pageTrack !== this.state.activeTrack) {
-                this.setState({ activeTrack: pageTrack });
+                this.setState({ 
+                    activeTrack: pageTrack,
+                    activeAudio: new Audio(pageTrack.trackSong)
+                });
                 this.audio = new Audio(pageTrack.trackSong);
             }
         }
@@ -61,10 +76,10 @@ class TrackShow extends React.Component {
 
     componentWillUnmount() {
         const { clearTracks, clearAlbums } = this.props;
+        const { activeTrack, activeAudio } = this.state;
 
-        if (this.audio) {
-            this.audio.pause();
-            this.audio.currentTime = 0;
+        if (this.state.playing) {
+            this.clickPlay(activeTrack, activeAudio);
         }
 
         clearTracks();
@@ -72,6 +87,7 @@ class TrackShow extends React.Component {
     }
 
     clickPlay(track, audio) {
+        const { activeAudio } = this.state;
         const isPlaying = this.state.playing;
         let activeTrack;
 
@@ -82,18 +98,16 @@ class TrackShow extends React.Component {
         }
 
         if (!isPlaying) {
-            this.audio = audio;
-            this.audio.play();
+            activeAudio.play();
             this.setState({ playing: true, activeTrack: track });
         } else {
-            this.audio = audio;
-            this.audio.pause();
+            activeAudio.pause();
             this.setState({ playing: false });
         }
     }
 
     next() {
-        this.audio.pause();
+        this.state.activeAudio.pause();
         this.setState({ playing: false });
     }
 
@@ -139,7 +153,7 @@ class TrackShow extends React.Component {
 
         if (this.state.deleted) {
             return (<Redirect to={`/artists/${currentUserId}`} />)
-        } else if (((pageUser && pageTrack && !pageTrack.albumId) || (pageUser && pageTrack && pageAlbum)) && this.audio) {
+        } else if (((pageUser && pageTrack && !pageTrack.albumId) || (pageUser && pageTrack && pageAlbum)) && this.state.activeAudio) {
             let fromAlbum, trackArt, deleteTrack;
 
             if (pageTrack.albumId) {
@@ -229,13 +243,13 @@ class TrackShow extends React.Component {
                     bannerArt = null;
             }
 
-            const musicPlayer = this.state.activeTrack && !this.state.activeTrack.duration ?
+            const musicPlayer = this.state.activeTrack && this.state.activeAudio.duration ?
                 (
                     <MusicPlayer 
                         playing={this.state.playing}
                         clickPlay={this.clickPlay}
                         activeTrack={this.state.activeTrack}
-                        activeAudio={this.audio}
+                        activeAudio={this.state.activeAudio}
                         next={this.next}
                     />
                 ) : (
@@ -285,7 +299,6 @@ class TrackShow extends React.Component {
                     </div>
                     <div className="artist-info-column">
                         {bioPic}
-                        {/* <span className="artist-username-bio">{pageUser.username}</span> */}
                         <Link to={`/artists/${pageUser.id}`} id="bio" className="artist-username-bio">{pageUser.username}</Link>
                     </div>
                 </div>

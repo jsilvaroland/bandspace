@@ -80,7 +80,7 @@ class Search extends React.Component {
           className={searchClassName}
           type="text"
           value={this.state.query}
-          placeholder="Search and discover music"
+          placeholder="search and discover music"
           onChange={this.change}
         />
         <FontAwesomeIcon icon={faSearch} className="search-bar-icon" />

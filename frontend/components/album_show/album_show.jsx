@@ -53,18 +53,12 @@ class AlbumShow extends React.Component {
     const { pageAlbumId, pageAlbum, pageTracks } = this.props;
 
     if (this.state.activeAudio && !this.state.activeAudio.duration) {
-
-        ////
-
-
         const that = this;
         this.state.activeAudio.onloadedmetadata = function () {
             console.log(this.duration);
             that.audioDuration = this.duration;
             that.setState({ audioDuration: this.duration });
         };
-
-        ///
     }
 
     if (this.state.activeAudio && !this.state.featuredAudio) {
