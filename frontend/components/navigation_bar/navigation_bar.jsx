@@ -44,6 +44,7 @@ class NavigationBar extends React.Component {
     }
 
     handleClickOutside(e, field) {
+      e.target.click();
         if (this.state.activeDropDown && this.addWrapperRef) {
             if (!this.userWrapperRef.contains(e.target) && !this.addWrapperRef.contains(e.target)) {
                 this.collapse(field);

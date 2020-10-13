@@ -13,6 +13,7 @@ class SearchIndex extends React.Component {
                                 key={i}
                                 result={result}
                                 onReset={onReset}
+                                onClick={onClick}
                             />
                         )
                     })

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const SearchIndexItem = props => {
-    const { result, onReset } = props;
+    const { result, onReset, onClick } = props;
     let link, title, type, src;
     if (result.trackIds) {
         link = `/artists/${result.artistId}/albums/${result.id}`;
@@ -23,7 +23,7 @@ const SearchIndexItem = props => {
 
     return (
         <li>
-            <Link className="search-link" onClick={onReset} to={link}>
+            <Link className="search-link" onClick={onClick} to={link}>
                 <img className="search-art" src={src} />
                 <div className="search-link-text">
                     <div className="search-link-title">{title}</div>
