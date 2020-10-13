@@ -153,7 +153,6 @@ class AlbumShow extends React.Component {
       this.state.activeAudio.pause();
       this.setState({ playing: false, activeTrack: this.props.pageTracks[0] });
       this.state.activeAudio = this.state.featuredAudio;
-      // test this
     }
   }
 
@@ -418,7 +417,8 @@ class AlbumShow extends React.Component {
           </div>
           <div className="artist-info-column">
             {bioPic}
-            <span className="artist-username-bio">{pageUser.username}</span>
+            {/* <span className="artist-username-bio">{pageUser.username}</span> */}
+            <Link to={`/artists/${pageUser.id}`} id="bio" className="artist-username-bio">{pageUser.username}</Link>
           </div>
         </div>
       );

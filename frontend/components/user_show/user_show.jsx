@@ -191,7 +191,8 @@ class UserShow extends React.Component {
                         />
                         <div className="artist-info-column">
                             {bioPic}
-                            <span className="artist-username-bio">{pageUser.username}</span>
+                            {/* <span className="artist-username-bio">{pageUser.username}</span> */}
+                            <Link to={`/artists/${pageUser.id}`} id="bio" className="artist-username-bio">{pageUser.username}</Link>
                         </div>
                     </div>
                 )

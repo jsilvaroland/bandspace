@@ -32,7 +32,7 @@ eugene = User.create!({
     is_artist: true
 })
 
-eugene_art = open('https://bandspace-seeds.s3-us-west-1.amazonaws.com/image-34.png')
+eugene_art = open('https://bandspace-seeds.s3-us-west-1.amazonaws.com/cache_21634291.jpg')
 eugene.photo.attach(io: eugene_art, filename: 'image-34.png')
 
 eugene_banner = open('https://bandspace-seeds.s3-us-west-1.amazonaws.com/banner-49.png')
@@ -58,7 +58,7 @@ riley = User.create!({
     is_artist: true
 })
 
-riley_art = open('https://bandspace-seeds.s3-us-west-1.amazonaws.com/image-33.jpg')
+riley_art = open('https://bandspace-seeds.s3-us-west-1.amazonaws.com/Marble-pattern.jpg')
 riley.photo.attach(io: riley_art, filename: 'image-33.jpg')
 
 riley_banner = open('https://bandspace-seeds.s3-us-west-1.amazonaws.com/banner-51.png')
@@ -77,7 +77,7 @@ planets = Album.create!({
     credits: ''
 })
 
-planets_art = open('https://bandspace-seeds.s3-us-west-1.amazonaws.com/image-31.png')
+planets_art = open('https://bandspace-seeds.s3-us-west-1.amazonaws.com/44325906_276167676368814_115900014605107200_n.jpg')
 planets.photo.attach(io: planets_art, filename: 'image-31.png')
 
 itbo = Album.create!({
@@ -118,7 +118,7 @@ mtfs = Album.create!({
     credits: ''
 })
 
-mtfs_art = open('https://bandspace-seeds.s3-us-west-1.amazonaws.com/image-35.jpg')
+mtfs_art = open('https://bandspace-seeds.s3-us-west-1.amazonaws.com/dog-188273_1280.jpg')
 mtfs.photo.attach(io: mtfs_art, filename: 'image-35.jpg')
 
 gt = Album.create!({

@@ -1,7 +1,7 @@
 .user-show, .my-user-show {
     width: 915px;
     background-color: rgb(255, 255, 255);
-    padding: 35px 30px 80px;
+    padding: 35px 30px 35px;
     margin-bottom: 40px;
     border-width: 0 1px 1px;
     border-style: solid;
@@ -124,12 +124,28 @@ a.release-link:hover {
     text-overflow: ellipsis;
 }
 
-.artist-username-bio {
+artist-username-bio {
     width: 100%;
     font-size: 14px;
-    color: #363636;
+    color: #0687F5;
     font-weight: 600;
+    text-decoration: none;
     margin-bottom: 3px;
+    cursor: pointer;
+}
+
+.artist-info-column > a {
+    width: 100%;
+    font-size: 14px;
+    color: #0687F5;
+    font-weight: 600;
+    text-decoration: none;
+    margin-bottom: 3px;
+    cursor: pointer;
+}
+
+#bio:hover {
+    text-decoration: underline;
 }
 
 #banner-file, #bio-pic-file {
