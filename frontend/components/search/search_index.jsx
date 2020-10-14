@@ -3,7 +3,7 @@ import SearchIndexItem from './search_index_item';
 
 class SearchIndex extends React.Component {
     render() {
-        const { results, onReset, activeDropDown, onClick } = this.props;
+        const { results, onReset, activeDropDown, clickLink } = this.props;
         return (
             <ol className="search-results-list" id={activeDropDown === 'search' ? "show" : null} >
                 {
@@ -13,7 +13,7 @@ class SearchIndex extends React.Component {
                                 key={i}
                                 result={result}
                                 onReset={onReset}
-                                onClick={onClick}
+                                clickLink={clickLink}
                             />
                         )
                     })

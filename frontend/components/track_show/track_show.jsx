@@ -174,9 +174,17 @@ class TrackShow extends React.Component {
             if (pageUser.id === currentUserId) {
                 pageUser.userArt ?
                     bioPic = <div className="bio-pic">
-                        <img className="bio-pic-art" src={pageUser.userArt} />
-                        <button className="remove"
-                            onClick={this.deleteBioPic}>
+                        <Link to={`/artists/${pageUser.id}`}>
+                            <img className="bio-pic-art" src={pageUser.userArt} />
+                        </Link>
+                        <button
+                        className="remove"
+                        onClick={() =>
+                            openModal({
+                            "delete-custom-pic": "delete-custom-pic",
+                            })
+                        }
+                        >
                             &times;
                         </button>
                     </div> :

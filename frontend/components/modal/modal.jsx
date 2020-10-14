@@ -29,6 +29,9 @@ const Modal = props => {
         case 'delete-custom-header':
             component = <DeleteArtContainer artType="Custom Header" />;
             break;
+        case 'delete-custom-pic':
+            component = <DeleteArtContainer artType="Profile Pic" />;
+            break;
         case 'custom-header-size-error':
             component = <UploadErrorContainer artType="Custom Header" maxSize="2MB" />;
             break;

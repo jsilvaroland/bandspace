@@ -10,8 +10,9 @@ class NavigationBar extends React.Component {
         this.toggleDropdown = this.toggleDropdown.bind(this);
         this.setAddWrapperRef = this.setAddWrapperRef.bind(this);
         this.setUserWrapperRef = this.setUserWrapperRef.bind(this);
+        this.setSearchIndexWrapperRef = this.setSearchIndexWrapperRef.bind(this);
         this.handleClickOutside = this.handleClickOutside.bind(this);
-        this.onClick = this.onClick.bind(this);
+        this.click = this.click.bind(this);
         this.collapse = this.collapse.bind(this);
     }
 
@@ -43,22 +44,28 @@ class NavigationBar extends React.Component {
         this.userWrapperRef = node;
     }
 
+    setSearchIndexWrapperRef(node) {
+      this.searchIndexWrapperRef = node;
+    }
+
     handleClickOutside(e, field) {
-      e.target.click();
-        if (this.state.activeDropDown && this.addWrapperRef) {
-            if (!this.userWrapperRef.contains(e.target) && !this.addWrapperRef.contains(e.target)) {
-                this.collapse(field);
-            }
-        } else if (this.state.activeDropDown && !this.userWrapperRef.contains(e.target)) {
-            this.collapse(field);
+      if (this.searchIndexWrapperRef && this.searchIndexWrapperRef.contains(e.target)) {
+        e.target.click();
+      }
+      if (this.state.activeDropDown && this.addWrapperRef) {
+        if (!this.userWrapperRef.contains(e.target) && !this.addWrapperRef.contains(e.target)) {
+          this.collapse(field);
         }
+      } else if (this.state.activeDropDown && !this.userWrapperRef.contains(e.target)) {
+        this.collapse(field);
+      }
     }
     
     collapse() {
         this.setState({ activeDropDown: null });
     }
 
-    onClick(field) {
+    click(field) {
         if (this.state.activeDropDown === field) {
             this.collapse();
         } else {
@@ -146,7 +153,8 @@ class NavigationBar extends React.Component {
                   {/* change it to input with placeholder text of "Search and discover music" */}
                   <SearchContainer
                     activeDropDown={activeDropDown}
-                    onClick={this.onClick}
+                    clickLink={this.click}
+                    setRef={this.setSearchIndexWrapperRef}
                   />
                   {currentUser
                     ? logoutLink(currentUser, logout)
@@ -172,7 +180,7 @@ class NavigationBar extends React.Component {
                   >
                     <a
                       className="add-menu-btn"
-                      onClick={() => this.onClick("addMenuBtn")}
+                      onClick={() => this.click("addMenuBtn")}
                     >
                       + add
                     </a>
@@ -187,7 +195,7 @@ class NavigationBar extends React.Component {
                     >
                       <a
                         className="user-menu-btn"
-                        onClick={() => this.onClick("userMenuBtn")}
+                        onClick={() => this.click("userMenuBtn")}
                       >
                         <div className="user-pic">
                           <img
@@ -216,7 +224,8 @@ class NavigationBar extends React.Component {
                   </div>
                   <SearchContainer
                     activeDropDown={activeDropDown}
-                    onClick={this.onClick}
+                    clickLink={this.click}
+                    setRef={this.setSearchIndexWrapperRef}
                   />
                 </div>
                 <div className="right-nav-logged-in">
@@ -227,7 +236,7 @@ class NavigationBar extends React.Component {
                     >
                       <a
                         className="user-menu-btn"
-                        onClick={() => this.onClick("userMenuBtn")}
+                        onClick={() => this.click("userMenuBtn")}
                       >
                         <div className="user-pic">
                           <img src={currentUser.userArt} />
@@ -252,7 +261,8 @@ class NavigationBar extends React.Component {
                   </div>
                   <SearchContainer
                     activeDropDown={activeDropDown}
-                    onClick={this.onClick}
+                    clickLink={this.click}
+                    setRef={this.setSearchIndexWrapperRef}
                   />
                 </div>
                 <div className="right-nav-logged-out-not-splash">

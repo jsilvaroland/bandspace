@@ -216,13 +216,41 @@ class AlbumShow extends React.Component {
         return <div>Page does not exist</div>;
       }
 
+      // pageUser.userBanner
+      //     ? (bannerArt = (
+      //         <div className="header-placeholder">
+      //           <Link to={`/artists/${pageUser.id}`}>
+      //             <img className="banner-art" src={pageUser.userBanner} />
+      //           </Link>
+      //           <button
+      //             className="remove"
+      //             onClick={() =>
+      //               openModal({
+      //                 "delete-custom-pic": "delete-custom-pic",
+      //               })
+      //             }
+      //           >
+      //             &times;
+      //           </button>
+      //         </div>
+      //       ))
+
       let editDeleteButtons, bioPic, bannerArt;
       if (pageUser.id === currentUserId) {
         pageUser.userArt
           ? (bioPic = (
               <div className="bio-pic">
-                <img className="bio-pic-art" src={pageUser.userArt} />
-                <button className="remove" onClick={this.deleteBioPic}>
+                <Link to={`/artists/${pageUser.id}`}>
+                  <img className="bio-pic-art" src={pageUser.userArt} />
+                </Link>
+                <button
+                  className="remove"
+                  onClick={() =>
+                    openModal({
+                      "delete-custom-pic": "delete-custom-pic",
+                    })
+                  }
+                >
                   &times;
                 </button>
               </div>

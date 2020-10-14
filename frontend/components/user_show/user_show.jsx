@@ -91,10 +91,18 @@ class UserShow extends React.Component {
                 // page is logged-in-user's page
                 pageUser.userArt ? 
                     bioPic = <div className="bio-pic">
-                                <img className="bio-pic-art" src={pageUser.userArt} />
-                                <button className="remove"
-                                    onClick={this.deleteBioPic}>
-                                    &times;
+                                <Link to={`/artists/${pageUser.id}`}>
+                                    <img className="bio-pic-art" src={pageUser.userArt} />
+                                </Link>
+                                <button
+                                className="remove"
+                                onClick={() =>
+                                    openModal({
+                                    "delete-custom-pic": "delete-custom-pic",
+                                    })
+                                }
+                                >
+                                &times;
                                 </button>
                             </div> :
                     bioPic = <div className="bio-pic-upload">
@@ -150,7 +158,7 @@ class UserShow extends React.Component {
                         />
                         <div className="artist-info-column">
                             {bioPic}
-                            <span className="artist-username-bio">{pageUser.username}</span>
+                            <Link to={`/artists/${pageUser.id}`} id="bio" className="artist-username-bio">{pageUser.username}</Link>
                         </div>
     
                     </div>
@@ -191,7 +199,6 @@ class UserShow extends React.Component {
                         />
                         <div className="artist-info-column">
                             {bioPic}
-                            {/* <span className="artist-username-bio">{pageUser.username}</span> */}
                             <Link to={`/artists/${pageUser.id}`} id="bio" className="artist-username-bio">{pageUser.username}</Link>
                         </div>
                     </div>

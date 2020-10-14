@@ -10,7 +10,8 @@ const mapStateToProps = (state, ownProps) => {
     results: Object.values(state.entities.search),
     currentUser: state.entities.users[state.session.id],
     activeDropDown: ownProps.activeDropDown,
-    onClick: ownProps.onClick,
+    clickLink: ownProps.clickLink,
+    setRef: ownProps.setRef,
   };
 };
 

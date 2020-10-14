@@ -8,11 +8,15 @@ class DeleteArt extends React.Component {
 
     deleteArt() {
         const { artType, updateUser, closeModal } = this.props;
-
+        const nullFormData = new FormData();
         switch (artType) {
             case 'Custom Header':
-                const nullFormData = new FormData();
                 nullFormData.append('user[banner]', null);
+                updateUser(nullFormData)
+                    .then(closeModal());
+                break;
+            case 'Profile Pic':
+                nullFormData.append('user[photo]', null);
                 updateUser(nullFormData)
                     .then(closeModal());
                 break;

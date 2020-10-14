@@ -30,9 +30,9 @@ class Search extends React.Component {
     }
 
     change(e) {
-      const { results, onClick, activeDropDown } = this.props;
+      const { results, clickLink, activeDropDown } = this.props;
 
-      if (activeDropDown !== "search") onClick("search");
+      if (activeDropDown !== "search") clickLink("search");
       const query = e.target.value;
       const callback = (result) => {
         const filterBy = result.username ? "username" : "title";
@@ -48,7 +48,7 @@ class Search extends React.Component {
     }
     
     render() {
-        const { currentUser, activeDropDown } = this.props;
+        const { currentUser, activeDropDown, clickLink, setRef } = this.props;
         const { pathname } = this.props.location;
         const { query, results } = this.state;
         let wrapperClassName, searchClassName, searchResults;
@@ -65,7 +65,8 @@ class Search extends React.Component {
             searchResults = <SearchIndex 
                                 activeDropDown={activeDropDown}
                                 results={results.slice(0, 5)}
-                                onReset={this.onReset} 
+                                onReset={this.onReset}
+                                clickLink={clickLink}
                             />
         } else if (query !== '' && results.length === 0) {
             searchResults = <div className="no-results"
@@ -75,7 +76,7 @@ class Search extends React.Component {
         }
 
 		return (
-      <div className={wrapperClassName}>
+      <div className={wrapperClassName} ref={setRef}>
         <input
           className={searchClassName}
           type="text"
